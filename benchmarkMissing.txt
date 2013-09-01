@@ -1,0 +1,44 @@
+Notes on R6RS benchmarking
+==========================
+3 September 2009
+
+
+Petite Chez Scheme v7.9.3 runs all benchmarks successfully.
+PLT Scheme v4.2.1 runs all benchmarks successfully.
+Ypsilon 0.9.6-update3 runs all benchmarks successfully.
+
+On Pentium machines, Larceny v0.97 runs all benchmarks successfully.
+On SPARC machines, Larceny fails on the following benchmarks:
+
+    compiler      (bug in assembler; code segment is too large)
+    bv2string     (bug in assembler; code segment is too large)
+
+Petit Larceny v0.97 fails on the following benchmark:
+
+    compiler      (looks like it may be a bug in gcc)
+
+Ikarus 0.0.3 appears to go into an infinite loop on equal.
+Ikarus fails on the following benchmarks:
+
+    dderiv        (make-hashtable primitive not supported yet)
+    mbrotZ        (exception incorrectly raised on complex number syntax)
+    cat3          (utf-16-codec not supported yet)
+    read3         (utf-16-codec not supported yet)
+    bibfreq2      (make-hashtable primitive not supported yet)
+    equal         (infinite loop?)
+    normalization (string-normalize-nfkd primitive not supported yet)
+    hashtable0    (make-eqv-hashtable primitive not supported yet)
+
+Mosh 0.2.0 appears to go into an infinite loop on earley.
+Mosh fails on the following benchmarks:
+
+    sumfp         (1e6 etc incorrectly read as exact)
+    sum1          (1e6 etc incorrectly read as exact)
+    read0         (incorrect results, then fails with unhandled exception)
+    earley        (infinite loop?)
+    ray           (1e6 etc incorrectly read as exact)
+    equal         (segmentation fault)
+    normalization (incorrect results)
+    bv2string     (incorrect results)
+    listsort      (segmentation fault)
+

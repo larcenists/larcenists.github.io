@@ -1,0 +1,12 @@
+(define inport (open-input-file "bib"))
+(define outport (open-output-file "foo"))
+
+(define (catport port)
+	(let ((x (read-char port)))
+		(if (eof-object? x)
+			(close-output-port outport)
+			(begin
+				(write-char x outport)
+				(catport port)))))
+
+; (catport inport)  => cp bib foo

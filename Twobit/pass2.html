@@ -1,0 +1,110 @@
+<html>
+<title>
+Twobit Pass 2
+</title>
+
+<body>
+
+<p>
+<h1>
+Twobit Pass 2: source-level optimization.
+</h1>
+
+<p>
+Most of Twobit's optimizations occur during Pass 2, which
+consists of one
+post-order pass over the expression tree output by
+<a href="pass1.html">Pass 1</a>.
+
+<p>
+That expression tree contains no internal definitions.
+The main goal of optimization is to detect known local
+procedures, to record them as internal definitions, and
+to hoist these internal definitions to a more global
+scope where they will be evaluated less frequently.
+
+<p>
+The two most important optimizations in Pass 2 are
+<a href="p2saa.html">single assignment analysis</a>,
+which detects assignments that can be converted into
+internal definitions of
+<a href="p2background.html#known">known local procedures</a>, and
+<a href="p2lifting.html">incremental lambda lifting</a>,
+which hoists the known local procedures of nested lambda
+expressions to their enclosing lambda expression.
+
+<p>
+These are also the most original of the optimizations
+used in Twobit.  They are variations of two well-known
+optimizations,
+<a href="p2background.html#closure">closure analysis</a> and
+<a href="p2background.html#lifting">lambda lifting</a>, which
+are used by most compilers for higher order languages.
+
+<p>
+<h2><a href="p2background.html">Background</a></h2>
+<ul>
+<li><a href="p2background.html#closure">Closure analysis</a>
+<li><a href="p2background.html#lifting">Lambda lifting</a>
+<li><a href="p2background.html#inclifting">Incremental lambda lifting</a>
+</ul
+
+<p>
+<h2><a href="p2order.html">Optimizations</a></h2>
+<ul>
+<li><a href="p2local.html">Local source transformations</a>
+<li>Beta substitutions
+    <ul>
+    <li>Propagation of constants, variables, and lambda expressions
+    <li>Inlining of known local procedures
+    <li>Call tensioning
+    </ul>
+<li><a href="p2saa.html">Single assignment analysis</a>
+<li><a href="p2sae.html">Single assignment elimination</a>
+<li><a href="p2ae.html">Assignment elimination</a>
+<li><a href="p2lifting.html">Incremental lambda lifting</a>
+</ul>
+
+<p>
+<h2><a href="p2custom.html">Customization</a></h2>
+<ul>
+<li><a href="p2custom.html#registerset">Register set</a>
+<li><a href="p2custom.html#primops">Inlining of primitive operations</a>
+<li>Inlining of local procedures
+<li><a href="p2custom.html#lifting">Lambda lifting</a>
+<li><a href="p2custom.html#targeting">Interprocedural register targeting</a>
+<li><a href="p2custom.html#switches">Compiler switches</a>
+</ul>
+
+<p>
+<a name="rev2">For the</a>
+<a href="pass1.html#example1"><code>reverse-map</code></a>
+example, the output of Pass 2 is
+
+<p>
+<pre>
+(begin
+  (set! reverse-map
+    (lambda (.f|1 .l|1)
+      (define .loop|2
+        (lambda (.f|1|6 .l|3 .x|3)
+          (if (pair? .l|3)
+            (.loop|2
+              .f|1|6
+              (cdr .l|3)
+              (cons (.f|1|6 (car .l|3)) .x|3))
+            .x|3)))
+      (begin (unspecified)
+             (.loop|2 .f|1 .l|1 '()))))
+  'reverse-map)
+</pre>
+
+<p>
+An optional Pass 3, to perform flow analysis and representation
+inference, has not yet been released.
+For these notes we will assume that the
+output of Pass 2 goes directly to the
+<a href="pass4.html">code generator</a>.
+
+</body>
+</html>

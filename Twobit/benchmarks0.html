@@ -1,0 +1,71 @@
+<html>
+<title>
+Twobit: benchmarks
+</title>
+
+<body>
+
+<p>
+<h2>Benchmarks</h2>
+Last updated 26 July 1999.
+
+<p>
+We have graphed the performance of several popular implementations
+on the benchmarks that come with Gambit-C and on several other
+benchmarks that we have written or obtained from other sources.
+Please keep in mind that the results of benchmarking
+<a href="bmcrock.temp.html">should not be taken too seriously</a>.
+
+<p>
+To avoid comparing apples with oranges, we have separated our results
+into timings for
+<ul>
+<li><a href="benchmarks1_unsafe.html">unsafe compiled code</a>,
+    as in C and C++.
+<li><a href="benchmarks1_safe.html">safe compiled code</a>, as in Java
+    and Standard ML.
+<li><a href="benchmarks1_safe_generic.html">safe compiled code with
+    generic arithmetic</a>.
+<li><aa href="benchmarks1_interpreted.html">safe interpreted code with
+    generic arithmetic</aa>.
+</ul>
+
+<p>
+The benchmarked systems:
+<ul>
+<li>Larceny, using a development version that is intermediate between
+    v1.0a1 and v1.0a2, with the default generational garbage collector.
+<li><a href="http://www.scheme.com/csug/index.html">Chez Scheme</a> 6.1.
+<li><a href="gambit-c_toc.html">Gambit-C</a> v3.0.
+<li>gcc -O2.
+    (For some allocation-intensive or garbage-collection-intensive benchmarks,
+    we also wrote a custom storage allocator for the <code>C</code> version
+    of the benchmark.  These timings are identified by <code>gcc (A)</code>.)
+<li><a href="http://cm.bell-labs.com/cm/cs/what/smlnj/index.html">Standard ML
+    of New Jersey</a> v110.0.3.
+<li><a href="http://java.sun.com/">Java</a>
+    v1.2 from Sun, with just-in-time compilation.
+</ul>
+
+<p>
+All of our timings represent the cpu time for a single run on a Sun
+Ultra 1 with no other users.  (Eventually we will report the average
+of several runs, and for the garbage collection benchmarks we will
+eventually report real times, but the cpu times have been very repeatable.)
+When a few timings are missing for a system, this usually means that
+we have not been able to get the system to run those particular
+benchmarks; in some cases the problem is caused by non-portable code
+within a benchmark.
+When all of the timings are missing for a system, this usually means
+that the system cannot reasonably be configured to fit the category
+of systems being benchmarked.  For example, gcc cannot be configured
+to generate safe code, to perform generic arithmetic, or to act as
+an interpreter.
+
+<p>
+The numbers shown are user cpu times obtained from a single run on an
+UltraSPARC with no other users.
+The bar graphs show relative performance.  Longer is better.
+
+</body>
+</html>

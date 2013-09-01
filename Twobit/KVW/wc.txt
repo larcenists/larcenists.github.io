@@ -1,0 +1,26 @@
+(define inport (open-input-file "bib"))
+
+(define nl 0)
+(define nw 0)
+(define nc 0)
+(define inword #f)
+
+(define (wcport port)
+	(let ((x (read-char port)))
+		(if (eof-object? x)
+			(begin
+				(list nc nw nl))
+			(begin
+				(set! nc (+ nc 1))
+				(if (char=? x #\newline)
+					(set! nl (+ nl 1)))
+				(if (or (char=? x #\space)
+					(char=? x #\newline))
+					(set! inword #f)
+					(if (not inword)
+						(begin
+						(set! nw (+ nw 1))
+						(set! inword #t))))
+				(wcport port)))))
+
+; (wcport inport) => wc bib

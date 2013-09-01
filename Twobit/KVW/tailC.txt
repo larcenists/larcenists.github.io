@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+main(int argc, char *argv[])
+{
+	int i, j;
+	char buf[5000];
+	FILE *fp;
+	char **lp = (char **) malloc(100 * sizeof(char *));
+	int nbuf = 100;
+
+	if (argc == 1)
+		fp = stdin;
+	else
+		fp = fopen(argv[1], "r");
+	for (i = 0; fgets(buf, sizeof buf, fp) != NULL; i++) {
+		if (i >= nbuf) {
+			nbuf *= 2;
+			lp = (char **) realloc(lp, nbuf * (sizeof(char *)));
+		}
+		lp[i] = strdup(buf);
+	}
+	for (j = i-1; j >= 0; j--)
+		printf("%s", lp[j]);
+}

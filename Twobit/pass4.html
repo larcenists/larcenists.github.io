@@ -1,0 +1,113 @@
+<html>
+<title>
+Twobit Pass 4
+</title>
+
+<body>
+
+<p>
+<h1>
+Twobit Pass 4: code generation.
+</h1>
+
+<p>
+The code generator is fairly straightforward.
+Its output is a list-structured representation of
+assembly code for a hypothetical
+<a href="mmachine.html">MacScheme machine</a>.
+
+<p>
+Only a few optimizations are performed during Pass 4:
+<ul>
+<li><a href="p4closures.html">Closure conversion</a>.
+<li>Register targeting.
+<li><code>LET</code> optimization.
+<li><a href="p2custom.html#primops">Inlining of known primitives</a>.
+<li><a href="p2custom.html#primops">Recognition of immediate operands</a>.
+<li>Common subexpression elimination for variable references only.
+<li><a href="p4pao.html">Parallel assignment optimization</a>.
+<li><a href="p4reuse.html">Frame optimization</a>.
+<li><a href="p4phantom.html">Elimination of redundant stores and loads</a>.
+</ul>
+
+<p>
+The
+<a href="p4phantom.html">real output of pass 4</a>
+usually includes <code>nop</code> instructions,
+which are removed by an
+<a href="pass5.html">optional pass</a>
+and are ignored by the
+<a href="assembly.html">assembler</a>
+in any case.
+Without these <code>nop</code> instructions,
+the MacScheme machine assembly code that is generated for the
+<a href="pass1.html#example1"><code>reverse-map</code></a>
+example is
+
+<p>
+<pre>
+((17 (                  ;       lambda      *,0,*
+      (62)              ;       ;           .proc
+      (19 2)            ;       ;           args=       2
+      (1 unspecified)   ;       ;           op1         unspecified
+      (5 ())            ;       ;           const       ()
+      (15 3)            ;       ;           setreg      3
+      (32 1001 3)       ;       ;           branch      1001,3
+      (60 4)            ;       ;           .align      4
+      (63 1001)         ;       ;   L1001:
+      (62)              ;       ;           .proc
+      (58 #(.loop|2     ;       ;           .proc-doc   #(.loop|2
+            #f 2 #f #f  ;       ;                         #f 2 #f #f
+            (l x)))     ;       ;                         (l x))
+      (14 2 .l|3)       ;       ;           reg         2,.l|3
+      (1 pair?)         ;       ;           op1         pair?
+      (33 1004 3)       ;       ;           branchf     1004,3
+      (22 3)            ;       ;           save        3
+      (13 0 0)          ;       ;           store       0,0
+      (13 1 2)          ;       ;           store       1,2
+      (13 2 3)          ;       ;           store       2,3
+      (13 3 1)          ;       ;           store       3,1
+      (14 2 .l|3)       ;       ;           reg         2,.l|3
+      (1 car)           ;       ;           op1         car
+      (15 7)            ;       ;           setreg      7
+      (14 1 .f|1|6)     ;       ;           reg         1,.f|1|6
+      (15 2)            ;       ;           setreg      2
+      (16 7 1)          ;       ;           movereg     7,1
+      (14 2)            ;       ;           reg         2
+      (23 1007)         ;       ;           setrtn      1007
+      (21 1)            ;       ;           invoke      1
+      (60 4)            ;       ;           .align      4
+      (63 1007)         ;       ;   L1007:
+      (61)              ;       ;           .cont
+      (12 0 0)          ;       ;           load        0,0
+      (12 7 1)          ;       ;           load        7,1
+      (2 cons 7)        ;       ;           op2         cons,7
+      (15 3)            ;       ;           setreg      3
+      (12 1 2)          ;       ;           load        1,2
+      (10 3)            ;       ;           stack       3
+      (1 cdr)           ;       ;           op1         cdr
+      (15 2)            ;       ;           setreg      2
+      (25 3)            ;       ;           pop         3
+      (32 1001 3)       ;       ;           branch      1001,3
+      (63 1004)         ;       ;    L1004:
+      (14 3 .x|3)       ;       ;           reg         3,.x|3
+      (26))             ;       ;           return
+     0                  ;       ;           
+     #(reverse-map      ;       ;           
+       #f 2 #f #f       ;       ;           
+       (f l)))          ;       ;           
+ (7 reverse-map)        ;       setglbl     reverse-map
+ (5 reverse-map)        ;       const       reverse-map
+ (26))                  ;       return
+</pre>
+
+<p>
+
+This MacScheme machine assembly code is then passed to the
+<a href="assembly.html">assembler</a> for peephole
+optimization and generation of native code for the real target
+machine.
+
+
+</body>
+</html>

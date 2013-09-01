@@ -1,0 +1,304 @@
+<html>
+<title>
+Twobit Pass 2: customization
+</title>
+
+<body>
+
+<h2>Customizing Pass 2</h2>
+
+<p>
+Most of the optimizations in Pass 2 are independent of the target
+architecture.
+Those that are sensitive to the code generator or target are controlled
+by parameters, customizable policies, and compiler switches:
+<ul>
+<li><a href="#registerset">Register set</a>
+<li><a href="#primops">Inlining of primitive operations</a>
+<li><a href="#inlining">Inlining of local procedures</a>
+<li><a href="#lifting">Lambda lifting</a>
+<li><a href="#targeting">Interprocedural register targeting</a>
+<li><a href="#switches">Compiler switches</a>
+</ul>
+
+<p>
+<hr>
+
+<p>
+<h3><a name="registerset">The register set</a></h3>
+
+<p>
+The number of
+<abug href="bugs.html#registers">general registers</abug>
+that Twobit allocates for
+arguments and temporaries is a parameter.
+The <a href="assembly.html">assembler</a>
+maps Twobit's general registers onto some
+combination of hardware registers and memory locations.
+
+<p>
+The front end of Twobit currently has no knowledge of specialized
+representations or registers.  In particular, Twobit boxes all
+numbers and uses subroutine calls for all
+<abug href="bugs.html#arithmetic">floating point</abug>
+calculations.
+
+<p>
+<hr>
+
+<p>
+<h3><a name="primops">Inlining of primitive operations</a></h3>
+
+<p>
+The IEEE standard for Scheme allows any procedure to be redefined.
+Since most operations are procedures in Scheme, this prevents the
+compiler from generating inline code for most operations.
+
+<p>
+A <a href="#switches">compiler switch</a> allows the programmer to
+promise that none of the usual primitive procedures will be
+redefined, which allows Twobit to compile them specially.
+When this switch is true:
+<ul>
+<li>Pass 1 standardizes the number of arguments passed to procedures
+    such as <code>+</code> and performs some constant folding.
+<li>Pass 2 performs certain
+    <a href="p2local.html#known">local source transformations</a>
+    that could not otherwise be performed.
+<li>Pass 4 generates inline code for calls to primitive procedures.
+</ul>
+
+<p>
+A table of primitive operations is supplied as a parameter.
+For each primitive operation, this table specifies:
+<ul>
+<li>The name of the operation.
+<li>Its arity.
+<li>Its <a href="mmachine.html">MacScheme machine</a> assembler
+    mnemonic or encoding.
+<li>A predicate that recognizes constant operands for which an
+    immediate form of the operation is implemented by the assembler.
+</ul>
+
+<p>
+Except for the assembler, which is target-dependent, Twobit has
+no further knowledge of primitive data types and operations.
+
+<p>
+<hr>
+
+<p>
+<h3><a name="inlining">Inlining of local procedures</a></h3>
+
+<p>
+<hr>
+
+<p>
+<h3><a name="lifting">Incremental lambda lifting</a></h3>
+
+<p>
+It is always possible to lift all known local procedures to the
+outermost lambda expression.  This is not always desirable, however,
+because the formal parameters that must be added represent extra
+registers that must be saved across a non-tail-recursive call.
+This is a target-dependent tradeoff, which should be evaluated by the
+interprocedural register allocator.
+
+<p>
+At each stage of <a href="p2lifting.html">incremental lambda lifting</a>,
+after the <a href="p2lifting.html#flow">flow equations</a> have been
+solved but before the source code is transformed, Twobit calls
+<code>POLICY:LIFT?</code>, a predicate that determines whether
+lifting will be performed.
+<code>POLICY:LIFT?</code> is given three arguments to examine:
+<ol>
+<li>The lambda expression that contains the internal definitions
+    to be lifted.
+<li>The enclosing lambda expression to which the internal
+    definitions will be lifted.
+<li>The solutions to the flow equations, which list the formal
+    parameters that will be added if lifting is performed.
+</ol>
+Twobit lifts all or none, because all can
+<abug href="bugs#safeforspace">share the same closure</abug>.
+
+
+<p>
+Many factors could be taken into account
+when deciding whether to lift a group of known local procedures.
+Here are just a few:
+<ul>
+<li>If the body of the source lambda expression contains a lambda
+    expression for which a closure must be created anyway, then
+    its internal definitions could share that closure without
+    lifting.
+<li>If the destination lambda expression already contains internal
+    definitions, then adding more will not add to the cost of
+    creating a closure at the destination.
+<li>If lifting would add too many new formal parameters, then it
+    should not be done.
+<li>If a procedure contains non-tail-recursive calls or a large
+    number of local variables, then adding new local variables
+    is likely to increase the cost of register spilling within
+    that procedure.
+<li>If many procedures are available for lifting, then it is likely
+    that the programmer defined them for use in a computation whose
+    cost will dominate the cost of creating a closure.
+</ul>
+
+<p>
+For example, Twobit currently transforms
+<p>
+<pre>
+  (define (sieve n)
+    (define (new-generator next-prime prime)
+      (let ((psquare (* prime prime)))
+        (lambda ()
+          (define (loop t)
+            (if (or (< t psquare) (not (zero? (remainder t prime))))
+                t
+                (loop (next-prime))))
+          (loop (next-prime)))))
+    ...)
+</pre>
+into
+<pre>
+  ((lambda ()
+     (define .sieve_3
+       (lambda (.n_5)
+         ...))
+     (define .new-generator_6
+       (lambda (.next-prime_10 .prime_10)
+         ((lambda (.psquare_11)
+            (define .loop_13
+              (lambda (.t_15)
+                (if
+                 ((lambda (.T93_16)
+                    (if .T93_16
+                        .T93_16
+                        (not (zero? (remainder .t_15 .prime_10)))))
+                  (< .t_15 .psquare_11))
+                 .t_15
+                 (.loop_13 (.next-prime_10)))))
+            (lambda () (.loop_13 (.next-prime_10))))
+          (* .prime_10 .prime_10))))
+     ...))
+</pre>
+Here the known local procedure <code>.loop_13</code> has been
+lifted out of only one lambda expression.  Lifting to the enclosing
+lambda expression would add <code>.psquare_11</code> as another
+argument, and there would be no benefit at all:  A closure must be
+created anyway for the body of the lambda expression that defines
+<code>.loop_13</code>, and <code>.loop_13</code> can share that
+closure at no cost.
+
+<p>
+The policy used for incremental lambda lifting does not appear
+to be critical in practice.  It is usually advantageous to lift
+all known local procedures to the outermost level, as is done by
+conventional lambda lifting.
+
+<p>
+<hr>
+
+<p>
+<h3><a name="targeting">Interprocedural register targeting</a></h3>
+
+<p>
+Since the compiler can by definition locate all calls to a known
+local procedure, it can reorder the procedure's formal parameters
+and rewrite each call to match the new order.
+In Twobit, the formal parameters are just names for the registers
+that are live at entry to the procedure, so reordering the parameters
+amounts to interprocedural register targeting.
+
+<p>
+Register targeting is easier than interprocedural register
+allocation, because register allocation involves decisions
+concerning which values should be kept in registers and how
+long they should be kept there.  Twobit simply assumes that
+the arguments to known
+procedures will be kept in registers for the duration of each
+call, so all there is to do is to select a particular register
+for each argument.  The goal of register targeting is to
+minimize register shuffling when one procedure calls another.
+
+<p>
+Twobit performs interprocedural register targeting by reordering
+the formal parameters that it adds to known local procedures during
+lambda lifting.
+The ordering is chosen by by a
+<abug href="bugs.html#retargeting">customizable policy procedure</abug>.
+
+<p>
+If the set A of formal parameters to be added to <code>f</code> is equal to
+the set of formal parameters for the lambda expression L
+that defines <code>f</code>, then Twobit adds the new parameters to the
+beginning of the parameter list for <code>f</code>, after sorting them
+so that, for a call to <code>f</code> from the body of L, these parameters
+will already reside in the correct registers.
+
+<p>
+If A is a proper subset of the formal parameters of L, and this is
+the first lifting of <code>f</code>, then the
+parameters in A are allocated to the positions they occupy in
+the formal parameter list of L, and the original formal
+parameters of <code>f</code> are
+<abug href="bugs.html#targeting">filled in</abug> around them.
+If a formal parameter <code>x</code> of L is not an element of A but
+occurs as an actual parameter in some call to <code>f</code>, then the
+corresponding formal parameter of <code>f</code> should be placed in the
+position left vacant by <code>x</code>.
+These heuristics reduce register shuffling for calls
+between mutually recursive procedures, including loop nests.
+
+<p>
+<hr>
+
+<p>
+<h3><a name="switches">Compiler switches</a></h3>
+
+<p>
+Several <abug href="bugs.html#switches">switches</abug> affect Twobit's
+optimizations:
+<ul>
+<li><code>(integrate-usual-procedures #t)</code> tells Twobit to
+    assume that Scheme's usual procedures will not be redefined,
+    which allows Twobit to generate inline code for them.
+<li><code>(benchmark-mode #t)</code> tells Twobit to compile the
+    <code>(define (f ...) ...)</code> syntax for a top-level
+    definition as if it were
+<pre>
+        (define f
+          (let ()
+            (define (f ...) ...)
+            f))
+</pre>
+    This compiler switch has no effect on the
+    <code>(define f ...)</code> syntax for top-level definitions,
+    nor does it affect the interpretation of internal definitions.
+<li><code>(local-optimizations #t)</code> activates Twobit's Pass 5.
+</ul>
+These switches are true by default.
+
+<p>
+The first two switches are taken from MacScheme.
+They allow a programmer to assert that preserving
+the precise semantics of Scheme when certain top-level procedures
+are dynamically redefined is less important that generating efficient
+code.
+
+<p>
+The benefits of
+<code>benchmark-mode</code>
+are explained by
+
+<blockquote>
+<a href="http://www.cs.Princeton.EDU:80/faculty/appel/">Andrew
+W Appel</a>.
+Loop headers in lambda-calculus or CPS.
+Princeton University CS-TR-460-94, June 1994.
+</blockquote>
+
+</body>
+</html>

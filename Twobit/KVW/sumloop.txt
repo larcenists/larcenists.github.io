@@ -1,0 +1,17 @@
+(define sum 0)
+
+(define (tail-rec-aux i n)
+	(if (< i n)
+		(begin (set! sum (+ sum 1)) (tail-rec-aux (+ i 1) n))
+		sum))
+
+(define (tail-rec-loop n)
+	(tail-rec-aux 0 n))
+
+(define (do-loop n)
+	(do ((i 0 (+ i 1)))
+		((>= i n) sum)
+		(set! sum (+ sum 1))))
+
+; (do-loop 1000000)
+; (tail-rec-loop 1000000)

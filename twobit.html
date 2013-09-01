@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="default.css" rel="stylesheet" type="text/css" />
+    <link href="twobit.css" rel="stylesheet" type="text/css" />
+    <link rev="made" href="mailto:larceny@ccs.neu.edu" />
+    <title>
+      The Larceny Project -- Home page
+    </title>
+    <style type="text/css">
+      .red    { color: red; }
+    </style>
+  </head>
+
+<body>
+
+<!-- start header -->
+<div id="strip1">&nbsp;</div>
+<div id="strip2">&nbsp;</div>
+<div id="header">
+  <div id="logo">
+    <h1><a href="#">
+        <img src="images/larceny.png" alt="The Larceny Project"/>
+        </a>
+    </h1>
+  </div>
+</div>
+<!-- end header -->
+
+<!-- start page -->
+
+<div id="page">
+<!-- start content -->
+<div id="content">
+
+<div class="post">
+<h1 class="title">Twobit and Larceny</h1>
+
+<p>
+Twobit is a relatively simple optimizing compiler for Scheme.
+Four different back-ends now serve as the basis for three
+related implementations of Scheme.
+</p>
+
+<div id="compilerDiagram">
+<div class="twobit">Twobit</div>
+<div class="backends">
+<div class="backend" id="be1"><div class="middle" id="be1m"><div class="backendInner" id="be1i">SPARC, IA32</div></div></div>
+<div class="backend" id="be2"><div class="middle" id="be2m"><div class="backendInner" id="be2i">C</div></div></div>
+<div class="backend" id="be3"><div class="middle" id="be3m"><div class="backendInner" id="be3i">CLR</div></div></div>
+</div>
+<div style="clear: both;"></div>
+</div>
+
+<p>
+In decreasing order of
+performance:
+</p><ol>
+<li><a href="../index.html">Larceny</a>
+    is a research-quality implementation of Scheme that compiles
+    directly to native machine code for SPARC or x86-32 architectures.
+</li><li><a href="../index.html">Petit Larceny</a>
+    is a portable implementation that batch-compiles to
+    C instead of machine code.
+</li><li><a href="../index.html">Common Larceny</a>
+    runs on Microsoft .NET's Common Language Runtime,
+    generating JIT-compiled IL instead of native or C code.
+</li></ol>
+
+<p>
+These design notes
+were written primarily for students and
+for the developers of Twobit and Larceny.
+They do not yet describe the current version of Twobit, and
+are based on the description of an earlier version of Twobit in
+</p>
+<blockquote>
+<a href="http://www.cesura17.net/~will/">Clinger, W.</a>,
+and
+<a href="http://www.ccs.neu.edu/home/lth">Hansen, L.T.</a>
+Lambda, the ultimate label;
+or a simple optimizing compiler for Scheme.  <cite>Proceedings of the
+1994 ACM Conference on Lisp and Functional Programming</cite>, June 1994,
+pages 128-139.
+</blockquote>
+                </div>
+		<div class="post">
+			<h1 class="title">Lambda, the Ultimate Label</h1>
+                        <p>
+Twobit is based on viewing lambda expressions as assembly language labels that have been augmented by a list of symbolic names for the registers that are live at that label. The simplicity of this view results from allocating all non-local, non-global variables on the heap. Aggressive lambda lifting makes this practical by eliminating all non-local variables except for those that would have to be allocated on the heap anyway. The eliminated non-local variables become additional arguments to lambda expressions, which means they will be allocated in registers.
+                        </p>
+
+<p>
+Most optimizations used in Twobit are well-known, but a few are new
+or unusual:
+</p><ul>
+    <li><a href="../Twobit/p2lifting.html">Incremental lambda lifting</a>
+
+        gives the compiler more flexibility than global lambda lifting,
+        without the complexity
+        of global lambda lifting followed by lambda dropping.
+    </li><li><a href="../Twobit/p2custom.html#targeting">Interprocedural register
+        targeting</a> is performed by reordering arguments during
+        lambda lifting.  This optimization relies upon
+        <a href="../Twobit/p4pao.html">parallel assignment optimization</a>
+        during flow analysis or code generation.
+    </li><li><a href="../Twobit/p2saa.html">Single assignment analysis</a>
+        is a Scheme-specific first order
+        closure analysis.  This optimization was used in MacScheme
+        and possibly in the Orbit compiler but had not been described.
+    </li><li><a href="../Twobit/p2sae.html">Single assignment elimination</a>
+        is complicated by the presence
+        of Scheme's <code>call-with-current-continuation</code>.
+    </li><li><a href="../Twobit/p4reuse.html">Frame optimization</a>
+
+        tends to reduce the number of continuation frames that are
+        allocated by a procedure.
+    </li><li><a href="../Twobit/p4phantom.html">Redundant loads and stores are
+        eliminated</a>
+        by a backpatching algorithm similar to that used for frame
+        optimization.
+</li></ul>
+<p>
+The intermediate form used by the front end is a
+<a href="../Twobit/syntax.html">restricted subset of Scheme</a>.
+The intermediate form used by the back end is assembly code for a
+hypothetical <a href="../Twobit/mmachine.html">MacScheme machine</a>.
+</p>
+                </div>
+		<div class="post">
+			<h1 class="title">Pass Structure</h1>
+			<div class="entry">
+
+<div class="rpasses">
+<div class="rpassArrow"></div>
+<div class="rpass" id="rp1"><div class="passNumber">1</div><div class="middle" id="p1m"><div class="passInner" id="p1i"><a href="../Twobit/pass1.html">Standardization<br />of syntax</a></div></div></div>
+<div class="rpassArrow"></div>
+<div class="rpass" id="rp2"><div class="passNumber">2</div><div class="middle" id="p2m"> <div class="passInner" id="p2i"><a href="../Twobit/pass2.html">Optimization</a></div></div></div>
+<div class="rpassArrow"></div>
+<div class="rpass" id="rp3"><div class="passNumber">3</div><div class="middle" id="p3m"> <div class="passInner" id="p3i"><!-- a href="../Twobit/pass3.html" -->Flow analysis<!-- /a --></div></div></div>
+<div class="rpassArrow"></div>
+</div>
+
+<div class="rpasses">
+<div class="rpassArrow"></div>
+<div class="rpass" id="rp4"><div class="passNumber">4</div><div class="middle" id="p4m"> <div class="passInner" id="p4i"><a href="../Twobit/pass4.html">Code<br />generation</a></div></div></div>
+<div class="rpassArrow"></div>
+<div class="rpass" id="rp5"><div class="passNumber">5</div><div class="middle" id="p5m"> <div class="passInner" id="p5i"><a href="../Twobit/pass5.html">Local<br />optimization</a></div></div></div>
+<div class="rpassArrow"></div>
+<div class="rpass" id="rp6"><div class="passNumber">6</div><div class="middle" id="p6m"> <div class="passInner" id="p6i"><a href="../Twobit/assembly.html">Assembly</a></div></div></div>
+<div class="rpassArrow"></div>
+</div>
+
+<div style="clear:both; margin-bottom: 1em;">
+</div>
+
+<!--
+                        <div class="pass" id="p1"><div class="middle" id="p1m"> <div class="passInner" id="p1i"><a href="../Twobit/pass1.html">Standardization<br />of syntax</a></div></div></div>
+                        <div class="passArrow"></div>
+                        <div class="pass" id="p2"><div class="middle" id="p2m"> <div class="passInner" id="p2i"><a href="../Twobit/pass2.html">Optimization</a></div></div></div>
+                        <div class="passArrow"></div>
+                        <div class="pass" id="p3"><div class="middle" id="p3m"> <div class="passInner" id="p3i">Flow analysis</div></div></div>
+                        <div class="passArrow"></div>
+                        <div class="pass" id="p4"><div class="middle" id="p4m"> <div class="passInner" id="p4i"><a href="../Twobit/pass4.html">Code<br />generation</a></div></div></div>
+                        <div class="passArrow"></div>
+                        <div class="pass" id="p5"><div class="middle" id="p5m"> <div class="passInner" id="p5i"><a href="../Twobit/pass5.html">Local<br />optimization</a></div></div></div>
+                        <div class="passArrow"></div>
+                        <div class="pass" id="p6"><div class="middle" id="p6m"> <div class="passInner" id="p6i"><a href="../Twobit/pass6.html">Assembly</a></div></div></div>
+-->
+
+                        </div>
+		</div>
+	</div>
+	<!-- end content -->
+
+
+
+<!-- start sidebar -->
+
+<div id="sidebar">
+<ul>
+<li>
+    <h2><b>Download</b> Larceny</h2>
+    <ul>
+    <li><a href="download.html"><strong>Larceny</strong>
+        </a></li>
+    <li><a href="download-petit.html"><strong>Petit
+        Larceny</strong></a></li>
+    <li><a href="CommonLarceny/download.html"><strong>Common
+        Larceny</strong>
+        </a></li>
+    <li><a href="licensing.html">Licensing</a></li>
+    </ul>
+</li>
+<li>
+    <h2><b>About</b> Larceny</h2>
+    <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="overview.html">Overview</a></li>
+    <li><a href="doc.html">Documentation</a></li>
+    <li><a href="research.html">Research</a></li>
+    <li><a href="dev.html">Development</a></li>
+    <li><a href="history.html">History</a></li>
+    <li><a href="benchmarks.html">Benchmarks</a></li>
+    </ul>
+</li>
+</ul>
+</div>
+
+<!-- end sidebar -->
+
+<div style="clear: both;">&nbsp;</div>
+
+<!-- end page -->
+
+<!-- hr />
+
+  <p>
+    <a href="http://validator.w3.org/check/referer"><img
+        style="border:0;width:88px;height:31px"
+        src="http://www.w3.org/Icons/valid-xhtml10"
+        alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+  </p>
+
+<div>
+<a href="mailto:larceny@ccs.neu.edu">larceny@ccs.neu.edu</a><br />
+</div>
+
+<p>
+Last updated (not yet checked in!) 17 February 2010.
+</p -->
+
+</div>
+
+<!-- start footer -->
+
+<div id="footer">
+<p id="legal">&copy; 2008 William D Clinger.
+    Design by <a href="http://www.nodethirtythree.com/">NodeThirtyThree</a>
+    and <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.
+</p>
+</div>
+
+<!-- end footer -->
+
+</body>
+</html>

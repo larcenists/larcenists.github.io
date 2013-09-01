@@ -1,0 +1,47 @@
+<html>
+<title>
+Twobit Pass 2: assignment elimination
+</title>
+
+<body>
+
+<p>
+<h2>Assignment elimination</h2>
+
+<p>
+Following single assignment analysis and single assignment elimination,
+assignment elimination finds all
+remaining local variables that appear on the left hand side of an
+assignment.  If any such variables <code>I1</code> ... are found, then
+the body of the lambda expression being optimized is replaced by
+a <code>LET</code> of the form
+<pre>
+  ((lambda (V1 ...) ...)
+   (MAKE-CELL I1) ...)
+</pre>
+in which all references to such variables are replaced by calls to
+<code>CELL-REF</code>,
+and all assignments by calls to <code>CELL-SET!</code>.
+The <code>MAKE-CELL</code> procedure allocates heap storage for the variable,
+which is essentially replaced by a pointer to that storage.
+Assignment elimination makes all local variables immutable as in
+Standard ML, so they can be copied freely, which greatly
+simplifies lambda lifting.
+
+<p>
+The storage for an assigned variable must be allocated on the heap
+if that variable is accessible from any procedure whose lifetime
+cannot be bounded.
+Programmers should realize that
+<abug href="bugs.html#ae">assignments are more expensive</abug> in
+higher order languages than in most imperative languages.
+
+<p>
+After assignment elimination has eliminated all assignments to
+the local variables of a lambda expression, the known local
+procedures of that lambda expression can be
+<a href="p2lifting.html">lifted</a> to the next outer lambda
+expression.
+
+</body>
+</html>

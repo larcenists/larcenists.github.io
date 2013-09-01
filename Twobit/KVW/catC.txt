@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+main(int argc, char *argv[]) {
+	int c;
+	FILE *fp = stdin;
+
+	if (argc > 1)
+		fp = fopen(argv[1], "r");
+	if (fp == NULL) {
+		fprintf(stderr, "can't open %s\n", argv[1]);
+		exit(1);
+	}
+	while ((c = getc(fp)) != EOF)
+		putc(c, stdout);
+}

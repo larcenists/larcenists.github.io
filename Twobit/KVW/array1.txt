@@ -1,0 +1,22 @@
+; test array mechanism
+; (try 50000)
+; Modified 25 Nov 1997 by William D Clinger to fix bug (see ;wdc).
+
+(define (create-x n)
+	(define result (make-vector n))
+	(do ((i 0 (+ i 1)))
+		((>= i n) result)
+		(vector-set! result i i)))
+
+(define (create-y x)
+    ;(define n (vector-length x))           ;wdc
+    ;(define result (make-vector n))        ;wdc
+    (let* ((n (vector-length x))            ;wdc
+           (result (make-vector n)))        ;wdc
+	(do ((i (- n 1) (- i 1)))
+		((< i 0) result)
+		(vector-set! result i (vector-ref x i))))
+)                                           ;wdc
+
+(define (try n)
+	(vector-length (create-y (create-x n))))

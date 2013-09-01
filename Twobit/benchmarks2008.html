@@ -1,0 +1,97 @@
+<html>
+<title>
+Twobit: benchmarks
+</title>
+
+<body>
+
+<h1>Benchmarks</h1>
+<p>
+Last updated 23 July 2008.
+</p>
+
+<p>
+We have graphed the performance of several implementations
+of the R6RS on a set of
+<a href="benchmarksAboutR6.html">R6RS benchmarks</a>
+collected by Will Clinger.
+These
+<a href="benchmarksAboutR6.html">R6RS benchmarks</a>
+include improved versions of most
+<a href="http://www.iro.umontreal.ca/~gambit/bench.html">
+Gambit benchmarks</a> (collected by Marc Feeley)
+and also include new benchmarks that test some
+of the more important features that were introduced by the R6RS.
+</p>
+
+<p>
+Please keep in mind that the results of benchmarking
+<a href="bmcrock.temp.html">should not be taken too seriously</a>.
+</p>
+
+<a name="genuine">
+<h2>Genuine R6RS Benchmarks</h2>
+
+<p>
+The R6RS-conforming <strong>Genuine R6RS</strong> benchmarks
+consist of portable R6RS top-level programs.
+We have timings for three very different machines:
+</p>
+<div>
+    <ul>
+    <li><a href="benchmarksGenuineR6Linux.html">2.8 GHz Pentium
+        (Linux)</a>
+    <li><a href="benchmarksGenuineR6Solaris.html">1.5 GHz SunBlade 1500
+        (Solaris)</a>
+    <li><a href="benchmarksGenuineR6MacOSXppc.html">800 MHz PowerBook G4
+        (MacOS X PowerPC)</a>
+    </ul>
+</div>
+
+<h3>The Benchmarked Systems</h3>
+
+<p>
+As of this writing, there appear to be only five systems
+that implement enough of the R6RS
+to make benchmarking worthwhile.
+We benchmarked all five:
+</p>
+
+<div>
+<ul>
+<li><a href="http://larceny.ccs.neu.edu/">Larceny</a>
+    v0.962
+    (Linux and Solaris only)</li>
+<li><a href="http://larceny.ccs.neu.edu/">Petit Larceny</a>
+    v0.962</li>
+<li><a href="http://www.cs.indiana.edu/~aghuloum/ikarus/">Ikarus</a>
+    0.0.3
+    (Linux only)</li>
+<li><a href="http://www.plt-scheme.org/">PLT Scheme</a>
+    v4.0.2
+    </li>
+<li><a href="http://code.google.com/p/ypsilon/">Ypsilon</a>
+    0.9.5-update1
+    (Linux only)</li>
+</ul>
+</div>
+
+<h2>Explanation of Timings</h2>
+
+<p>
+The numbers shown are for a single run on a machine with no other users,
+and give the elapsed time in seconds for a single run on
+a machine with no other users.
+The bar graphs show relative performance.  Longer is better.
+</p>
+
+<p>
+Where no timing is shown for a system, the system was unable
+to run the benchmark correctly.  We believe that
+<a href="benchmarkMissing.txt">all missing timings</a>
+reflect a bug or implementation restriction in the system
+that was unable to run the benchmark.
+</p>
+
+</body>
+</html>

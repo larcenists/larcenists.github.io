@@ -1,0 +1,28 @@
+; Modified 26 Nov 1997 by William D Clinger to fix bugs (see ;wdc).
+
+(define inport (open-input-file "bib"))
+	;; out of memory if try very much input
+(define outport (open-output-file "foo"))
+
+(define (readline port line-so-far)
+	(let ((x (read-char port)))
+		(cond ((eof-object? x)
+				x)
+			((char=? x #\newline)
+				(list->string (reverse
+					(cons x line-so-far))))
+			(#t (readline port (cons x line-so-far))))))
+
+(define (tail-r-aux port file-so-far)
+	(let ((x (readline port '())))                        ;wdc
+		(if (eof-object? x)
+			(begin
+				(display file-so-far outport)
+				;(close-port outport))        ;wdc
+                                (close-output-port outport))
+			(tail-r-aux port (cons x file-so-far)))))
+
+(define (tail-r port)
+	(tail-r-aux port '()))                                ;wdc
+
+; (tail-r input) => tail -r bib >foo

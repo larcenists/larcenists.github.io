@@ -1,0 +1,118 @@
+<html>
+<title>
+Twobit Pass 2: single assignment elimination
+</title>
+
+<p>
+<h2>Single assignment elimination</h2>
+
+<p>
+This optimization is not terribly important, but it illustrates
+the subtlety of interprocedural optimizations for imperative
+languages.
+
+<p>
+Single assignment elimination attempts to convert local variables
+that are assigned once at the head of their scope into <code>LET</code>
+variables:
+
+<p>
+<pre>
+  (lambda (... I1 ... In ...)
+    (begin D ...)
+    (begin (set! I1 E1)
+           ...
+           (set! In En)
+           E ...))
+</pre>
+
+<p>
+becomes
+
+<p>
+<pre>
+  (lambda (... IGNORED ... IGNORED ...)
+    (let* ((I1 E1) ... (In En))
+      (begin D ...)
+      (begin E ...)))
+</pre>
+
+<p>
+provided for each k:
+<ol>
+    <li><code>Ik</code> does not occur in <code>E1</code>, ..., <code>Ek</code>.
+    <li>Either <code>E1</code> through
+        <code><abug href="bugs.html#saebug">Ek</abug></code>
+        contain no procedure calls
+        or <code>Ik</code> is not
+        <abug href="bugs.html#saebug">accessible</abug>
+        from an escaping lambda expression.
+    <li><code>Ik</code> is assigned only once.
+</ol>
+
+<p>
+The third condition is probably not necessary.
+
+<p>
+The second condition is necessary because, for example,
+
+<p>
+<pre>
+  (define f
+    (lambda (x)
+      (set! x (g))
+      (lambda () x)))
+</pre>
+
+<p>
+is not equivalent to
+
+<p>
+<pre>
+  (define f
+    (lambda (IGNORED)
+      ((lambda (x)
+         (lambda () x))
+       (g))))
+</pre>
+
+<p>
+in all Scheme contexts.
+In particular, if <code>g</code> is defined by
+
+<p>
+<pre>
+  (define g
+    (let ((n 0)
+          (get-x (lambda () 0))
+          (set-x (lambda (y) -1)))
+      (lambda ()
+        (case n
+          ((0) (set! n 1)
+               (let ((h (f 0)))
+                 (if (= n 2)
+                     (set! get-x h))
+                 (write (get-x))
+                 (newline)
+                 (set! n 3)
+                 (g)))
+          ((1) (set! n 2)
+               (call-with-current-continuation
+                (lambda (k)
+                  (set! set-x k)
+                  3)))
+          ((3) (set-x (+ 1 (get-x))))))))
+</pre>
+
+<p>
+then the first definition of <code>f</code> causes
+<code>(g)</code> to print all the integers beginning with 3,
+but the second definition of <code>f</code> causes
+<code>(g)</code> to print 3 over and over again.
+
+<p>
+Single assignment elimination is followed by
+<a href="p2ae.html">assignment elimination</a>.
+
+</body>
+</html>

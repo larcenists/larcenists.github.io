@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- see http://www.w3.org/QA/2002/04/valid-dtd-list.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+      Larceny Bugs
+    </title>
+    <style type="text/css">
+      .unfixed    { color: red; }
+      .unreleased { color: green; }
+      .fixed      { color: green; }
+    </style>
+  <link rev="made" href="mailto:larceny@ccs.neu.edu" />
+  </head>
+
+<body>
+
+<h1>Bug Reports</h1>
+
+<p>
+Bug reports may be submitted at
+<a href="http://larceny.ccs.neu.edu/trac/">Larceny's Trac site</a>
+or by email to
+<a href="mailto:larceny@ccs.neu.edu">larceny@ccs.neu.edu</a>.
+</p>
+
+<p>
+<a href="http://larceny.ccs.neu.edu/larceny-trac/report/6">Lists
+of all submitted bugs</a> are also available.
+</p>
+
+<h2>Known Bugs in Larceny</h2>
+
+<p>
+Some of the more important bugs that have been discovered in
+<a href="http://larceny.ccs.neu.edu/">Larceny</a> v0.97 "Funny in the Head"
+include:
+</p>
+
+<div align="center">
+<table border="2">
+<tr>
+
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/647">
+    ERR5RS/R6RS <code>(or)</code> returns <code>#t</code>
+    </a>
+</td>
+<td width="275">
+    <span class="unreleased">fixed in development system</span>
+</td>
+</tr>
+
+</table>
+</div>
+
+<h2>Bugs fixed in Larceny v0.97</h2>
+
+<p>
+Some of the more important bugs in v0.96 that have
+been fixed in v0.97 include:
+</p>
+
+<div align="center">
+<table border="2">
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/519">
+    <code>write-char</code> and <code>put-char</code>
+    are inlined incorrectly, evaluating their character argument twice
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.961
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/521">
+    assertion failure in <code>transcoded-port</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/523">
+    fencepost error in <code>get-string-n</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/524">
+    blocking bug in <code>get-bytevector-n!</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/525">
+    contract violation in <code>get-bytevector-n!</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/530">
+    <code>bytevector-s32-set!</code> doesn't work when storing negative numbers
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/538">
+    <code>command-line</code> should always return a non-empty list
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/539">
+    options for <code>file-options</code> work only in R5RS mode
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/540">
+    options for <code>buffer-mode</code> don't work
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/549">
+    <code>define-condition-type</code> doesn't work
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/550">
+    Scheme scripts don't always pass <code>command-line</code>
+        arguments correctly
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/551">
+    self-executable Scheme scripts don't redirect standard input properly
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/552">
+    infinite loop in <code>assp</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/554">
+    <code>bitwise-and</code> incorrect on large bignums
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/555">
+    <code>bitwise-if</code> returns incorrect results on large bignums
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/556">
+    <code>bitwise-copy-field</code> incorrect on large bignums
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/557">
+    <code>log</code> should also accept two arguments
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/558">
+    <code>(rnrs base)</code> should export <code>angle</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/560">
+    <code>(rnrs)</code> should export <code>record-type-descriptor</code>
+        and <code>record-constructor-descriptor</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/562">
+    <code>(rnrs io ports)</code> should export <code>standard-error-port</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/563">
+    all elements of <code>(command-line)</code> should be strings
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/564">
+    <code>vector-sort!</code> must modify its argument
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/566">
+    <code>fold-left</code> and <code>fold-right</code>
+        should accept 3 or more arguments
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/567">
+    <code>fxrotate-bit-field</code> doesn't work
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/568">
+    <code>fixnum->flonum</code> doesn't work
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/571">
+    <code>quotient</code> incorrect when dividing least fixnum by -1
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/527">
+    no exception when opening an existing file for output
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.97b1
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/518">
+    heap dumping breaks <code>eq?</code> and <code>eqv?</code>
+    hashtables
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span>
+    in development system
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/519">
+    <code>write-char</code> and <code>put-char</code>
+    are inlined incorrectly, evaluating their character argument twice
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.961
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/521">
+    assertion failure in <code>transcoded-port</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/523">
+    fencepost error in <code>get-string-n</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/524">
+    blocking bug in <code>get-bytevector-n!</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/525">
+    contract violation in <code>get-bytevector-n!</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/530">
+    <code>bytevector-s32-set!</code> doesn't work when storing negative numbers
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/538">
+    <code>command-line</code> should always return a non-empty list
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/539">
+    options for <code>file-options</code> work only in R5RS mode
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/540">
+    options for <code>buffer-mode</code> don't work
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/549">
+    <code>define-condition-type</code> doesn't work
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/550">
+    Scheme scripts don't always pass <code>command-line</code>
+        arguments correctly
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/551">
+    self-executable Scheme scripts don't redirect standard input properly
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.962
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/552">
+    infinite loop in <code>assp</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/554">
+    <code>bitwise-and</code> incorrect on large bignums
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/555">
+    <code>bitwise-if</code> returns incorrect results on large bignums
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/556">
+    <code>bitwise-copy-field</code> incorrect on large bignums
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/557">
+    <code>log</code> should also accept two arguments
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/558">
+    <code>(rnrs base)</code> should export <code>angle</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/560">
+    <code>(rnrs)</code> should export <code>record-type-descriptor</code>
+        and <code>record-constructor-descriptor</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/562">
+    <code>(rnrs io ports)</code> should export <code>standard-error-port</code>
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/563">
+    all elements of <code>(command-line)</code> should be strings
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/564">
+    <code>vector-sort!</code> must modify its argument
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/566">
+    <code>fold-left</code> and <code>fold-right</code>
+        should accept 3 or more arguments
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/567">
+    <code>fxrotate-bit-field</code> doesn't work
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/568">
+    <code>fixnum->flonum</code> doesn't work
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/571">
+    <code>quotient</code> incorrect when dividing least fixnum by -1
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.963
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/527">
+    no exception when opening an existing file for output
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.97b1
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/518">
+    heap dumping breaks <code>eq?</code> and <code>eqv?</code>
+    hashtables
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">fixed</span> in v0.97
+</td>
+</tr>
+
+</table>
+</div>
+
+
+
+<h2>Enhancements added in Larceny v0.97</h2>
+
+<p>
+Some of the more important improvements added in
+<a href="http://larceny.ccs.neu.edu/">Larceny</a> v0.97
+include:
+</p>
+
+<div align="center">
+<table border="2">
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/159">
+    update FFI documentation
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">done</span> in v0.97
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://larceny.ccs.neu.edu/larceny-trac/ticket/517">
+    ERR5RS/R6RS library file extensions should be a parameter
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">added</span> in v0.97
+</td>
+</tr>
+
+<tr>
+<td width="400">
+    <a href="http://srfi.schemers.org/srfi-97/">
+    SRFI 97: SRFI Libraries
+    </a>
+</td>
+<td width="275">
+    <span class="fixed">added</span> in v0.97 (42 of the 49 SRFIs)
+</td>
+</tr>
+
+</table>
+</div>
+
+
+<hr />
+
+  <p>
+    <a href="http://validator.w3.org/check/referer"><img
+        style="border:0;width:88px;height:31px"
+        src="http://www.w3.org/Icons/valid-xhtml10"
+        alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+  </p>
+
+<div>
+<a href="mailto:larceny@ccs.neu.edu">larceny@ccs.neu.edu</a><br />
+</div>
+
+<p>
+Last updated 23 August 2009.
+</p>
+
+</body>
+</html>

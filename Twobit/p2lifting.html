@@ -1,0 +1,218 @@
+<html>
+<title>
+Twobit Pass 2: incremental lambda lifting
+</title>
+
+<body>
+
+<h2>Incremental lambda lifting</h2>
+
+<p>
+<a href="p2background#inclifting">Incremental lambda lifting</a>
+lifts the internal definitions of known local
+procedures to the next outer lambda expression.
+For example, the internal definition of <code>.loop_3</code> in
+
+<p>
+<pre>
+  ((lambda ()
+     (begin
+      (set! reverse-map
+            (lambda (.f_2 .l_2)
+              (define .loop_3
+                (lambda (.l_5 .x_5)
+                  (if (pair? .l_5)
+                      (.loop_3 (cdr .l_5)
+                               (cons (.f_2 (car .l_5)) .x_5))
+                      .x_5)))
+              (.loop_3 .l_2 '())))
+      'reverse-map)))
+</pre>
+
+<p>
+is lifted to the outer lambda expression in
+
+<p>
+<pre>
+  ((lambda ()
+     (define .loop_3
+       (lambda (.f_2 .l_5 .x_5)
+         (if (pair? .l_5)
+             (.loop_3 .f_2
+                      (cdr .l_5)
+                      (cons (.f_2 (car .l_5)) .x_5))
+             .x_5)))
+     (begin
+      (set! reverse-map
+            (lambda (.f_2 .l_2)
+              (.loop_3 .f_2 .l_2 '())))
+      'reverse-map)))
+</pre>
+
+<p>
+Because <code>.loop_3</code> is lifted out of the scope of
+<code>.f_2</code>, which occurs free within the original code
+for <code>.loop_3</code>, <code>.f_2</code> must become an
+additional formal parameter to <code>.loop_3</code>, and all calls
+to <code>.loop_3</code> must be changed to pass this additional
+parameter.
+
+<p>
+Lambda lifting is one of the most complex optimizations performed
+by Twobit, mainly because of complications that arise with groups
+of mutually recursive known local procedures.  Consider
+
+<p>
+<pre>
+((lambda ()
+   (begin (set! foo
+                (lambda (n x y)
+                  (define (f n)
+                    (if (zero? n) x (g (- n 1))))
+                  (define (g n)
+                    (if (zero? n) y (f (- n 1))))
+                  (f n)))
+          'foo)))
+</pre>
+
+<p>
+If <code>f</code> were lifted to the outer lambda expression, then
+it would have to take <code>g</code> and <code>x</code> as extra parameters.
+That means <code>g</code> would have
+to supply <code>g</code> and <code>x</code> as extra arguments when
+it calls <code>f</code>:
+
+<p>
+<pre>
+((lambda ()
+   (define (f g x n)
+     (if (zero? n) x (g (- n 1))))
+   (begin (set! foo
+                (lambda (n x y)
+                  (define (g n)
+                    (if (zero? n) y (f g x (- n 1))))
+                  (f g x n)))
+          'foo)))
+</pre>
+
+<p>
+Notice that <code>g</code> now escapes its scope, negating the earlier
+closure analysis.  Worse yet, if <code>g</code> were lifted to the outer
+lambda expression, it would have
+to take an extra parameter <code>y</code>.
+That means <code>f</code> would have
+to supply <code>y</code> as an extra argument when it calls <code>g</code>.
+
+<p>
+But <code>f</code> is now outside the scope of <code>y</code>!
+Lifting <code>g</code> can therefore add extra arguments not only to
+<code>g</code> but to procedures that call it.
+Adding extra arguments to those procedures
+may in turn involve adding extra arguments to procedures that call
+the procedures that call <code>g</code>, and so on.
+
+<p>
+Eventually this process of adding arguments will stabilize.
+For this example the result is
+
+<p>
+<pre>
+((lambda ()
+   (define (f g x y n)
+     (if (zero? n) x (g x y (- n 1))))
+   (define (g x y n)
+     (if (zero? n) y (f g x y (- n 1))))
+   (begin (set! foo
+                (lambda (n x y)
+                  (f g x y n)))
+          'foo)))
+</pre>
+
+<p>
+This is suboptimal:  <code>f</code> is back within
+the scope of <code>g</code>, so it is unnecessary to pass
+<code>g</code> to <code>f</code>.
+
+<p>
+<h3>The flow equation for incremental lambda lifting</h3>
+
+<p>
+The solution is to lift each group of known local procedures as a
+unit, after performing a flow analysis to determine
+precisely which parameters must be added to each procedure.
+Let V be the set of parameters for the lambda expression
+at whose head a group of known local procedures is defined,
+let f1, ... be the names of those procedures, and let FV(fi)
+be the variables that occur free in the code for fi.
+The set of variables Ai that need to be added as parameters to fi
+is defined by the recursive flow equation
+
+<p>
+<center>
+Ai = (FV(fi) intersect V) union (union {Aj | fi calls fj})
+</center>
+
+<p>
+Compare this with the flow equation for conventional lambda
+lifting:
+
+<p>
+<center>
+Ai = FV(fi) union (union {Aj | fi calls fj})
+</center>
+
+<p>
+The only difference between these flow equations is that,
+by intersecting with V, incremental lambda lifting limits the
+flow problem to the formal parameters of the lambda expression
+from which the known local procedures are being lifted.
+Another way of looking at it is that conventional lambda
+lifting takes V to be the set of all variables that occur
+within the program.
+
+<p>
+<a name ="cost">Solving these flow equations</a> takes O(m^3 * n^2)
+time, where m is the number of procedures being lifted and
+n is the number of variables in the base set V.
+For incremental lambda lifting, m and n are usually quite small.
+On the other hand, incremental lambda lifting requires O(m)
+different flow problems to be solved.
+
+<p>
+Twobit currently represents sets of variables as lists,
+so it actually uses an O(m^3 * n^3) algorithm to solve these
+flow equations.  When compiling Twobit itself, Pass 2 spends
+about 6% of its time solving flow equations.  This is less
+than 1% of the total compilation time.
+
+<p>
+Experiments using an O(m^3 * n^2) algorithm on synthetic benchmarks
+have shown that incremental lambda lifting can be either faster or
+slower than conventional lambda lifting, depending on the structure
+of the program being compiled.
+
+<p>
+In short, compilation time is not a major issue for incremental
+lambda lifting.
+
+<p>
+<h3>When and how to lift</h3>
+
+<p>
+Incremental lambda lifting is flexible because the lifting
+process can be halted at an intermediate scope.
+<a href="p2custom.html#lifting">Heuristics</a>
+are applied at each stage of lifting to determine
+whether further lifting is desirable.
+
+<p>
+<a href="p2custom.html#targeting">Interprocedural register targeting</a>
+is performed by reordering the formal parameters of known local
+procedures when they are lifted.
+
+<p>
+Incremental lambda lifting is performed at the very end of
+<a href="pass2.html#rev2">Pass 2</a>.
+
+</body>
+</html>

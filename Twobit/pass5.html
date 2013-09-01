@@ -1,0 +1,47 @@
+<html>
+<title>
+Twobit Pass 5
+</title>
+
+<body>
+
+<p>
+<h1>
+Twobit Pass 5: local optimizations.
+</h1>
+
+<p>
+Pass 5 is an optional pass that performs local optimizations.
+Its main effect is to remove <code>nop</code> instructions
+and <code>save -1</code> and <code>pop -1</code> instructions,
+which would be ignored by the assembler anyway.
+In the current version of Twobit, pass 5 has little if any
+effect on the quality of the generated code.
+
+<p>
+In a previous version of Twobit, pass 5 removed some redundant
+loads and stores that are now eliminated by an improved pass 4.
+Pass 5 has been retained because it has proved useful for debugging
+and for research, and might be used in the future for optimizations
+such as instruction scheduling.
+
+<h3>
+Invariants
+</h3>
+
+<p>
+To simplify the debugger and to provide ready access to
+constants and non-local variables, register 0 always contains
+the currently executing procedure.
+The local optimizer must never eliminate an instruction that
+changes register 0.
+
+<p>
+To make local optimization more effective, the
+<a href="pass4.html">code generator</a>
+annotates each branch instruction with a conservative
+estimate of the set of registers that are live at the
+target of the branch.
+
+</body>
+</html>

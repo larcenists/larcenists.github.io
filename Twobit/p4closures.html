@@ -1,0 +1,46 @@
+<html>
+<title>
+Twobit Pass 4: closure conversion
+</title>
+
+<body>
+
+<p>
+<h2>
+Twobit Pass 4: closure conversion.
+</h2>
+
+<p>
+Twobit represents procedures and environments as specially tagged
+arrays whose elements contain code, cells for global variables
+mentioned by the code, the values of constants and non-global
+free variables mentioned by the code, and a static link to
+another environment.
+Each such array is called a rib.
+
+<p>
+Lambda lifting results in flat or nearly flat closures.
+Static measurements from Twobit compiling itself show that over
+90% of the sites that create a closure create a flat closure with
+only 1 rib.
+Over 98% of these sites create a closure that contain only 1 or 2
+ribs.  It does not appear worthwhile to use display closures as
+in Chez Scheme, since they are advantageous only for closures with
+3 or more ribs.
+
+<p>
+Twobit generates code to close every lambda expression, but multiple
+lambda expressions often share a closure.
+Twobit generates code to create a closure whenever:
+<ul>
+<li>A lambda expression is not the right hand side of an internal
+    definition, and is not the operator of a call.
+<li>The body of a lambda expression contains internal definitions.
+    The right hand sides of the internal definitions share this
+    closure.
+<li>A lambda expression takes so many arguments that few registers
+    remain available for temporaries.
+</ul>
+
+</body>
+</html>

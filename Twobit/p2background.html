@@ -1,0 +1,207 @@
+<html>
+<title>
+Pass 2 Background
+</title>
+
+<body>
+
+<center>
+[ <a href="#closure">Closure analysis</a>
+| <a href="#lifting">Lambda lifting</a>
+| <a href="#inclifting">Incremental lambda lifting</a>
+]
+</center>
+
+<p>
+<h2><a name="closure">Closure analysis</a></h2>
+
+<p>
+In block-structured languages, a procedure is more than its
+code.  The procedure must also incorporate the environment
+in which its code was declared.  Without this environment,
+references to variables that occur free in its code could
+not be resolved.
+
+<p>
+A <dfn>closure</dfn> is a run-time data structure that represents a
+procedure by representing both its code and the environment
+in which that code was declared, or closed.
+Closure analysis is an interprocedural static analysis that
+seeks to avoid the creation of closures where possible, and
+to choose the most efficient representation for those closures
+that must be created.
+
+<p>
+Closure analysis is utterly trivial for C.  Since all
+procedures are closed in the global environment, there is
+never any reason to create a closure.
+
+<p>
+In most block-structured languages, no
+procedure outlives the activation of the block in which
+it is declared.
+Most non-global procedures are called only from sites within
+their scope that name the procedure explicitly.  There is no
+need to create a closure for such procedures, since the
+environment in which they were declared can be computed at
+each call site.
+
+<p>
+A closure does have to be created for a procedure that is
+passed as an argument.  Most Pascal compilers create this
+closure when the procedure is passed.  The environment
+part of the closure can be represented as a pointer into
+the stack.
+
+<p>
+In higher order languages that allow a procedure to outlive
+the block in which it is declared, closure analysis becomes
+a very important and nontrivial optimization.
+Without closure analysis, a closure must be allocated for
+every procedure.  Since a procedure's free variables must
+live as long as the procedure, every variable that occurs
+free within the code for some procedure must be allocated on
+the heap.
+
+<p>
+<a name="firstorder">Higher order</a>
+closure analysis usually eliminates most heap
+allocation of closures and variables but requires cubic time.
+In practice, most of the benefit is achieved by optimizing
+only named procedures that are never referenced outside the
+operator position of a call.
+This is known as first order closure analysis; it suffices to
+eliminate heap allocation of closures and variables for all
+first order programs.
+
+<p>
+Passive closure analysis is content to analyze the program
+as it was written by the programmer.  With passive analysis,
+and especially with first order passive analysis, a single
+lambda expression in an argument position can wreak havoc by
+closing over variables that name procedures for which no
+closure would otherwise have to be created.  If the procedure
+in argument position has an unknown lifetime, all of the
+procedures to which it refers will have an unknown lifetime.
+All of the variables and procedures to which they refer will
+have an unknown lifetime, and so on.  It is quite possible
+that all variables and procedures whose scope contains the
+escaping lambda expression will have to be allocated on the
+heap.
+
+<p>
+<h2><a name="lifting">Lambda lifting</a></h2>
+
+<p>
+Lambda lifting is an optimization that actively rewrites a
+program in an attempt to reduce the heap allocation required
+when a procedure's lifetime cannot be statically determined.
+
+<p>
+<a name="known">When the compiler can find</a>
+all of the call sites for a local
+procedure, and the compiler can determine that each of those
+sites can call only that one procedure, then that procedure
+is referred to as a <dfn>known local procedure</dfn>.
+In practice, most known local procedures can be found by a
+<a href="#firstorder">first order closure analysis</a>.
+
+<p>
+The compiler can use nonstandard calling conventions to call
+a known local procedure, since it can rewrite each call site.
+
+<p>
+In particular, the compiler can change each call site to
+pass some or all of that procedure's free variables as extra
+arguments.
+This may allow the compiler to hoist its declaration to an
+outer scope.
+This hoisting of known local procedures is called
+<dfn>lambda lifting</dfn>.
+
+<p>
+Lambda lifting has several benefits:
+<ul>
+<li>It removes free variables (by adding extra arguments),
+    which reduces the number of variables that must be
+    captured by the procedure's closure.
+<li>It groups procedures so they can share a common closure in
+    a common environment, which reduces heap allocation.
+<li>It tends to reduce the dynamic frequency of closure creation
+    by moving lambda expressions to less frequently executed sites.
+<li>It tends to move most procedures to a global scope, where
+    no closures need to be created.
+<li>It exposes free variables to interprocedural register targeting.
+</ul>
+
+<p>
+The main disadvantage of lambda lifting is that it adds extra
+arguments to known local procedures.
+If too many extra arguments are added, the cost of passing
+the extra arguments and of saving them in stack frames may be 
+greater than the benefits.
+When arguments are viewed as registers, as in Twobit, then
+this tradeoff becomes a matter of interprocedural register
+allocation.
+
+<p>
+Lambda lifting also incurs the compile-time cost of solving a
+<a href="p2lifting.html#flowequation">flow equation</a>
+to determine which arguments must be added.
+Most compilers that perform lambda lifting solve this equation
+only once, to find the arguments that must be added in order to
+lift known local procedures to the global environment.
+If the number of arguments appears excessive, a procedure will
+not be lifted at all.
+
+<p>
+This all-or-nothing approach can be suboptimal.  Sometimes it
+is best to lift a known local procedure only part of the way
+to the outermost level of a program.
+
+<p>
+Olivier Danvy has considered lambda dropping, which follows
+lambda lifting by dropping some of the lifted procedures down
+into scopes that allow some of the added arguments to be
+converted back into free variables.
+Lambda dropping can be done without solving any more flow
+equations, but can result in passing arguments to procedures
+that don't use them.
+
+<p>
+<h2><a name="inclifting">Incremental lambda lifting</a></h2>
+
+<p>
+Twobit uses <dfn>incremental lambda lifting</dfn>, which
+lifts a group of known local procedures only one scope
+at a time.  The advantage of incremental lifting is that
+it can stopped at any intermediate scope.
+
+<p>
+The output of Pass 1 always contains a single outermost lambda
+expression.  By the end of Pass 2, it is usually the case that
+all known local procedures have been hoisted to that outermost
+lambda expression.
+When this is not the case, it is because the compiler's
+<a href="p2custom.html#lifting">heuristics</a>
+have predicted that better code will result from hoisting some
+known local procedures only part of the way, or not at all.
+
+<p>
+One disadvantage of incremental lambda lifting is that a
+<a href="p2lifting.html#flowequation">flow equation</a>
+must be solved for each scope.
+The <a href="p2lifting.html#cost">compile-time cost of incremental lambda
+lifting</a> is not a major issue, however.
+
+<p>
+Another problem with lambda lifting in general is that a known
+procedure generally cannot be lifted past the binding of a variable
+that appears on the left hand side of an assignment.
+Lambda lifting in Twobit is therefore preceded by optimizations
+that remove all assignments to local variables.
+These optimizations begin with
+<a href="p2local.html">local source transformations</a>.
+
+</body>
+</html>

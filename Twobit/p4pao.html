@@ -1,0 +1,94 @@
+<html>
+<title>
+Twobit Pass 4: parallel assignment optimization
+</title>
+
+<body>
+
+<p>
+<h2>
+Twobit Pass 4: parallel assignment optimization.
+</h2>
+
+<p>
+Scheme does not specify the order in which the arguments
+of a procedure call are evaluated.
+Most Scheme compilers, including Twobit, use parallel
+assignment optimization to find an
+efficient order of evaluation for each call.
+
+<p>
+Consider, for example, the internal definition
+
+<p>
+<pre>
+  (define .loop_3
+    (lambda (.f_2 .l_5 .x_5)
+      (if (pair? .l_5)
+          (.loop_3 .f_2
+                   (cdr .l_5)
+                   (cons (.f_2 (car .l_5))
+                         .x_5))
+          .x_5)))
+</pre>
+
+<p>
+Variables <code>.f_2</code>, <code>.l_5</code>, and <code>.x_5</code>
+are symbolic names for registers
+<code>REG1</code>, <code>REG2</code>, and <code>REG3</code>,
+which are the first three registers used to pass arguments.
+To evaluate the arguments for the tail-recursive call to
+<code>.loop_3</code>, the compiler must therefore
+achieve the effect of performing the following assignment
+statements in parallel:
+
+<p>
+<pre>
+     REG1  :=  REG1
+     REG2  :=  (cdr REG2)
+     REG3  :=  (cons (REG1 (car REG2)) REG3)
+</pre>
+
+<p>
+On a sequential machine, the effect of this parallel
+assignment can be achieved most efficiently
+by performing the third assignment first, followed by
+the second assignment.  The first assignment does not
+need to be performed at all.
+
+<p>
+Twobit performs parallel assignment optimization by
+constructing the dependency graph for the parallel
+assignments.  Using <code>&lt;=</code> to mean "depends on",
+the dependency graph for the example above is
+
+<p>
+<pre>
+     REG1 &lt;= REG1
+     REG2 &lt;= REG2
+     REG3 &lt;= REG1, REG2, REG3
+</pre>
+
+<p>
+Twobit then attempts a topological sort of the dependency
+graph.
+If a topological sort can be found, then it
+represents an order of evaluation that will evaluate each
+argument expression directly into its target register.
+
+<p>
+If <abug href="bugs.html#pao">no topological sort</abug>
+can be found, then at least one
+temporary will be required to hold an argument until its
+target register becomes free.
+In the worst case every register depends on every other
+register, in which case all of the arguments must be kept
+in temporaries until all have been evaluated, but this
+seldom happens.
+
+<p>
+Parallel assignment optimization reduces the size of the
+Scheme standard library by about 6%.
+
+</body>
+</html>

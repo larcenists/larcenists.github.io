@@ -1,0 +1,104 @@
+<html>
+<title>
+Twobit Pass2: single assignment analysis
+</title>
+
+<body>
+
+<p>
+<h2>Single assignment analysis</h2>
+
+<p>
+Single assignment analysis combines
+<a href="p2background.html#firstorder">first order closure analysis</a>
+with an inverse of the Scheme-specific
+<a href="pass1.html#defelimination">Pass 1 transformation</a>
+that eliminated all internal definitions.
+
+<p>
+Single assignment analysis identifies
+any formal parameters that are assigned exactly once, at the
+head of the lambda body, to the result of a lambda expression, 
+and are
+<abug href="bugs.html#saa">called as often as they are referenced</abug>.
+Such parameters
+are actually the names of local procedures whose call points are
+all visible to the compiler.  There is no need to create a closure
+for such procedures, since the environment in which they are
+declared will be accessible from the environment in effect at
+each place where they are called.  This fact is recorded by
+transforming
+<p>
+<pre>
+  (lambda (... I ...)
+    (begin D ...)
+    (begin (set! I L) E1 ...))
+</pre>
+<p>
+into
+<p>
+<pre>
+   (lambda (... IGNORED ...)
+     (begin (define I L) D ...)
+     (begin E1 ...))
+</pre>
+<p>
+in which the single assignment has become an internal definition.
+For example, the assignment to <code>.loop|2</code> in the
+<a href="pass1.html#example1">output of Pass 1</a>
+becomes an internal definition during Pass 2:
+
+<p>
+<pre>
+((begin
+   (set! reverse-map
+     (lambda (.f|1 .l|1)
+       (define .loop|2
+         (lambda (.l|3 .x|3)
+           (if (pair? .l|3)
+               (.loop|2
+                 (let ((.x|6|9 .l|3))
+                   (begin
+                     (.check! (pair? .x|6|9) 1 .x|6|9)
+                     (.cdr:pair .x|6|9)))
+                 (cons (.f|1 (let ((.x|15|18 .l|3))
+                               (begin
+                                 (.check! (pair? .x|15|18) 0 .x|15|18)
+                                 (.car:pair .x|15|18))))
+                       .x|3))
+               .x|3)))
+       (.loop|2 .l|1 '())))
+   'reverse-map))
+</pre>
+
+<p>
+It may seem that nothing has been accomplished by converting the
+original internal definition into an assignment, only to convert
+it back into an internal definition.
+
+<p>
+The point is that an internal definition in the output of Pass 2
+records a known local procedure, whereas an internal definition in
+the original code may define a variable whose value is not even a
+procedure, or whose value is changed by assignments, or whose value
+is a procedure that must be represented as a closure because it is
+passed as an argument.
+In other words, Twobit uses the internal definition syntax as a handy
+notation for known local procedures, whereas Scheme programmers use
+that syntax for allocation and initialization of arbitrary variables.
+
+<p>
+Twobit's single assignment analysis also checks to make sure every
+call to a known local
+procedure passes the correct number of arguments.  If the known
+local procedure has a rest parameter, the rest parameter is replaced
+by an ordinary parameter and the excess arguments in each call to
+that known procedure are replaced by an open-coded call to
+<code>LIST</code>.
+
+<p>
+Single assignment analysis is followed by
+<a href="p2sae.html">single assignment elimination</a>.
+
+</body>
+</html>

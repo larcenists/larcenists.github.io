@@ -1,0 +1,46 @@
+table.benchmarks {
+        width: 100%;
+        padding: 0;
+        cell-padding: 0;
+        cell-spacing: 0;
+        border: 0;
+        font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+}
+
+table.benchmarks td {
+        font-size: 60%;
+}
+
+table.benchmarks td.benchmark {
+        text-align: right;
+        font-family: monospace;
+        font-size: 100%;
+}
+
+table.benchmarks .bar { width: 75%; }
+
+table.benchmarks .larceny    { background-color:#847cd8; }
+table.benchmarks .larceny095 { background-color:#000000; }
+table.benchmarks .larceny094 { background-color:#000000; }
+table.benchmarks .larceny093 { background-color:#000000; }
+table.benchmarks .petit      { background-color:#5000a0; }
+table.benchmarks .bigloo     { background-color:#000080; }
+table.benchmarks .chez       { background-color:#004040; }
+table.benchmarks .chicken    { background-color:#A06000; }
+table.benchmarks .gambit     { background-color:#400060; }
+table.benchmarks .ikarus     { background-color:#205050; }
+table.benchmarks .mit        { background-color:#2000c0; }
+table.benchmarks .mosh       { background-color:#c02040; }
+table.benchmarks .mzscheme   { background-color:#008020; }
+table.benchmarks .plt        { background-color:#008020; }
+table.benchmarks .petite     { background-color:#304080; }
+table.benchmarks .scheme48   { background-color:#602040; }
+table.benchmarks .ypsilon    { background-color:#a04020; }
+
+dl.benchmarks {
+}
+
+dl.benchmarks dt {
+        font-family: monospace;
+        font-weight: bold;
+}

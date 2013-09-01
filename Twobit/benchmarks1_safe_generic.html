@@ -1,0 +1,236 @@
+<html>
+<title>
+Twobit: benchmarks (safe, generic)
+</title>
+
+<body>
+
+<p>
+<h2>Benchmarks using safe code and generic arithmetic.</h2>
+Last updated 6 July 1999.
+
+<p><h3>Microbenchmarks: floating point arithmetic</h3>
+
+<pre>
+                                                                         <a href="benchmarks2.temp.html#sumfp">sumfp</a>
+Larceny    91.70  ***************************************                     
+Chez       60.04  ************************************************************
+Gambit    608.92  ******                                                      
+
+                                                                         <a href="benchmarks2.temp.html#fibfp">fibfp</a>
+Larceny     9.98  **********************************************              
+Chez        7.57  ************************************************************
+Gambit     61.64  *******                                                     
+</pre>
+
+<p><h3>Microbenchmarks: calls, closures, continuations</h3>
+
+<pre>
+                                                                           <a href="benchmarks2.temp.html#sum">sum</a>
+Larceny     3.01  ************************************************************
+Chez        8.43  *********************                                       
+Gambit    476.24                                                              
+
+                                                                           <a href="benchmarks2.temp.html#fib">fib</a>
+Larceny     1.78  ************************************************************
+Chez        3.14  **********************************                          
+Gambit     48.15  **                                                          
+
+                                                                           <a href="benchmarks2.temp.html#tak">tak</a>
+Larceny     7.32  ************************************************************
+Chez       13.66  ********************************                            
+Gambit    174.72  ***                                                         
+
+                                                                        <a href="benchmarks2.temp.html#cpstak">cpstak</a>
+Larceny     9.48  *************************************                       
+Chez        5.85  ************************************************************
+Gambit     58.12  ******                                                      
+
+                                                                          <a href="benchmarks2.temp.html#ctak">ctak</a>
+Larceny    14.84  *********                                                   
+Chez        2.34  ************************************************************
+Gambit     14.49  **********                                                  
+</pre>
+
+<p><h3>Microbenchmarks: lists</h3>
+
+<pre>
+                                                                          <a href="benchmarks2.temp.html#takl">takl</a>
+Larceny     9.16  ************************************************************
+Chez       21.37  **************************                                  
+Gambit    191.75  ***                                                         
+
+                                                                         <a href="benchmarks2.temp.html#ntakl">ntakl</a>
+Larceny     7.35  ************************************************************
+Chez       21.42  *********************                                       
+Gambit    191.94  **                                                          
+
+                                                                        <a href="benchmarks2.temp.html#dderiv">dderiv</a>
+Larceny    10.77  ************************************************************
+Chez       14.83  ********************************************                
+Gambit     71.36  *********                                                   
+
+                                                                         <a href="benchmarks2.temp.html#deriv">deriv</a>
+Larceny     9.12  ************************************************************
+Chez        9.37  **********************************************************  
+Gambit     41.59  *************                                               
+
+                                                                       <a href="benchmarks2.temp.html#destruc">destruc</a>
+Larceny    10.46  ************************************************************
+Chez       10.38  ************************************************************
+Gambit    195.82  ***                                                         
+
+                                                                       <a href="benchmarks2.temp.html#diviter">diviter</a>
+Larceny     3.92  ************************************************************
+Chez        6.53  ************************************                        
+Gambit     92.14  ***                                                         
+
+                                                                        <a href="benchmarks2.temp.html#divrec">divrec</a>
+Larceny     8.44  ************************************************************
+Chez       12.43  *****************************************                   
+Gambit     96.66  *****                                                       
+
+                                                                        <a href="benchmarks2.temp.html#browse">browse</a>
+Larceny    13.29  ***************************************************         
+Chez       11.27  ************************************************************
+Gambit    157.81  ****                                                        
+</pre>
+
+<p><h3>Larger benchmarks: floating point</h3>
+
+<pre>
+                                                                           <a href="benchmarks2.temp.html#fft">fft</a>
+Larceny    31.47  *************************************                       
+Chez       19.60  ************************************************************
+Gambit    299.74  ****                                                        
+
+                                                                         <a href="benchmarks2.temp.html#mbrot">mbrot</a>
+Larceny    14.12  ******************************************                  
+Chez        9.97  ************************************************************
+Gambit    125.27  *****                                                       
+
+                                                                       <a href="benchmarks2.temp.html#nucleic">nucleic</a>
+Larceny    85.44  ****************************                                
+Chez       40.21  ************************************************************
+Gambit    292.96  ********                                                    
+
+                                                                        <a href="benchmarks2.temp.html#pnpoly">pnpoly</a>
+Larceny     3.22  *****************************************************       
+Chez        2.84  ************************************************************
+Gambit     38.52  ****                                                        
+
+                                                                           <a href="benchmarks2.temp.html#ray">ray</a>
+Larceny    64.94  ************************************************************
+
+                                                                       <a href="benchmarks2.temp.html#simplex">simplex</a>
+Larceny    17.50  ************************************************            
+Chez       13.97  ************************************************************
+Gambit    169.84  *****                                                       
+</pre>
+
+<p><h3>Larger benchmarks: puzzles</h3>
+
+<pre>
+                                                                        <a href="benchmarks2.temp.html#puzzle">puzzle</a>
+Larceny    20.18  ************************************************************
+Chez       40.10  ******************************                              
+Gambit    514.80  **                                                          
+
+                                                                       <a href="benchmarks2.temp.html#triangl">triangl</a>
+Larceny    31.70  ************************************************************
+Chez       64.95  *****************************                               
+Gambit    639.86  ***                                                         
+</pre>
+
+<p><h3>Larger benchmarks: miscellaneous</h3>
+
+<pre>
+                                                                       <a href="benchmarks2.temp.html#conform">conform</a>
+Larceny    12.47  ************************************************************
+Chez       14.51  ****************************************************        
+Gambit     35.29  *********************                                       
+
+                                                                       <a href="benchmarks2.temp.html#dynamic">dynamic</a>
+Larceny     2.88  ************************************************************
+Chez        3.36  ***************************************************         
+Gambit     35.32  *****                                                       
+
+                                                                        <a href="benchmarks2.temp.html#earley">earley</a>
+Larceny    22.08  **************************                                  
+Chez        9.46  ************************************************************
+Gambit    133.34  ****                                                        
+
+                                                                        <a href="benchmarks2.temp.html#graphs">graphs</a>
+Larceny    32.21  ****************************************                    
+Chez       21.45  ************************************************************
+Gambit    212.11  ******                                                      
+
+                                                                       <a href="benchmarks2.temp.html#lattice">lattice</a>
+Larceny    37.04  ***************************************************         
+Chez       31.24  ************************************************************
+Gambit    294.60  ******                                                      
+
+                                                                          <a href="benchmarks2.temp.html#maze">maze</a>
+Larceny    20.17  ************************************************************
+Chez       29.70  *****************************************                   
+Gambit    130.96  *********                                                   
+
+                                                                       <a href="benchmarks2.temp.html#mazefun">mazefun</a>
+Larceny     1.22  ************************************************************
+Chez        2.13  **********************************                          
+Gambit     31.24  **                                                          
+
+                                                                         <a href="benchmarks2.temp.html#peval">peval</a>
+Larceny    10.50  ************************************************************
+Chez       10.55  ************************************************************
+Gambit     60.70  **********                                                  
+
+                                                                        <a href="benchmarks2.temp.html#scheme">scheme</a>
+Larceny     5.53  ***************************************                     
+Chez        3.64  ************************************************************
+Gambit     17.90  ************                                                
+
+                                                                        <a href="benchmarks2.temp.html#slatex">slatex</a>
+Larceny     4.23  ************************************************************
+Chez        6.03  ******************************************                  
+</pre>
+
+<p><h3>Larger benchmarks: variations on <code>boyer</code></h3>
+
+<pre>
+                                                                         <a href="benchmarks2.temp.html#boyer">boyer</a>
+Larceny     4.69  ************************************************************
+Chez        6.89  *****************************************                   
+Gambit    142.92  **                                                          
+
+                                                                      <a href="benchmarks2.temp.html#smlboyer">smlboyer</a>
+Larceny     4.60  ************************************************************
+Chez        6.33  ********************************************                
+
+                                                                        <a href="benchmarks2.temp.html#nboyer">nboyer</a>
+Larceny    14.46  ************************************************************
+Chez       15.51  ********************************************************    
+Gambit    107.90  ********                                                    
+
+                                                                        <a href="benchmarks2.temp.html#sboyer">sboyer</a>
+Larceny    10.55  ****************************************************        
+Chez        9.08  ************************************************************
+Gambit    119.36  *****                                                       
+</pre>
+
+<p><h3>Synthetic benchmarks: garbage collection</h3>
+
+<pre>
+                                                                       <a href="benchmarks2.temp.html#gcbench">gcbench</a>
+Larceny    18.85  **********************************************              
+Chez       14.58  ************************************************************
+Gambit    129.23  *******                                                     
+
+                                                                         <a href="benchmarks2.temp.html#perm9">perm9</a>
+Larceny    10.35  ************************************************************
+Chez       15.78  ***************************************                     
+Gambit     90.48  *******                                                     
+</pre>
+
+</body>
+</html>

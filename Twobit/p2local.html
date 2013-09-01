@@ -1,0 +1,105 @@
+<html>
+<title>
+Twobit Pass 2: local transformations
+</title>
+
+<body>
+
+<p>
+<h1>
+Twobit Pass 2: local transformations
+</h1>
+
+<p>
+Twobit performs several local transformations to simplify the
+intermediate code, making subsequent optimizations easier to
+express.  Most of these transformations are essentially
+the same as in Rabbit.
+
+<p>
+<pre>
+  original                        rewrites to                provided
+  --------                        -----------                --------
+
+  (begin ... (begin ---) ...)     (begin ... --- ...)
+  (begin ... 'K ... E)            (begin ... ... E)
+  (begin ... I ... E)             (begin ... ... E)
+  (begin ... (lambda ---) ... E)  (begin ... ... E)
+  (set! I (begin ... E))          (begin ... (set! I E))
+  (E0 ... (begin --- E) ...)      (begin --- (E0 ... E ...))
+
+  (if '#f E1 E2)                  E2
+  (if 'K  E1 E2)                  E1                          K != #f
+  (if (if B0 '#f '#f) E1 E2)      (begin B0 E2)
+  (if (if B0 '#f 'K ) E1 E2)      (if B0 E2 E1)               K != #f
+  (if (if B0 'K  '#f) E1 E2)      (if B0 E1 E2)               K != #f
+  (if (if B0 'K1 'K2) E1 E2)      (begin B0 E1)               K1, K2 != #f
+  (if (if B0 (if B1 #t #f) B2)    (if (if B0 B1 B2) E1 E2)
+      E1 E2)
+  (if (if B0 B1 (if B2 #t #f))    (if (if B0 B1 B2) E1 E2)
+      E1 E2)
+  (if (if X  X   B0 ) E1 E2)      (if (if X #t B0) E1 E2)     X a variable
+  (if (if X  B0  X  ) E1 E2)      (if (if X B0 #f) E1 E2)     X a variable
+  (if ((lambda (X)                (if ((lambda (X)
+         (if X X B2)) B0)                (if X #t (if B2 #t #f))) B0)
+      E1 E2)                          E1 E2)
+  (if (begin ... B0) E1 E2)       (begin ... (if B0 E1 E2))
+  (if (not E0) E1 E2)             (if E0 E2 E1)               not is integrable
+
+  ((lambda () E))                 E                           no internal defs
+
+  ((lambda (I1 ... Ik . Irest)    ((lambda (I1 ... Ik Irest)
+     ---)                            ---)
+   E1 ... Ek Ek+1 ...)             E1 ... Ek (LIST Ek+1 ...))
+
+  ((lambda (... IGNORED ...)      (begin E
+     ---)                          ((lambda (... ...) ---)
+   ... E ...)                       ... ...))
+</pre>
+
+<p>
+The following beta substitutions are not truly local, but are
+mentioned here for completeness.
+
+<p>
+<pre>
+  ((lambda (... I ...) E1)        ((lambda (... ...)         E2 = E1['K/I]
+   ... 'K ...)                       E2)
+                                   ... ...)
+
+  ((lambda (... I ...) E1)        ((lambda (... ...)         E2 = E1['K/I]
+   ... I2 ...)                       E2)                     I2 is never
+                                   ... ...)                    assigned
+
+  ((lambda (... I ...) ---)       ((lambda (... ...)         I is not assigned
+   ... (lambda ===) ...)             (define I (lambda ===))   and each mention
+                                     ---)                      is in call
+                                   ... ...)                    position
+</pre>
+
+<p>
+In addition to these transformations, Twobit's pass 2 performs a group
+of transformations that make it easier to generate good code from
+macro-expanded <code>CASE</code> expressions.  These transformations
+operate on conditional expressions that have the form
+<pre>
+    CASE{I}  ::=  E  |  (if (PRED I K) E CASE{I})
+    PRED  ::=  memv  |  memq  |  eqv?  |  eq?
+</pre>
+where I a variable.  The first step is to remove duplicated constants
+and to collect all the case clauses, sorting them into the following
+categories based on their simplified list of constants:
+<ul>
+<li>constants are fixnums
+<li>constants are characters
+<li>constants are symbols
+<li>constants are of mixed or other type
+</ul>
+After duplicate constants have been removed, the predicates for
+these clauses can be tested in any order.  A transformed
+<code>CASE</code> expression usually begins with a type dispatch,
+with the subsidiary dispatch for each type chosen according to the
+type, the number of constants, and their density within a range.
+
+</body>
+</html>

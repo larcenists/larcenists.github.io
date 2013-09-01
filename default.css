@@ -1,0 +1,415 @@
+/*  The colors that seem to matter are:
+ *
+ *     strip1 (background-color)
+ *     body (background-color)
+ *     page (background-color)
+ *     sidebar (background-color)
+ *     footer (background-color; should be same as for strip1)
+ *     legal (color)
+ *     legal a (color)
+ *     a:link (color)
+ *     a:visited (color)
+ *
+ *     #847cd8 seems to be a reasonable dark lavender.
+ */
+
+body {
+        background-color: #fefdff;
+	margin: 0px 0 0 0;
+	padding: 0;
+	color: #333333;
+}
+
+h1, h2, h3 {
+	margin: 0;
+	text-transform: none;
+	font-weight: normal;
+	color: #3E3E3E;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+/* TODO: eliminate if Will decides text-transform: none is the norm */
+.platform {
+        text-transform: none;
+}
+
+code {
+        font-size: 12px;
+}
+
+h1 {
+	font-size: 32px;
+}
+
+h2 {
+	font-size: 23px;
+}
+
+p, ul, ol {
+	margin: 0 0 2em 0;
+}
+
+p, ul, ol, dd {
+	text-align: justify;
+	line-height: 160%;
+	font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+	font-size: 80%;
+}
+
+ul ul {
+        font-size: 100%;
+}
+
+ul.bib li {
+        margin-bottom: 1em;
+}
+
+a:link {
+	color: #7850ff;
+}
+
+a:visited {
+	color: #386030;
+}
+
+a:hover, a:active {
+	text-decoration: underline;
+}
+
+img {
+	border: none;
+}
+
+img.left {
+	float: left;
+	margin-right: 15px;
+}
+
+img.right {
+	float: right;
+	margin-left: 15px;
+}
+
+/* Form */
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+fieldset {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+legend {
+	display: none;
+}
+
+input, textarea, select {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #333333;
+}
+
+/* Header */
+
+#header {
+	width: 850px;
+	height: 82px;
+	margin: 0 auto 40px auto;
+	background: url(images/img03.gif) repeat-x left bottom;
+}
+
+#strip1 {
+        height: 20px;
+        background-color: #847cd8;
+}
+
+#strip2 {
+        height: 80px;
+}
+
+#logo {
+	float: left;
+}
+
+#logo h1 {
+	font-size: 38px;
+	color: #494949;
+}
+
+#logo h1 sup {
+	vertical-align: text-top;
+	font-size: 24px;
+}
+
+#logo h1 a {
+	color: #494949;
+}
+
+#logo h2 {
+	margin-top: -10px;
+	font-size: 12px;
+	color: #A0A0A0;
+}
+
+#logo a {
+	text-decoration: none;
+}
+
+/* Menu */
+
+#menu {
+	float: right;
+}
+
+#menu ul {
+	margin: 0;
+	padding: 15px 0 0 0;
+	list-style: none;
+}
+
+#menu li {
+	display: inline;
+}
+
+#menu a {
+	display: block;
+	float: left;
+	margin-left: 30px;
+	padding: 7px;
+	text-decoration: none;
+	font-size: 13px;
+	color: #000000;
+}
+
+#menu a:hover {
+	text-decoration: underline;
+}
+
+#menu .active a {
+	background: url(images/img02.gif) repeat-x left bottom;
+}
+
+/* Page */
+
+#page {
+        background-color: #f8f4ff;
+	width: 850px;
+	margin: 0 auto;
+}
+
+/* Content */
+
+#content {
+	float: left;
+	width: 575px;
+}
+
+/* Post */
+
+.post {
+}
+
+.post .title {
+	margin-bottom: 20px;
+	padding-bottom: 5px;
+	background: url(images/img03.gif) repeat-x left bottom;
+}
+
+.post .entry {
+        padding-left: 20px;
+}
+
+.post .meta {
+	padding: 15px 0 60px 0;
+	background: url(images/img03.gif) repeat-x;
+}
+
+.post .meta p {
+	margin: 0;
+	line-height: normal;
+	color: #999999;
+}
+
+.post .meta .byline {
+	float: left;
+}
+
+.post .meta .links {
+	float: right;
+}
+
+.post .meta .more {
+	padding: 0 20px 0 18px;
+	background: url(images/img06.gif) no-repeat left center;
+}
+
+.post .meta .comments {
+	padding-left: 22px;
+	background: url(images/img07.gif) no-repeat left center;
+}
+
+.post .meta b {
+	display: none;
+}
+
+/* Sidebar */
+
+#sidebar {
+        background-color: #f0ecff;
+        padding-left: 20px;
+        padding-top: 20px;
+	float: right;
+	width: 195px;
+}
+
+#sidebar ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#sidebar li {
+	margin-bottom: 20px;
+	font-size: 13px;
+	line-height: 23px;
+}
+
+#sidebar li ul {
+}
+
+#sidebar li li {
+	margin: 0;
+}
+
+#sidebar h2 {
+	margin-bottom: 10px;
+	background: url(images/img03.gif) repeat-x left bottom;
+	font-size: 16px;
+}
+
+/* Search */
+
+#search {
+}
+
+#search h2 {
+	margin-bottom: 20px;
+}
+
+#s {
+	width: 120px;
+	margin-right: 5px;
+	padding: 3px;
+	border: 1px solid #F0F0F0;
+}
+
+#download {
+        padding: 9px;
+        background: #ECECEC url(images/img08.gif) repeat-x left bottom;
+        border: none;
+        
+}
+
+#x {
+	padding: 3px;
+	background: #ECECEC url(images/img08.gif) repeat-x left bottom;
+	border: none;
+	text-transform: lowercase;
+	font-size: 11px;
+	color: #4F4F4F;
+}
+
+/* Boxes */
+
+.box1 {
+	padding: 20px;
+	background: url(images/img05.gif) no-repeat;
+}
+
+.box2 {
+	color: #BABABA;
+}
+
+.box2 h2 {
+	margin-bottom: 15px;
+	background: url(images/img10.gif) repeat-x left bottom;
+	font-size: 16px;
+	color: #FFFFFF;
+}
+
+.box2 ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.box2 a:link, .box2 a:hover, .box2 a:active, .box2 a:visited  {
+	color: #EDEDED;
+}
+
+.box3 {
+        padding-left: 20px;
+        padding-top: 20px;
+/*      background: url(images/img05.gif) no-repeat;   */
+        color: #303030;
+/*        background-color: #f0e8f4; */
+}
+
+/* Footer */
+
+#footer {
+	height: 100px;
+	min-height: 100px;
+	padding: 30px 0 0 0;
+/*	background: #003448 url(images/img09.gif) repeat-x;  */
+/*        background-color: #003448;  */
+/*        background-color: #005070;   */
+        background-color: #847cd8;
+}
+
+html>body #footer {
+	height: auto;
+}
+
+#footer p {
+	font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+#footer .wrap {
+	width: 850px;
+	margin: 0 auto;
+}
+
+#legal {
+	clear: both;
+	padding-top: 20px;
+	text-align: center;
+        color: #a49cf8;
+}
+
+#legal a {
+        color: #b4acf8;
+}
+
+#fbox1, #fbox2, #fbox3 {
+	float: left;
+}
+
+#fbox1 {
+	width: 310px;
+}
+
+#fbox2 {
+	width: 200px;
+	padding-left: 70px;
+}
+
+#fbox3 {
+	width: 200px;
+	padding-left: 70px;
+}

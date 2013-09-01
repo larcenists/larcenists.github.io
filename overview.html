@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="default.css" rel="stylesheet" type="text/css" />
+    <link rev="made" href="mailto:larceny@ccs.neu.edu" />
+    <title>
+      The Larceny Project -- Overview
+    </title>
+    <style type="text/css">
+      .red    { color: red; }
+    </style>
+  </head>
+
+<body>
+
+<!-- start header -->
+<div id="strip1">&nbsp;</div>
+<div id="strip2">&nbsp;</div>
+<div id="header">
+  <div id="logo">
+    <h1><a href="#">
+        <img src="images/larceny.png" alt="The Larceny Project"/>
+        </a>
+    </h1>
+  </div>
+</div>
+<!-- end header -->
+
+<!-- start page -->
+
+<div id="page">
+<!-- start content -->
+<div id="content">
+
+<div class="post">
+<h1 class="title">Overview</h1>
+<div class="entry">
+<p>
+Larceny is a simple and
+<a href="benchmarks.html">efficient</a>
+implementation of the Scheme programming language.
+Created originally as a test vehicle for research on
+<a href="http://www.cesura17.net/~will/Professional/Research/Presentations/GC/index.html">garbage
+collection</a> and
+<a href="twobit.html">compiler optimizations</a>,
+Larceny has grown into a major multiplatform system,
+and is currently the only implementation
+that supports all four de facto standards for Scheme:
+IEEE/ANSI,
+<a href="http://www.schemers.org/Documents/Standards/R5RS/">R5RS</a>,
+<a href="http://scheme-punks.org/wiki/index.php?title=ERR5RS:Charter">ERR5RS</a>,
+and the
+<a href="http://www.r6rs.org/">R6RS</a>.
+</p>
+
+<p>
+Major goals of Larceny are:
+</p>
+
+<ul>
+<li> Small and reasonably portable:  The libraries are written almost 
+     entirely in Scheme, and machine-specific parts of the run-time are
+     mostly isolated to a few modules written in C or assembly language.
+</li>
+<li> Good overall performance:  Roughly comparable to Chez Scheme,
+     SML of New Jersey, and commercial Common Lisp systems.
+</li>
+<li> Implements all four de facto standards for Scheme:
+     IEEE/ANSI,
+     <a href="http://www.schemers.org/Documents/Standards/R5RS/">R5RS</a>,
+     <a href="http://scheme-punks.org/wiki/index.php?title=ERR5RS:Charter">ERR5RS</a>,
+     and the <a href="http://www.r6rs.org/">R6RS</a>.
+
+</li>
+<li> Built around an optimizing Scheme compiler:
+     <a href="twobit.html">Twobit</a>.
+</li>
+<li> Supports pluggable garbage collectors.  At one time there were five:
+     <ul>
+     <li> a traditional stop-and-copy collector</li>
+     <li> a traditional copying younger-first generational collector</li>
+
+     <li> a copying hybrid renewal-older-first generational collector</li>
+     <li> a copying hybrid deferred-older-first generational collector</li>
+     <li> the Boehm-Demers-Weiser conservative collector</li>
+     </ul>
+    The current version
+    of Larceny offers a choice between the first three garbage collectors
+    listed above.  Younger-first generational collection is the current
+    default.  
+    The hybrid deferred-older-first and conservative collectors
+    are no longer supported, as they seldom performed as well as
+    the younger-first or hybrid renewal-older-first collectors.
+    <br/>
+    <br/>
+    A radical new garbage collector is under development.
+</li>
+</ul>
+<p>
+Development of Larceny has been supported by
+NSF, Sun Microsystems, and Microsoft.
+</p>
+</div>
+</div>
+</div>
+
+
+<!-- end content -->
+
+<!-- start sidebar -->
+
+<div id="sidebar">
+<ul>
+<li>
+    <h2><b>Download</b> Larceny</h2>
+    <ul>
+    <li><a href="download.html"><strong>Larceny</strong>
+        </a></li>
+    <li><a href="download-petit.html"><strong>Petit
+        Larceny</strong></a></li>
+    <li><a href="CommonLarceny/download.html"><strong>Common
+        Larceny</strong>
+        </a></li>
+    <li><a href="licensing.html">Licensing</a></li>
+    </ul>
+</li>
+<li>
+    <h2><b>About</b> Larceny</h2>
+    <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="overview.html">Overview</a></li>
+    <li><a href="doc.html">Documentation</a></li>
+    <li><a href="research.html">Research</a></li>
+    <li><a href="dev.html">Development</a></li>
+    <li><a href="history.html">History</a></li>
+    <li><a href="benchmarks.html">Benchmarks</a></li>
+    </ul>
+</li>
+</ul>
+</div>
+
+<!-- end sidebar -->
+
+<div style="clear: both;">&nbsp;</div>
+</div>
+
+<!-- end page -->
+
+
+<!--
+  <p>
+    <a href="http://validator.w3.org/check/referer"><img
+        style="border:0;width:88px;height:31px"
+        src="http://www.w3.org/Icons/valid-xhtml10"
+        alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+  </p>
+-->
+
+
+<!-- start footer -->
+<div id="footer">
+	<p id="legal">&copy; 2008 William D Clinger. Design by <a href="http://www.nodethirtythree.com/">NodeThirtyThree</a> and <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>
+</div>
+<!-- end footer -->
+</body>
+</html>

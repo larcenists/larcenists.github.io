@@ -1,0 +1,212 @@
+<html>
+<title>
+The real output from Pass 1
+</title>
+
+<body>
+
+<p>
+<h3>
+The real output from Pass 1:
+</h3>
+
+<pre>
+((lambda ()
+   (begin)
+   '(() () () () #f)
+   (begin
+     (set! reverse-map
+       (lambda (.f|1 .l|1)
+         (begin)
+         '(((.f|1 ((begin .f|1))
+                  ()
+                  (((begin .f|1)
+                    ((lambda (.x|15|18)
+                       (begin)
+                       '(((.x|15|18
+                            ((begin .x|15|18)
+                             (begin .x|15|18)
+                             (begin .x|15|18))
+                            ()
+                            ()))
+                         ()
+                         ()
+                         ()
+                         #(#f #f 1 #f #f (.x|15)))
+                       (begin
+                         ((begin .check!)
+                          ((begin pair?) (begin .x|15|18))
+                          '0
+                          (begin .x|15|18))
+                         ((begin .car:pair) (begin .x|15|18))))
+                     (begin .l|3)))))
+            (.l|1 ((begin .l|1)) () ()))
+           ()
+           ()
+           ()
+           #(reverse-map #f 2 #f #f (f l)))
+         ((lambda (.loop|2)
+            (begin)
+            '(((.loop|2
+                 ((begin .loop|2) (begin .loop|2))
+                 ((set! .loop|2
+                    (lambda (.l|3 .x|3)
+                      (begin)
+                      '(((.l|3 ((begin .l|3) (begin .l|3) (begin .l|3))
+                               ()
+                               ())
+                         (.x|3 ((begin .x|3) (begin .x|3)) () ()))
+                        ()
+                        ()
+                        ()
+                        #(.loop|2 #f 2 #f #f (l x)))
+                      (if ((begin pair?) (begin .l|3))
+                          ((begin .loop|2)
+                           ((lambda (.x|6|9)
+                              (begin)
+                              '(((.x|6|9
+                                   ((begin .x|6|9)
+                                    (begin .x|6|9)
+                                    (begin .x|6|9))
+                                   ()
+                                   ()))
+                                ()
+                                ()
+                                ()
+                                #(#f #f 1 #f #f (.x|6)))
+                              (begin
+                                ((begin .check!)
+                                 ((begin pair?) (begin .x|6|9))
+                                 '1
+                                 (begin .x|6|9))
+                                ((begin .cdr:pair) (begin .x|6|9))))
+                            (begin .l|3))
+                           ((begin cons)
+                            ((begin .f|1)
+                             ((lambda (.x|15|18)
+                                (begin)
+                                '(((.x|15|18
+                                     ((begin .x|15|18)
+                                      (begin .x|15|18)
+                                      (begin .x|15|18))
+                                     ()
+                                     ()))
+                                  ()
+                                  ()
+                                  ()
+                                  #(#f #f 1 #f #f (.x|15)))
+                                (begin
+                                  ((begin .check!)
+                                   ((begin pair?) (begin .x|15|18))
+                                   '0
+                                   (begin .x|15|18))
+                                  ((begin .car:pair) (begin .x|15|18))))
+                              (begin .l|3)))
+                            (begin .x|3)))
+                          (begin .x|3)))))
+                 (((begin .loop|2) (begin .l|1) '())
+                  ((begin .loop|2)
+                   ((lambda (.x|6|9)
+                      (begin)
+                      '(((.x|6|9
+                           ((begin .x|6|9) (begin .x|6|9) (begin .x|6|9))
+                           ()
+                           ()))
+                        ()
+                        ()
+                        ()
+                        #(#f #f 1 #f #f (.x|6)))
+                      (begin
+                        ((begin .check!)
+                         ((begin pair?) (begin .x|6|9))
+                         '1
+                         (begin .x|6|9))
+                        ((begin .cdr:pair) (begin .x|6|9))))
+                    (begin .l|3))
+                   ((begin cons)
+                    ((begin .f|1)
+                     ((lambda (.x|15|18)
+                        (begin)
+                        '(((.x|15|18
+                             ((begin .x|15|18)
+                              (begin .x|15|18)
+                              (begin .x|15|18))
+                             ()
+                             ()))
+                          ()
+                          ()
+                          ()
+                          #(#f #f 1 #f #f (.x|15)))
+                        (begin
+                          ((begin .check!)
+                           ((begin pair?) (begin .x|15|18))
+                           '0
+                           (begin .x|15|18))
+                          ((begin .car:pair) (begin .x|15|18))))
+                      (begin .l|3)))
+                    (begin .x|3))))))
+              ()
+              ()
+              ()
+              #(#f #f 1 #f #f (loop)))
+            (begin
+              (set! .loop|2
+                (lambda (.l|3 .x|3)
+                  (begin)
+                  '(((.l|3 ((begin .l|3) (begin .l|3) (begin .l|3))
+                           ()
+                           ())
+                     (.x|3 ((begin .x|3) (begin .x|3)) () ()))
+                    ()
+                    ()
+                    ()
+                    #(.loop|2 #f 2 #f #f (l x)))
+                  (if ((begin pair?) (begin .l|3))
+                      ((begin .loop|2)
+                       ((lambda (.x|6|9)
+                          (begin)
+                          '(((.x|6|9
+                               ((begin .x|6|9) (begin .x|6|9) (begin .x|6|9))
+                               ()
+                               ()))
+                            ()
+                            ()
+                            ()
+                            #(#f #f 1 #f #f (.x|6)))
+                          (begin
+                            ((begin .check!)
+                             ((begin pair?) (begin .x|6|9))
+                             '1
+                             (begin .x|6|9))
+                            ((begin .cdr:pair) (begin .x|6|9))))
+                        (begin .l|3))
+                       ((begin cons)
+                        ((begin .f|1)
+                         ((lambda (.x|15|18)
+                            (begin)
+                            '(((.x|15|18
+                                 ((begin .x|15|18)
+                                  (begin .x|15|18)
+                                  (begin .x|15|18))
+                                 ()
+                                 ()))
+                              ()
+                              ()
+                              ()
+                              #(#f #f 1 #f #f (.x|15)))
+                            (begin
+                              ((begin .check!)
+                               ((begin pair?) (begin .x|15|18))
+                               '0
+                               (begin .x|15|18))
+                              ((begin .car:pair) (begin .x|15|18))))
+                          (begin .l|3)))
+                        (begin .x|3)))
+                      (begin .x|3))))
+              ((begin .loop|2) (begin .l|1) '())))
+          ((begin unspecified)))))
+     'reverse-map)))
+</pre>
+
+</body>
+</html>

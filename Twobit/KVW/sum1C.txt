@@ -1,0 +1,9 @@
+#include <stdio.h>
+
+main() {
+	double s = 0, d;
+
+	while (scanf("%lf", &d) != EOF)
+		s += d;
+	printf("%f\n", s);
+}

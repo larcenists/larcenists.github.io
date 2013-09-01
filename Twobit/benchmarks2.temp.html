@@ -1,0 +1,394 @@
+<html>
+<title>
+Twobit: description of benchmarks
+</title>
+
+<body>
+
+<p>
+<h2>Description of Benchmarks</h2>
+
+<em>Note:</em> Our educated guesses concerning the reasons for
+a particular system's performance appear within [square brackets].
+
+<h3>Microbenchmarks: floating point arithmetic</h3>
+
+<p>
+<h4><a name="sumfp">sumfp</a></h4>
+Sums the integers from 0 to 10000, 10000 iterations.
+A test of floating point arithmetic.
+Uses essentially the same code as the <code><a href="#sum">sum</a></code>
+benchmark.
+[In Larceny, all floating point calculations are done using generic
+arithmetic.]
+
+<p>
+<h4><a name="fibfp">fibfp</a></h4>
+Calculation of the 25th Fibonacci number using inexact numbers,
+50 iterations.
+A test of floating point arithmetic.
+Uses essentially the same code as the <code><a href="#fib">fib</a></code>
+benchmark.
+
+<h3>Microbenchmarks: calls, closures, continuations</h3>
+
+<p>
+<h4><a name="sum">sum</a></h4>
+Sums the integers from 0 to 10000, 10000 iterations.
+
+<p>
+<h4><a name="fib">fib</a></h4>
+Doubly recursive computation of the 25th fibonacci number
+(75025), using <code>(< n 2)</code> to terminate the
+recursion.
+[Register windows should perform well on this
+benchmark, but gcc may squander part of this advantage by allocating
+a register window even for the base case.]
+
+<p>
+<h4><a name="tak">tak</a></h4>
+A triply recursive integer function related to the Takeuchi function,
+a Gabriel benchmark, 1000 iterations.
+A test of non-tail calls and arithmetic.
+Historical note:
+The Symbolics 3600 performed 1 iteration of this benchmark in 0.43 seconds
+using generic arithmetic, which is about 65 times as slow as a Sun Ultra 1.
+
+<p>
+<h4><a name="cpstak">cpstak</a></h4>
+The <code><a href="#tak">tak</a></code> benchmark in continuation-passing
+style, 300 iterations.
+A test of closure creation.
+[Improperly tail recursive implementations convert this benchmark's
+tail recursion into deep recursion, which may exceed limits on the
+size of a control stack.]
+
+<p>
+<h4><a name="ctak">ctak</a></h4>
+The <code><a href="#tak">tak</a></code> benchmark in continuation-capturing
+style, 30 iterations.
+A test of <code>call-with-current-continuation</code>.
+[Larceny's code for <code>call-with-current-continuation</code> is now
+written in C, and most of its time on this benchmark is spent crossing
+the Scheme/C barrier.]
+
+<h3>Microbenchmarks: lists</h3>
+
+<p>
+<h4><a name="takl">takl</a></h4>
+The <code><a href="#tak">tak</a></code> benchmark using lists to represent
+integers, a Gabriel benchmark, 200 iterations.
+This benchmark contains a peculiar boolean expression for which some
+compilers generate very poor code:
+<pre>
+    (define (shorterp x y)
+      (and (not (null? y))
+           (or (null? x)
+               (shorterp (cdr x)
+                         (cdr y)))))
+</pre>
+Compare with the <code><a href="#ntakl">ntakl</a></code> benchmark.
+
+<p>
+<h4><a name="ntakl">ntakl</a></h4>
+A version of the <code><a href="#takl">takl</a></code> benchmark
+in which the peculiar boolean expression has been rewritten to make it
+less confusing for most people and for some compilers:
+<pre>
+    (define (shorterp x y)
+      (cond ((null? y) #f)
+            ((null? x) #t)
+            (else
+             (shorterp (cdr x) (cdr y)))))
+</pre>
+The rewritten expression is logically equivalent to the original.
+[The C versions of the
+<code><a href="#takl">takl</a></code>
+and
+<code><a href="#ntakl">ntakl</a></code>
+benchmarks make no attempt to reclaim heap storage,
+which gives C an advantage over garbage-collected languages.
+This advantage disappears in benchmarks that allocate large amounts
+of heap storage, such as
+<code><a href="#diviter">diviter</a></code>,
+<code><a href="#divrec">divrec</a></code>,
+<code><a href="#gcbench">gcbench</a></code>,
+and
+<code><a href="#perm9">perm9</a></code>.]
+
+<p>
+<h4><a name="dderiv">dderiv</a></h4>
+Table-driven symbolic differentiation, a Gabriel benchmark, 800000 iterations.
+Uses association lists instead of the original benchmark's property lists.
+
+<p>
+<h4><a name="deriv">deriv</a></h4>
+Symbolic differentiation, a Gabriel benchmark, 800000 iterations.
+
+<p>
+<h4><a name="destruc">destruc</a></h4>
+Destructive list operations, a Gabriel benchmark, 300 iterations.
+
+<p>
+<h4><a name="diviter">diviter</a></h4>
+Divides 200 by 2 using lists as a unary notation for integers,
+a Gabriel benchmark, 400000 iterations.
+This benchmark tests
+<code>null?</code>, <code>cons</code>, <code>car</code>,
+<code>cdr</code>, and little else.
+[This benchmark allocates 320 megabytes of heap storage, so
+the C version can't get by without deallocating storage.
+The C code for this benchmark performs node-at-a-time deallocation
+using either <code>free</code> or a custom deallocator.
+On our test machine, the standard library version of <code>free</code>
+is very slow for this benchmark, and even the custom deallocator can't
+reclaim storage quite as fast as a generational garbage collector.
+Compare this benchmark with
+<code><a href="#perm9">perm9</a></code>,
+for which a custom node-at-a-time deallocator outperforms generational
+garbage collection.]
+
+<p>
+<h4><a name="divrec">divrec</a></h4>
+This benchmark is the same as idiv2 except it uses deep recursion
+instead of iteration.
+[Implementations that use the SPARC's register windows
+to implement recursion will perform poorly on this benchmark.
+That is why <code>gcc</code> performs so poorly even with the
+custom storage allocator.]
+
+<p>
+<h4><a name="browse">browse</a></h4>
+Browsing a data base, a Gabriel benchmark, 600 iterations.
+[May be a test of <code>string->symbol</code> and/or
+<code>symbol->string</code>.]
+
+<h3>Larger benchmarks: floating point</h3>
+
+<p>
+<h4><a name="fft">fft</a></h4>
+Fast Fourier Transform, a Gabriel benchmark, 2000 iterations.
+A test of floating point arithmetic.
+(I haven't yet checked to see whether it has the same bugs as the
+original Gabriel benchmark.)
+
+<p>
+<h4><a name="mbrot">mbrot</a></h4>
+Generation of a Mandelbrot set, 30 iterations.
+A test of floating point arithmetic.
+
+<p>
+<h4><a name="nucleic">nucleic</a></h4>
+Determination of a nucleic acid's spatial structure, 10 iterations.
+A test of floating point arithmetic, and a real program.
+
+<p>
+<h4><a name="pnpoly">pnpoly</a></h4>
+Testing to see whether a point is contained within a 2-dimensional
+polygon, 10000 iterations.
+A test of floating point arithmetic.
+
+<p>
+<h4><a name="ray">ray</a></h4>
+Ray tracing a simple scene, 10 iterations.
+A test of floating point arithmetic.
+This program is translated from the Common Lisp code in
+Example 9.8 of Paul Graham's book on ANSI Common Lisp.
+
+<p>
+<h4><a name="simplex">simplex</a></h4>
+Simplex algorithm, 60000 iterations.
+A test of floating point arithmetic, and a real program.
+
+<h3>Larger benchmarks: puzzles</h3>
+
+<p>
+<h4><a name="puzzle">puzzle</a></h4>
+Combinatorial search of a state space, a Gabriel benchmark, 100 iterations.
+A test of arrays and classical compiler optimizations.
+This benchmark was originally written in Pascal by Forrest Baskett.
+
+<p>
+<h4><a name="triangl">triangl</a></h4>
+Another combinatorial search similar to
+<code><a href="#puzzle">puzzle</a></code>,
+a Gabriel benchmark,
+10 iterations.
+
+<h3>Larger benchmarks: miscellaneous</h3>
+
+<p>
+<h4><a name="conform">conform</a></h4>
+A type checker written by Jim Miller, 20 iterations.
+
+<p>
+<h4><a name="dynamic">dynamic</a></h4>
+Dynamic type inference, self-applied, 10 iterations.
+Written by Fritz Henglein.
+A real program.
+
+<p>
+<h4><a name="earley">earley</a></h4>
+Earley's parsing algorithm, parsing a 9-symbol input according to one
+of the simplest ambiguous grammars, 150 iterations.
+A real program, applied to toy data.
+
+<p>
+<h4><a name="graphs">graphs</a></h4>
+This program was provided by Andrew Wright, but we don't know much
+about it, and would appreciate more information.
+This higher order program creates closures almost as often as it
+performs non-tail procedure calls.
+
+<p>
+<h4><a name="lattice">lattice</a></h4>
+Another program that was provided by Andrew Wright.
+This program may have been written by Jim Miller.
+It enumerates the order-preserving maps between finite lattices.
+
+<p>
+<h4><a name="maze">maze</a></h4>
+Constructs a maze on a hexagonal grid, 2500 iterations.
+Written by Olin Shivers.
+
+<p>
+<h4><a name="mazefun">mazefun</a></h4>
+Constructs a maze on a rectangular grid using purely functional style,
+100 iterations.
+Written by Olin Shivers.
+
+<p>
+<h4><a name="peval">peval</a></h4>
+Partial evaluation of Scheme code, 100 iterations.
+Written by Marc Feeley.
+
+<p>
+<h4><a name="scheme">scheme</a></h4>
+A Scheme interpreter evaluating a merge sort, 200 iterations.
+Written by Marc Feeley.
+
+<p>
+<h4><a name="slatex">slatex</a></h4>
+Scheme to LaTeX processor, 20 iterations.
+A test of file i/o and probably much else.
+Part of a real program written by Dorai Sitaram.
+
+<h3>Larger benchmarks: variations on <code>boyer</code></h4>
+
+<p>
+<h4><a name="boyer">boyer</a></h4>
+Bob Boyer's theorem proving benchmark, a Gabriel benchmark, 10 iterations.
+This benchmark uses association lists in place of the original benchmark's
+property lists.  The <code><a href="#nboyer">nboyer</a></code> benchmark
+is an updated version of this benchmark.
+
+<p>
+<h4><a name="smlboyer">smlboyer</a></h4>
+Translation into Scheme of a translation into Standard ML of a translation
+into Scheme of the Common Lisp code for the original
+<code><a href="#boyer">boyer</a></code> benchmark, 10 iterations.
+Thanks to Standard ML, the data structures are somewhat more convoluted
+than in the <code><a href="#boyer">boyer</a></code> benchmark, but aren't
+much better.
+
+<p>
+<h4><a name="nboyer">nboyer</a></h4>
+An updated and exponentially scalable version of the
+<code><a href="#boyer">boyer</a></code> benchmark,
+1 iteration on a problem of size 3.
+(The <code><a href="#boyer">boyer</a></code>
+and <code><a href="#boyer">smlboyer</a></code>
+benchmarks solve a problem of size 0.)
+This benchmark's data structures are considerably more appropriate than
+the data structures used in the
+<code><a href="#boyer">boyer</a></code> and
+<code><a href="#boyer">smlboyer</a></code> benchmarks.
+A test of lists, vectors, and garbage collection.
+
+<p>
+<h4><a name="sboyer">sboyer</a></h4>
+A version of <a href="#nboyer">nboyer</a> that has been tuned (by Henry
+Baker) to reduce storage allocation, making it less of a garbage collection
+benchmark and more of a compiler benchmark.  Only 4 lines of code were
+changed, and another 7 lines of code were added.
+
+<h3>Synthetic benchmarks: garbage collection</h3>
+
+<p>
+<h4><a name="gcbench">gcbench</a></h4>
+This program was written to mimic the phase structure that has been
+conjectured for a class of application programs for which garbage
+collection may represent a significant fraction of the execution time.
+This benchmark warms up by allocating and then dropping a binary tree
+of height 18.
+Then it allocates a permanent tree of height 16 and a permanent array
+of 500000 floating point numbers.
+Then it allocates about 350 megabytes of tree storage in seven phases,
+allocating about 50 megabytes per phase.
+The first phase allocates 67648 trees of height 4, dropping each tree
+before allocating the next.
+The second phase allocates and drops 16512 trees of height 6,
+and so on to the last phase, which allocates 8 trees of height 16.
+Each phase is divided into two subphases.  The first subphase allocates
+trees top-down using side effects, while the second subphase allocates
+trees bottom-up without using side effects.
+This benchmark was written in Java by John Ellis and Pete Kovac,
+modified by Hans Boehm, and translated into Scheme, Standard ML,
+C++, and C by William Clinger.
+
+<p>
+One glaring difference between this benchmark and typical application
+code is that none of the trees are traversed after they are constructed.
+[This puts C and C++ at a disadvantage, because languages that rely on
+explicit deallocation must traverse the trees to deallocate their storage.]
+
+<p>
+[Generational garbage collectors perform extremely well on the early phases
+of this benchmark, but are likely to perform worse than non-generational
+collectors on the last phase or two.]
+
+<p>
+<h4><a name="perm9">perm9</a></h4>
+Creates a list containing all 362880 permutations of a
+list of 9 integers, in grey code order, using Zaks's
+algorithm, 5 iterations.
+A test of storage allocation and garbage collection.
+At the end of each iteration, the oldest half of the
+live storage becomes garbage.
+
+<p>
+[This benchmark is particularly difficult for generational garbage
+collectors, since it violates their assumption that young objects
+have a shorter future life expectancy than older objects.
+Nevertheless the generational collectors used in Larceny and in
+Chez Scheme perform reasonably well.]
+
+<p>
+[This benchmark is also difficult for C, because the permutation lists
+share much of their substructure.  To avoid freeing nodes more than
+once, the C version of this benchmark performs an extra pass over the
+lists to compute (biased negative) reference counts for each node:
+<pre>
+  for ( p = perms; p != 0; p = p->cdr ) {
+    for ( x = p->car; x != 0; x = x->cdr ) {
+      if ( x->num > 0 )
+        x->num = 0;
+      else --(x->num);
+    }
+  }
+</pre>
+This extra pass can be omitted when using a storage allocator written
+especially for this benchmark instead of using <code>malloc</code> and
+<code>free</code>.  With this custom allocator, the code generated by
+gcc runs almost 10 times as fast.  The code shown above does not
+account for very much of this improvement; most of the improvement
+must be blamed on the library code for <code>free</code>.]
+
+<p>
+<hr>
+
+<p>
+Last updated 6 July 1999.
+
+</body>
+</html>

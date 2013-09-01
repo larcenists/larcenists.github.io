@@ -1,0 +1,259 @@
+<html>
+<title>
+Twobit Pass 4: frame optimization
+</title>
+
+<body>
+
+<p>
+<h2>
+Twobit Pass 4: frame optimization
+</h2>
+
+<p>
+Twobit's code generator requires a stack frame whenever:
+
+<p>
+<ul>
+<li>A procedure call occurs in a non-tail-recursive position.
+<li>A temporary must be allocated, but no registers are
+    available.
+</ul>
+
+<p>
+When should these stack frames be allocated and deallocated?
+
+<p>
+Some compilers allocate a stack frame upon entry to every
+procedure.  This is inefficient for procedures that may
+contain non-tail-recursive calls but seldom perform them.
+
+<p>
+Some compilers allocate a separate stack frame for every
+non-tail-recursive call.  This is inefficient for procedures
+that perform many such calls.
+
+<p>
+Twobit performs a simple optimization to reduce the
+overhead of creating and initializing stack frames.
+The goals of this optimization are:
+
+<p>
+<ol>
+<li>To create no more than one stack frame per procedure
+    activation.
+<li>To create a stack frame only when necessary.
+</ol>
+
+<p>
+It is not always possible to achieve both of these goals.
+Twobit always achieves the first goal, but it sometimes
+creates an unnecessary stack frame.
+<a href="#chez">Chez Scheme</a>
+always achieves the second goal but does not
+always achieve the first.
+
+<p>
+<h3>Control flow graphs</h3>
+
+<p>
+In the subset of Scheme that Twobit uses as its
+<a href="syntax.html">intermediate form</a>,
+an expression represents straight-line code unless
+it contains a conditional expression or a non-tail-recursive
+procedure call.
+If non-tail calls are regarded as basic blocks with
+unknown effects, then the body of a lambda expression
+becomes an acyclic control flow graph with multiple
+exit points.
+The number of exit points is equal to 1 plus the number
+of conditional expressions that occur in a tail-recursive
+position.
+Fork points arise from conditional expressions, and come
+right after the test.
+
+<p>
+For example, the doubly recursive Fibonacci procedure
+
+<p>
+<pre>
+  (define fib
+    (lambda (n)
+      (if (< n 2)
+          n
+          (+ (fib (- n 1))
+             (fib (- n 2))))))
+</pre>
+
+<p>
+contains one fork point and two exit points.
+Its control flow graph is
+
+<p>
+<pre>
+                     ----------
+                     |  entry |
+                     ----------
+                          |
+                          |
+                          *
+                        *   *
+                      *       *
+                        *   *
+                      /   *   \
+                    /           \
+                  /               \
+                /                   \
+            *********        *****************
+            *   n   *        * (fib (- n 1)) *
+            *********        *****************
+                                     |
+                             *****************
+                             * (fib (- n 2)) *
+                             *****************
+                                     |
+                             *****************
+                             *       +       *
+                             *****************
+</pre>
+
+<p>
+There are only two kinds of positions within a control
+flow graph at which Twobit might allocate a stack frame:
+
+<p>
+<ul>
+<li>At entry.
+<li>After a conditional test has selected one of two branches.
+</ul>
+
+<p>
+Let's call these positions the
+<dfn>save positions</dfn>.
+If a stack frame is needed anywhere in the control flow
+graph, then at least one save position will dominate all
+places where a stack frame is needed.  These dominating
+save positions are totally ordered by the control flow
+graph.
+Twobit will allocate a stack frame at the last save
+position that dominates all places where a stack frame is
+needed.
+
+<p>
+If no stack frame is needed, then Twobit will not allocate one.
+
+<p>
+For the Fibonacci example, Twobit will not allocate a stack
+frame for the base case.  In the recursive case, Twobit will
+allocate a stack frame immediately after the test has
+determined that the recursive branch will be taken.
+
+<p>
+<h3>Frame optimization</h3>
+
+<p>
+Twobit generates a <code>save</code> instruction,
+which allocates a stack frame, at entry.
+The internal representation of the operand for this
+<code>save</code> instruction is a mutable data structure
+that the code generator uses to keep track of the maximum
+number of data slots within the frame that are live at any
+time.
+This maximum is initialized to -1.
+
+<p>
+Twobit generates code as though a stack frame has been
+allocated.
+Any use of the stack frame will ensure a non-negative value
+for the operand of the nearest <code>save</code> instruction that
+dominates the use.
+When the code generator reaches a new save position, it
+checks the mutable data structure to see whether
+a stack frame has been required to that point.
+If so, then it does not generate a <code>save</code> instruction
+at that save position, but continues to use the data structure
+for the previously generated <code>save</code> instruction.
+If no stack frame has been required, however,
+then it generates another <code>save</code> instruction,
+with a new mutable data structure as its operand.
+
+<p>
+A <code>pop</code> instruction is generated for returns
+and tail-recursive calls.  Its operand matches the operand
+of the nearest <code>save</code> instruction that dominates it.
+The <a href="pass5.html">local optimizer</a>
+and <a href="assembly.html">assembler</a>
+ignore <code>save</code> and <code>pop</code> instructions
+whose operand is -1.
+
+<p>
+<h3><a name="chez">Comparison with Chez Scheme</a></h3>
+
+<p>
+Twobit's frame optimization is conservative in the sense that
+no procedure activation ever allocates more than one frame.
+Sometimes a stack frame will be allocated when none is actually
+needed, however.
+Consider
+
+<p>
+<pre>
+  (define f
+    (lambda (x y z)
+      (if (> x 0)
+          (show x))
+      (if (> y 0)
+          (show y))
+      (if (> z 0)
+          (show z))
+      (list x y z)))
+</pre>
+
+<p>
+Twobit will allocate a stack frame for <code>f</code>
+even if all of its arguments are zero.
+Chez Scheme would not.
+On the other hand, Chez Scheme would allocate three
+separate stack frames for <code>f</code> if
+all of its arguments are positive.
+Twobit would allocate only one.
+
+<p>
+The algorithm used in Chez Scheme is a form of total
+redundacy elimination for register saves.
+For more information see
+
+<p>
+<blockquote>
+Robert G Burger, Oscar Waddell, and R. Kent Dybvig.
+Register allocation using lazy saves, eager restores,
+and greedy shuffling.
+In <cite>1995 ACM Conference on Programming Language
+Design and Implementation</cite>, June 1995,
+pages 130-138.
+</blockquote>
+
+<p>
+Frame optimization in Twobit is similar to partial
+redundancy elimination, but is not quite the same.
+For example, Twobit will generate code to allocate
+a stack frame within each arm of the conditional
+expression in
+
+<p>
+<pre>
+  (define f
+    (lambda (n)
+      (if (< n 2)
+          (begin (show n)
+                 n)
+          (+ (f (- n 1))
+             (f (- n 2))))))
+</pre>
+
+<p>
+Partial redundancy elimination would reduce code space
+by hoisting this code to a common dominator.
+
+</body>
+</html>

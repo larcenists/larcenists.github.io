@@ -1,0 +1,52 @@
+<html>
+<title>
+Pass 2 Order of optimizations
+</title>
+
+<body>
+
+<p>
+<h2>Order of optimizations</h2>
+
+<p>
+Most of Twobit's optimizations are performed by a single pass,
+with minimal cleanup after each transformation of the code.
+This makes the order in which optimizations are performed fairly
+critical.  This order is determined by the procedure that
+optimizes a lambda expression L.
+
+<p>
+When the body of L is optimized, any lambda expressions that may
+be contained within L are optimized recursively.
+This optimization may detect known local procedures, which are
+recorded as internal definitions and hoisted to the
+outermost of the inner lambda expressions.
+After all of the nested lambda expressions have been optimized,
+<a href="p2lifting.html">incremental lambda lifting</a>
+hoists their internal definitions to L.
+
+<p>
+<a href="p2saa.html">Single assignment analysis</a> then examines the
+body of L to find known local procedures,
+which it records as additional internal definitions.
+<a href="p2sae.html">Single assignment elimination</a> attempts to
+convert assignments to the formal parameters of L
+into <code>LET</code> bindings.
+All assignments to the formal parameters of L that remain after single
+assignment elimination are eliminated by
+<a href="p2ae.html">assignment elimination</a>.
+Calls to newly detected known local procedures may then be
+inlined.
+The optimized form of L is then returned.
+
+<p>
+The internal definitions of L are not
+lifted out of L until <em>after</em>
+all of the above optimizations have been
+performed and the optimized form of L has been
+returned.
+Lambda lifting is thus the very last optimization to be
+performed on a lambda expression.
+
+</body>
+</html>

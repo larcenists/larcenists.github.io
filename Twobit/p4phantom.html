@@ -1,0 +1,142 @@
+<html>
+<title>
+Twobit Pass 4
+</title>
+
+<body>
+
+<p>
+<h1>
+Twobit Pass 4: Elimination of redundant stores and loads
+</h1>
+
+<p>
+Twobit's code generator and on-the-fly register allocator generally
+assume that the contents of all registers have been saved into the
+current stack frame.
+To achieve this invariant, the code generator emits a <em>phantom</em>
+store instruction for each variable or temporary value that is computed
+into a register.
+These phantom instructions are represented as <code>nop</code>
+instructions whose operands encode a store instruction.
+If the value that is stored by the phantom instruction must later
+be loaded from the stack frame, then the phantom instruction is
+converted into a real store instruction.  If the value is never
+loaded from the stack frame, then the phantom instruction remains
+a <code>nop</code> and will be ignored by the
+<a href="assembly.html">assembler</a>.
+
+<p>
+When a phantom store instruction is converted into a real store
+instruction, the stack slot to be used is selected by an on-the-fly
+stack slot allocator according to the following algorithm:
+If there exists a previously allocated stack slot that was no longer
+in use when the phantom store instruction was generated, and that
+slot has not been allocated for any other phantom store instruction,
+then one of those slots will be allocated; otherwise a stack slot
+will be allocated by expanding the size of the current stack frame.
+
+<p>
+For the
+<a href="pass1.html#example1"><code>reverse-map</code></a>
+example, the real output from pass 4, complete with
+<code>nop</code> instructions, is shown below.
+In the phantom instruction
+<pre>
+        nop     13,0,-1
+</pre>
+the 13 stands for the mnemonic of a store instruction,
+the 0 is the register to be stored, and
+the -1 indicates that the stack slot has not yet been determined
+by the stack slot allocator.
+
+<p>
+<pre>
+((22 -1)                ;       save        -1
+ (29 13 0 -1)           ;       nop         13,0,-1
+ (17 (                  ;       lambda      *,0,*
+      (62)              ;       ;           .proc
+      (19 2)            ;       ;           args=       2
+      (22 -1)           ;       ;           save        -1
+      (29 13 0 -1)      ;       ;           nop         13,0,-1
+      (29 13 1 -1)      ;       ;           nop         13,1,-1
+      (29 13 2 -1)      ;       ;           nop         13,2,-1
+      (1 unspecified)   ;       ;           op1         unspecified
+      (29 13 1 -1)      ;       ;           nop         13,1,-1
+      (29 13 2 -1)      ;       ;           nop         13,2,-1
+      (5 ())            ;       ;           const       ()
+      (15 3)            ;       ;           setreg      3
+      (29 13 3 -1)      ;       ;           nop         13,3,-1
+      (29 13 3 -1)      ;       ;           nop         13,3,-1
+      (25 -1)           ;       ;           pop         -1
+      (32 1001 3)       ;       ;           branch      1001,3
+      (60 4)            ;       ;           .align      4
+      (63 1001)         ;       ;   L1001:
+      (62)              ;       ;           .proc
+      (58 #(.loop|2     ;       ;           .proc-doc   #(.loop|2
+            #f 2 #f #f  ;       ;                         #f 2 #f #f
+            (l x)))     ;       ;                         (l x))
+      (22 -1)           ;       ;           save        -1
+      (29 13 0 -1)      ;       ;           nop         13,0,-1
+      (29 13 1 -1)      ;       ;           nop         13,1,-1
+      (29 13 2 -1)      ;       ;           nop         13,2,-1
+      (29 13 3 -1)      ;       ;           nop         13,3,-1
+      (14 2 .l|3)       ;       ;           reg         2,.l|3
+      (1 pair?)         ;       ;           op1         pair?
+      (33 1004 3)       ;       ;           branchf     1004,3
+      (22 3)            ;       ;           save        3
+      (13 0 0)          ;       ;           store       0,0
+      (13 1 2)          ;       ;           store       1,2
+      (13 2 3)          ;       ;           store       2,3
+      (13 3 1)          ;       ;           store       3,1
+      (14 2 .l|3)       ;       ;           reg         2,.l|3
+      (1 car)           ;       ;           op1         car
+      (15 7)            ;       ;           setreg      7
+      (29 13 7 -1)      ;       ;           nop         13,7,-1
+      (29 13 7 -1)      ;       ;           nop         13,7,-1
+      (14 1 .f|1|6)     ;       ;           reg         1,.f|1|6
+      (15 2)            ;       ;           setreg      2
+      (29 13 2 -1)      ;       ;           nop         13,2,-1
+      (16 7 1)          ;       ;           movereg     7,1
+      (14 2)            ;       ;           reg         2
+      (23 1007)         ;       ;           setrtn      1007
+      (21 1)            ;       ;           invoke      1
+      (60 4)            ;       ;           .align      4
+      (63 1007)         ;       ;   L1007:
+      (61)              ;       ;           .cont
+      (12 0 0)          ;       ;           load        0,0
+      (12 7 1)          ;       ;           load        7,1
+      (2 cons 7)        ;       ;           op2         cons,7
+      (15 3)            ;       ;           setreg      3
+      (29 13 3 -1)      ;       ;           nop         13,3,-1
+      (29 13 3 -1)      ;       ;           nop         13,3,-1
+      (12 1 2)          ;       ;           load        1,2
+      (29 13 1 -1)      ;       ;           nop         13,1,-1
+      (10 3)            ;       ;           stack       3
+      (1 cdr)           ;       ;           op1         cdr
+      (15 2)            ;       ;           setreg      2
+      (29 13 2 -1)      ;       ;           nop         13,2,-1
+      (29 13 2 -1)      ;       ;           nop         13,2,-1
+      (25 3)            ;       ;           pop         3
+      (32 1001 3)       ;       ;           branch      1001,3
+      (63 1004)         ;       ;    L1004:
+      (22 -1)           ;       ;           save        -1
+      (29 13 0 -1)      ;       ;           nop         13,0,-1
+      (29 13 1 -1)      ;       ;           nop         13,1,-1
+      (29 13 2 -1)      ;       ;           nop         13,2,-1
+      (29 13 3 -1)      ;       ;           nop         13,3,-1
+      (14 3 .x|3)       ;       ;           reg         3,.x|3
+      (25 -1)           ;       ;           pop         -1
+      (26))             ;       ;           return
+     0                  ;       ;           
+     #(reverse-map      ;       ;           
+       #f 2 #f #f       ;       ;           
+       (f l)))          ;       ;           
+ (7 reverse-map)        ;       setglbl     reverse-map
+ (5 reverse-map)        ;       const       reverse-map
+ (25 -1)                ;       pop         -1
+ (26))                  ;       return
+</pre>
+
+</body>
+</html>

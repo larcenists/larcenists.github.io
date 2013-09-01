@@ -1,0 +1,135 @@
+<html>
+<title>
+Twobit: MacScheme machine
+</title>
+
+<body>
+
+<p>
+<h3>The MacScheme machine</h3>
+
+<p>
+Pass 4 of Twobit generates assembly code for a hypothetical
+machine, which is confusingly called the MacScheme machine.
+(It was designed to
+overcome the shortcomings of a similar intermediate
+language used in MacScheme.)
+Its instructions were designed for easy peephole optimization
+when generating code for real RISC machines.
+
+<p>
+The MacScheme machine contains a <code>RESULT</code> register
+and general registers
+<code>REG0</code>,
+<code>REG1</code>,
+<code>REG2</code>,
+and so forth.
+<code>REG0</code> always holds the currently executing procedure,
+providing access to its constants and free variables.
+
+<p>
+Twobit's front end translates
+<a href="http://www.iro.umontreal.ca/~feeley">Feeley</a>'s
+iterative factorial example
+
+<p>
+<pre>
+  (define fact
+    (lambda (n)
+      (let loop ((i n) (ans 1))
+        (if (= i 0)
+            ans
+            (loop (- i 1) (* ans i))))))
+</pre>
+
+<p>
+into
+
+<p>
+<pre>
+(let* ((.T12 (lambda (.n|1)
+               (define .loop|7
+                 (lambda (.i|8 .ans|8)
+                   (let ((.T3 (= .i|8 0)))
+                     (if .T3
+                         .ans|8
+                         (let* ((.REG2 (* .ans|8 .i|8)) (.REG1 (- .i|8 1)))
+                           (.loop|7 .REG1 .REG2))))))
+               (.loop|7 .n|1 1)))
+       (.T13 (set! fact .T12)))
+  'fact)
+</pre>
+
+<p>
+The <a href="pass4.html">code generator</a>
+and <a href="pass5.html">local optimizer</a>
+translate this into the MacScheme machine code
+
+<p>
+<pre>
+        lambda      1000,0
+        setreg      7
+        reg         7,.T12
+        setglbl     fact
+        const       fact
+        return      
+L1000
+        .proc       
+        args=       1
+        const       1
+        setreg      2
+        branch      1001,2
+        .align      4
+L1001
+        .proc       
+        .proc-doc   #(.loop|7 #f 2 #f #f (i ans))
+        reg         1,.i|8
+        op2imm      =,0
+        branchf     1005,2
+        reg         2,.ans|8
+        return      
+L1005
+        reg         2,.ans|8
+        op2         *,1
+        setreg      2
+        reg         1,.i|8
+        op2imm      -,1
+        setreg      1
+        branch      1001,2
+
+</pre>
+
+<p>
+With peephole optimization and tagged fixnum arithmetic,
+the corresponding MIPS code might be
+
+<pre>
+L1000:                          L1000:
+        args=       1                   subi    $2,$2,1
+                                        beq     $2,$0,L1
+                                        [arity exception]
+                                L1:
+        const       1                   ori     $5,$0,4
+        setreg      2
+        branch      1001,2
+L1001:                          L1001:
+        reg         1                   bne     $4,$0,L1004
+        op2imm      =,0
+        branchf     1004,2
+        reg         2                   ori     $2,$5,0
+        return                          jr      $ra
+L1004:                          L1004:
+        reg         2                   asr     $3,$4,2
+        op2         *,1                 muls    $5,$5,$3
+        setreg      2
+        reg         1                   subi    $4,$4,4
+        op2imm      -,1
+        setreg      1
+        branch      1001,2              b       L1001
+</pre>
+
+<p>
+Last updated 27 October 2002.
+
+</body>
+</html>

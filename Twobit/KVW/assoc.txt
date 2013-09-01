@@ -1,0 +1,30 @@
+; associative array simulation
+; (try 10000)
+; Modified 26 Nov 1997 by William D Clinger to fix bug (see ;wdc).
+
+(define table '())  ;wdc
+
+(define (loadtable i n)
+	(if (< i n)
+		(begin
+		(let* ((key (number->string i 16))
+			(entry (assoc key table)))
+		(if entry
+			(set-cdr! entry (list (+ 1 (cadr entry))))
+			(set! table (cons (list key 1) table))))
+		(loadtable (+ i 1) n))))
+
+(define c 0)
+
+(define (searchtable i n)
+	(if (< i n)
+		(begin
+		(let* ((key (number->string i))
+			(entry (assoc key table)))
+		(if entry
+			(set! c (+ c 1))))
+		(searchtable (+ i 1) n))))
+
+(define (try n)
+	(loadtable 1 n)
+	(searchtable 1 n))

@@ -1,0 +1,104 @@
+<html>
+<title>
+Twobit: benchmarks
+</title>
+
+<body>
+
+<h1>Benchmarks</h1>
+<p>
+Last updated 20 July 2008.
+</p>
+
+<p>
+We have graphed the performance of several popular compilers
+on the
+<a href="http://www.iro.umontreal.ca/~gambit/bench.html">
+Gambit benchmarks</a> collected by Marc Feeley.
+</p>
+
+<p>
+We have also
+<a href="benchmarks2008.html">graphed the performance of
+several implementations of R6RS Scheme</a>
+on a set of
+<a href="benchmarksAboutR6.html">R6RS benchmarks</a>
+collected by Will Clinger.
+The
+<a href="benchmarksAboutR6.html">R6RS benchmarks</a>
+include improved versions of most
+<a href="http://www.iro.umontreal.ca/~gambit/bench.html">
+Gambit benchmarks</a>
+and also include new benchmarks that test some
+of the more important features that were introduced by the R6RS.
+</p>
+
+<p>
+As always, please keep in mind that the results of benchmarking
+<a href="bmcrock.temp.html">should not be taken too seriously</a>.
+</p>
+
+<a name="fake">
+<h2>Fake R6RS Benchmarks</h2>
+
+<p>
+The R5RS-compatible <strong>Fake R6RS</strong> benchmarks
+consist of reasonably portable R5RS programs, tested as safe
+compiled code with generic arithmetic
+and immutable bindings for all of the standard R5RS procedures.
+We have timings for two very different machines:
+</p>
+<div>
+    <ul>
+    <li><a href="benchmarksFakeR6Linux.html">a 2.8 GHz Linux machine</a>
+    <li><a href="benchmarksFakeR6.html">a 1.5 GHz SunBlade 1500</a>
+    </ul>
+</div>
+
+
+<h3>The Benchmarked Systems</h3>
+
+<div>
+<ul>
+<li><a href="http://larceny.ccs.neu.edu/">Larceny</a>
+    v0.96, v0.95, v0.94, and v0.93
+<li><a href="http://larceny.ccs.neu.edu/">Petit Larceny</a> v0.96
+<li><a href="http://www-sop.inria.fr/mimosa/fp/Bigloo/">Bigloo</a>
+    3.0a (Linux) or 2.7a (Solaris)
+<li><a href="http://www.scheme.com/csug/index.html">Chez Scheme</a> 6.1
+    (Solaris only)
+<li<a href="http://www.scheme.com/petitechezscheme.html">Petite
+    Chez Scheme</a> 7.3
+    (Linux only)
+<li><a href="http://www.call-with-current-continuation.org/">Chicken</a>
+    Version 2.732 (Linux) or Version 2, Build 5 (Solaris)
+<li><a href="http://www.iro.umontreal.ca/~gambit/">Gambit-C</a>
+    v4.1.0 (Linux) or v4.0 beta 20 (Solaris)
+<li><a href="http://www.cs.indiana.edu/~aghuloum/ikarus/">Ikarus</a>
+    0.0.2 (Linux only)
+<li><a href="http://www-swiss.ai.mit.edu/projects/scheme/">MIT Scheme</a>
+    7.7.90.+ (Linux only)
+<li><a href="http://www.plt-scheme.org/">MzScheme</a> version 370
+<li><a href="http://s48.org/">Scheme 48</a> version 1.7
+</ul>
+</div>
+
+<h2>Explanation of Timings</h2>
+
+<p>
+The numbers shown are for a single run on a machine with no other users.
+Most numbers give the elapsed time in seconds for a single run on
+a machine with no other users, but cpu time is shown for MIT Scheme.
+The bar graphs show relative performance.  Longer is better.
+</p>
+
+<p>
+When no timing is shown for a system, we probably weren't able
+to get that system to run that particular benchmark without
+changing the compiler options or the benchmark.
+Please remember that the problem may be caused by non-portable
+code in the benchmark.
+</p>
+
+</body>
+</html>

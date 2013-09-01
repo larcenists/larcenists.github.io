@@ -1,0 +1,97 @@
+<html>
+<title>
+Conclusions Reconsidered
+</title>
+
+<body>
+
+<p>
+A few of Kernighan and Van Wyk's conclusions about the performance
+of Scheme resulted from their choice of an extremely slow interpreter
+as their canonical implementation of Scheme.
+What would they have concluded if they had benchmarked a compiler
+instead?
+
+<p>
+<hr>
+
+<p>
+One of Kernighan and Van Wyk's conclusions was that purely functional
+tail recursion is no faster in Scheme than an imperative style that
+performs assignments to global variables:
+
+<p>
+<blockquote>
+we wrote two Scheme versions of the timing loop, string construction,
+and word count, one using the tail-recursion favored by Scheme aficionados,
+the other using the barbarian import <code>set!</code>;
+the difference in performance
+between the two versions never exceeded ten percent, and did not
+consistently favor one version over the other.
+</blockquote>
+
+<p>
+In Larceny, however, the
+<a href="sumloop2.txt">tail recursive version of the timing loop</a>
+is over three times as fast as the version using <code>set!</code>.
+The tail recursive version is only twenty percent faster in Gambit-C
+(with fixnum arithmetic) and in Chez Scheme, but that is still a
+dramatic difference.
+
+<p>
+This difference does not exist with the interpreted implementations,
+nor with the other two benchmarks mentioned above,
+because the overhead of interpretation, string manipulation,
+or character i/o are so dominant that they mask the expense of
+assignments.
+
+<p>
+It is also worth noting that Scheme's <code>do</code> construct,
+which Kernighan and Van Wyk characterized as an iteration construct
+"for unreconstructed imperative-style programmers",
+is not imperative at all:
+The loop variables are updated by binding, as in any other tail
+recursion, not by assignment.
+In compiled implementations of Scheme, the <code>do</code> construct
+has exactly the same overhead as the tail recursion for which it is
+an abbreviation.
+
+<p>
+<hr>
+
+<p>
+Concerning Scheme's poor i/o performance, Kernighan and Van Wyk
+concluded that
+
+<p>
+<blockquote>
+The enormous Scheme runtimes appear to be caused by the lack of
+facilities for buffered input and output.
+</blockquote>
+
+<p>
+This is true, although Chez Scheme shows that Scheme can get to
+within a factor of 2 of C even on i/o benchmarks.
+It is almost entirely a matter of implementation effort,
+and I hope the Kernighan and Van Wyk i/o benchmarks will encourage
+Scheme implementors to improve their i/o performance.
+(That's easy for me to say, because we've already made these
+improvements in a more recent version of Larceny.)
+
+<p>
+<hr>
+
+<p>
+<blockquote>
+Scheme appears to be very roughly comparable with Tcl...various
+compilation techniques improve this behavior.
+</blockquote>
+
+On Kernighan and Van Vyk's four computational (as opposed to i/o)
+benchmarks, compiled Scheme ranges from 6 times as slow to
+4 times as fast as unoptimized gcc.
+This range of results is typical for micro-benchmarks that compare
+compiled Scheme with compiled C.
+
+<p>
+Last updated 2 December 1997

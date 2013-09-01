@@ -1,0 +1,121 @@
+<html>
+<title>
+Twobit Pass 1
+</title>
+
+<body>
+
+<p>
+<h1>
+Twobit Pass 1: standardization of syntax.
+</h1>
+
+<p>
+Pass 1 collects information needed for optimization while
+converting a Scheme definition or expression into the front end's
+<a href="syntax.html">intermediate form</a>.
+It performs
+<abug href="bugs.html#hygienic">hygienic macro expansion</abug>,
+eliminates internal definitions,
+checks syntax, and gives a unique name to each local variable
+(<em>alpha conversion</em>).
+Pass 1 also creates for each local variable a table
+containing all references, assignments, and procedure calls
+to that variable.
+
+If the <code>integrate-usual-procedures</code> compiler switch
+is true, then Pass 1 performs some
+<abug href="bugs.html#folding">constant folding</abug> and normalizes
+the number of arguments passed to procedures such as <code>+</code>
+and <code>make-vector</code>.
+
+<p>
+<a name="example1">As an example</a>, Pass 1 converts
+
+<p>
+<pre>
+(define reverse-map
+  (lambda (f l)
+    (define (loop l x)
+      (if (pair? l)
+          (loop (cdr l)
+                (cons (f (car l))
+                      x))
+          x))
+    (loop l '())))
+</pre>
+
+<p>
+into a <a href="pass1realoutput.html">forbiddingly large</a>
+intermediate form that is equivalent to
+
+<p>
+<pre>
+((lambda ()
+   (begin
+     (set! reverse-map
+       (lambda (.f|1 .l|1)
+         ((lambda (.loop|2)
+            (begin
+              (set! .loop|2
+                (lambda (.l|3 .x|3)
+                  (if (pair? .l|3)
+                      (.loop|2
+                        ((lambda (.x|6|9)
+                           (begin
+                             (.check! (pair? .x|6|9) '1 .x|6|9)
+                             (.cdr:pair .x|6|9)))
+                         .l|3)
+                        (cons (.f|1 ((lambda (.x|15|18)
+                                       (begin
+                                         (.check! (pair? .x|15|18) '0 .x|15|18)
+                                         (.car:pair .x|15|18)))
+                                     .l|3))
+                              .x|3))
+                      .x|3)))
+              (.loop|2 .l|1 '())))
+          (unspecified))))
+     'reverse-map)))
+</pre>
+
+<p>
+This would be a legal expression of IEEE Scheme,
+except the renamed identifers are illegal:
+They have been prefixed by a period and contain a vertical bar.
+These illegal characters prevent any conflict with the names of
+legal global variables, which are not renamed.
+When Twobit is used as a preprocessor,
+legal but obscure sequences of characters are used instead of the
+period and vertical bar.
+
+<p>
+<a name="defelimination">The internal definition</a>
+of <code>loop</code> has been converted
+into a <code>LET</code> that binds <code>.loop|2</code> to a newly
+allocated location whose contents are undefined, and then stores
+the result of a lambda expression into that location.
+That is a literal rendering of the official semantics for an
+internal definition in Scheme, but most optimizing compilers do not
+expand internal definitions and <code>LETREC</code>s to such a low
+level.
+
+<p>
+Calls to certain of Scheme's standard library procedures, including
+<code>car</code> and <code>cdr</code>, have been expanded into calls
+to low-level procedures that are protected by explicit run-time checks.
+
+<p>
+The output of Pass 1 has several important properties:
+<ul>
+<li>There are no internal definitions.
+<li>No identifier is bound in more than one place.
+<li>No identifier contains an upper case letter.
+</ul>
+
+<p>
+Since there are no internal definitions in the output of Pass 1,
+<a href="pass2.html">Pass 2</a> has only seven kinds of expression
+to optimize.
+
+</body>
+</html>

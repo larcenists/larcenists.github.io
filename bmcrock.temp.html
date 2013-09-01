@@ -1,0 +1,127 @@
+<html>
+<title>
+Benchmarks
+</title>
+
+<body>
+
+<p>
+<h3>
+Benchmarks are a crock
+</h3>
+
+<p>
+With modern superscalar architectures, 5-level
+memory hierarchies, and wide data paths, changing the
+alignment of instructions and data can easily change
+the performance of a program by 20% or more, and Hans
+Boehm has witnessed a spectacular 100% variation in
+user CPU time while holding the executable file
+constant.
+Since much of this alignment is determined by the
+linker, loader, and garbage collector, most
+individual compiler optimizations are in the noise.
+To evaluate a compiler properly, one must often look
+at the code that it generates, not the timings.
+
+<p>
+<h4>Our benchmarks may not be representative</h4>
+
+<p>
+Many of our benchmarks test only a few aspects of performance.
+Such benchmarks are good if your goal is to learn what an implementation
+does well or not so well, which is our main concern.
+Such benchmarks are not so good if your goal is to predict how well an
+implementation will perform on "typical" Scheme programs.
+
+<p>
+Some of our benchmarks are derived from the computational kernels
+of real programs, or contain modules that are derived from or known
+to perform like the computational kernels of real programs:
+<code><a href="benchmarks2.temp.html#fft">fft</a></code>,
+<code><a href="benchmarks2.temp.html#nucleic">nucleic</a></code>,
+<code><a href="benchmarks2.temp.html#ray">ray</a></code>,
+<code><a href="benchmarks2.temp.html#simplex">simplex</a></code>,
+<code><a href="benchmarks2.temp.html#compiler">compiler</a></code>,
+<code><a href="benchmarks2.temp.html#conform">conform</a></code>,
+<code><a href="benchmarks2.temp.html#dynamic">dynamic</a></code>.
+<code><a href="benchmarks2.temp.html#earley">earley</a></code>,
+<code><a href="benchmarks2.temp.html#maze">maze</a></code>,
+<code><a href="benchmarks2.temp.html#parsing">parsing</a></code>,
+<code><a href="benchmarks2.temp.html#peval">peval</a></code>,
+<code><a href="benchmarks2.temp.html#scheme">scheme</a></code>,
+<code><a href="benchmarks2.temp.html#slatex">slatex</a></code>,
+<code><a href="benchmarks2.temp.html#nboyer">nboyer</a></code>,
+<code><a href="benchmarks2.temp.html#sboyer">sboyer</a></code>.
+These benchmarks are not so good for determining what an implementation
+does well or less well, because it may be hard to determine the reasons
+for an unusually fast or slow timing.
+If one of these benchmarks is similar to the programs that matter to you,
+however, then it may be a good predictor of performance.
+On the other hand, it may not be.
+
+<p>
+<h4>Real programs may not be representative either</h4>
+
+<p>
+The execution time of a program is often dominated by the time
+spent in very small pieces of code.  If an optimizing compiler happens
+to do a particularly good job of optimizing these hot spots, then the
+program will run quickly.  If a compiler happens to do an unusually
+poor job of optimizing one or more of these hot spots, then the program
+will run slowly.
+For example, compare
+<code><a href="benchmarks2.temp.html#takl">takl</a></code>
+with
+<code><a href="benchmarks2.temp.html#ntakl">ntakl</a></code>,
+or
+<code><a href="benchmarks2.temp.html#nboyer">nboyer</a></code>
+with
+<code><a href="benchmarks2.temp.html#sboyer">sboyer</a></code>.
+
+<p>
+If the hot spots occur within library routines, then a compiler may
+not affect the performance of the program very much.  Its performance
+may be determined by those library routines.
+For example, consider the performance of <code>gcc</code> on the
+<code><a href="benchmarks2.temp.html#diviter">diviter</a></code>
+or
+<code><a href="benchmarks2.temp.html#perm9">perm9</a></code>
+benchmarks.
+
+<p>
+The performance of a benchmark, even if it is derived from a real program,
+may not help to predict the performance of similar programs that have
+different hot spots.
+
+<p>
+<h4>A note on C and C++</h4>
+
+<p>
+It is well known that C and C++ are faster than
+any higher order or garbage collected language.
+If some benchmark suggests otherwise, then this merely shows
+that the author of that benchmark does not know how to write
+efficient C code.
+
+<p>
+As an example of C code that is much faster than anything
+that could be written in Scheme, I recommend
+<blockquote>
+<a href="http://www.cs.Princeton.EDU:80/faculty/appel/">Andrew
+W Appel</a>.
+Intensional equality ;-) for continuations.
+<cite>ACM SIGPLAN Notices</cite> 31(2),
+February 1996, pages 55-57.
+</blockquote>
+
+<p>
+<hr>
+</p>
+
+<p>
+Last updated 26 December 2007.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,1343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="default.css" rel="stylesheet" type="text/css" />
+    <link href="benchmarks.css" rel="stylesheet" type="text/css" />
+    <link rev="made" href="mailto:larceny@ccs.neu.edu" />
+    <title>
+      The Larceny Project -- R6RS Benchmarks
+    </title>
+    <style type="text/css">
+      .red    { color: red; }
+    </style>
+  </head>
+
+<body>
+
+<!-- start header -->
+<div id="strip1">&nbsp;</div>
+<div id="strip2">&nbsp;</div>
+<div id="header">
+  <div id="logo">
+    <h1><a href="#">
+        <img src="images/larceny.png" alt="The Larceny Project"/>
+        </a>
+    </h1>
+  </div>
+</div>
+<!-- end header -->
+
+<!-- start page -->
+
+<div id="page">
+<!-- start content -->
+<div id="content">
+
+
+<div class="post">
+<h2 class="title">Benchmarks ("Genuine R6RS")</h2>
+
+<div class="entry">
+<p>
+<em>Timings last updated 3 September 2009.</em>
+<br />
+<em>Last updated 28 January 2010.</em>
+</p>
+<p>
+<a href="benchmarksAboutR6.html">These benchmarks</a>
+are portable R6RS top-level programs.
+</p>
+<p>
+Benchmarked on a 1.5 GHz, 64-bit SunBlade 1500.
+The numbers show run time in seconds (except for the
+<code><a href="benchmarksAboutR6.html#geometricMean">geometricMean</a></code>
+pseudo-benchmark, whose numbers show average run time
+normalized to the fastest systems).
+The bars show relative performance; longer is better.
+</p>
+</div>
+
+
+
+<table class="benchmarks">
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#geometricMean">geometricMean</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>    1.16</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>    2.53</td>
+<td class="bar"><div class="petit" style="width: 46%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>    9.43</td>
+<td class="bar"><div class="plt" style="width: 12%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#browse">browse</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   18.70</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   44.80</td>
+<td class="bar"><div class="petit" style="width: 42%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  262.13</td>
+<td class="bar"><div class="plt" style="width: 7%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#deriv">deriv</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   32.84</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   96.82</td>
+<td class="bar"><div class="petit" style="width: 34%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  357.06</td>
+<td class="bar"><div class="plt" style="width: 9%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#dderiv">dderiv</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   72.14</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  197.58</td>
+<td class="bar"><div class="petit" style="width: 37%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  635.34</td>
+<td class="bar"><div class="plt" style="width: 11%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#destruc">destruc</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   12.10</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   27.14</td>
+<td class="bar"><div class="petit" style="width: 45%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  238.15</td>
+<td class="bar"><div class="plt" style="width: 5%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#diviter">diviter</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   17.27</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   62.75</td>
+<td class="bar"><div class="petit" style="width: 28%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  456.96</td>
+<td class="bar"><div class="plt" style="width: 4%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#divrec">divrec</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   21.83</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   75.45</td>
+<td class="bar"><div class="petit" style="width: 29%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  578.08</td>
+<td class="bar"><div class="plt" style="width: 4%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#puzzle">puzzle</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   32.93</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   65.48</td>
+<td class="bar"><div class="petit" style="width: 50%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  638.21</td>
+<td class="bar"><div class="plt" style="width: 5%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#triangl">triangl</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   35.70</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   83.62</td>
+<td class="bar"><div class="petit" style="width: 43%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  521.79</td>
+<td class="bar"><div class="plt" style="width: 7%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#tak">tak</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   13.92</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   43.98</td>
+<td class="bar"><div class="petit" style="width: 32%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  273.32</td>
+<td class="bar"><div class="plt" style="width: 5%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#takl">takl</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   17.93</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   51.97</td>
+<td class="bar"><div class="petit" style="width: 35%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  781.69</td>
+<td class="bar"><div class="plt" style="width: 2%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#ntakl">ntakl</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   13.93</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   62.75</td>
+<td class="bar"><div class="petit" style="width: 22%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  672.72</td>
+<td class="bar"><div class="plt" style="width: 2%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#cpstak">cpstak</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   25.64</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   50.75</td>
+<td class="bar"><div class="petit" style="width: 51%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  201.11</td>
+<td class="bar"><div class="plt" style="width: 13%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#ctak">ctak</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   71.64</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   94.03</td>
+<td class="bar"><div class="petit" style="width: 76%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>20482.08</td>
+<td class="bar"><div class="plt" style="width: 0%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#fib">fib</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   11.50</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   34.44</td>
+<td class="bar"><div class="petit" style="width: 33%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  212.61</td>
+<td class="bar"><div class="plt" style="width: 5%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#fibc">fibc</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   48.05</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   61.32</td>
+<td class="bar"><div class="petit" style="width: 78%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td> 5145.82</td>
+<td class="bar"><div class="plt" style="width: 1%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#fibfp">fibfp</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   69.43</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  148.15</td>
+<td class="bar"><div class="petit" style="width: 47%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  621.55</td>
+<td class="bar"><div class="plt" style="width: 11%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#sum">sum</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   30.10</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   72.58</td>
+<td class="bar"><div class="petit" style="width: 41%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  684.36</td>
+<td class="bar"><div class="plt" style="width: 4%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#sumfp">sumfp</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   60.53</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  150.32</td>
+<td class="bar"><div class="petit" style="width: 40%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  568.41</td>
+<td class="bar"><div class="plt" style="width: 11%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#fft">fft</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   30.52</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   49.52</td>
+<td class="bar"><div class="petit" style="width: 62%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  194.84</td>
+<td class="bar"><div class="plt" style="width: 16%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#mbrot">mbrot</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>  161.37</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  313.79</td>
+<td class="bar"><div class="petit" style="width: 51%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td> 1449.92</td>
+<td class="bar"><div class="plt" style="width: 11%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#mbrotZ">mbrotZ</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>  151.86</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  336.81</td>
+<td class="bar"><div class="petit" style="width: 45%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td> 1244.87</td>
+<td class="bar"><div class="plt" style="width: 12%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#nucleic">nucleic</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   76.56</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  170.33</td>
+<td class="bar"><div class="petit" style="width: 45%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  464.80</td>
+<td class="bar"><div class="plt" style="width: 16%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#pnpoly">pnpoly</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   49.38</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   76.16</td>
+<td class="bar"><div class="petit" style="width: 65%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  658.44</td>
+<td class="bar"><div class="plt" style="width: 7%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#ack">ack</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   21.50</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   55.08</td>
+<td class="bar"><div class="petit" style="width: 39%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  812.81</td>
+<td class="bar"><div class="plt" style="width: 3%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#array1">array1</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   19.20</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   32.89</td>
+<td class="bar"><div class="petit" style="width: 58%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  190.81</td>
+<td class="bar"><div class="plt" style="width: 10%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#string">string</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   11.36</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   22.02</td>
+<td class="bar"><div class="petit" style="width: 52%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>   13.39</td>
+<td class="bar"><div class="plt" style="width: 85%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#sum1">sum1</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   21.71</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   60.69</td>
+<td class="bar"><div class="petit" style="width: 36%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>   67.67</td>
+<td class="bar"><div class="plt" style="width: 32%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#cat">cat</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   23.19</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   41.16</td>
+<td class="bar"><div class="petit" style="width: 56%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  606.28</td>
+<td class="bar"><div class="plt" style="width: 4%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#cat2">cat2</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   22.84</td>
+<td class="bar"><div class="larceny" style="width: 17%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   41.44</td>
+<td class="bar"><div class="petit" style="width: 10%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>    3.94</td>
+<td class="bar"><div class="plt" style="width: 100%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#cat3">cat3</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   54.08</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   88.41</td>
+<td class="bar"><div class="petit" style="width: 61%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  460.02</td>
+<td class="bar"><div class="plt" style="width: 12%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#tail">tail</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   16.64</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   26.84</td>
+<td class="bar"><div class="petit" style="width: 62%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>   25.85</td>
+<td class="bar"><div class="plt" style="width: 64%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#wc">wc</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   17.03</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   24.04</td>
+<td class="bar"><div class="petit" style="width: 71%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  368.70</td>
+<td class="bar"><div class="plt" style="width: 5%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#read0">read0</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>  362.38</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  636.32</td>
+<td class="bar"><div class="petit" style="width: 57%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  677.35</td>
+<td class="bar"><div class="plt" style="width: 54%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#read1">read1</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   72.11</td>
+<td class="bar"><div class="larceny" style="width: 5%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  167.62</td>
+<td class="bar"><div class="petit" style="width: 2%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>    3.93</td>
+<td class="bar"><div class="plt" style="width: 100%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#read2">read2</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   72.08</td>
+<td class="bar"><div class="larceny" style="width: 6%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  168.61</td>
+<td class="bar"><div class="petit" style="width: 2%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>    4.09</td>
+<td class="bar"><div class="plt" style="width: 100%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#read3">read3</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>  110.86</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  218.72</td>
+<td class="bar"><div class="petit" style="width: 51%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  412.43</td>
+<td class="bar"><div class="plt" style="width: 27%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#bibfreq">bibfreq</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>    6.67</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   17.59</td>
+<td class="bar"><div class="petit" style="width: 38%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>   28.23</td>
+<td class="bar"><div class="plt" style="width: 24%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#bibfreq2">bibfreq2</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>    6.77</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   17.14</td>
+<td class="bar"><div class="petit" style="width: 39%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>   36.79</td>
+<td class="bar"><div class="plt" style="width: 18%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#conform">conform</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   25.79</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   62.40</td>
+<td class="bar"><div class="petit" style="width: 41%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  290.24</td>
+<td class="bar"><div class="plt" style="width: 9%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#dynamic">dynamic</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   23.86</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   56.94</td>
+<td class="bar"><div class="petit" style="width: 42%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  179.32</td>
+<td class="bar"><div class="plt" style="width: 13%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#earley">earley</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   63.45</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   96.90</td>
+<td class="bar"><div class="petit" style="width: 65%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td> 2015.05</td>
+<td class="bar"><div class="plt" style="width: 3%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#graphs">graphs</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   35.52</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   65.56</td>
+<td class="bar"><div class="petit" style="width: 54%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  238.57</td>
+<td class="bar"><div class="plt" style="width: 15%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#lattice">lattice</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   65.58</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  195.83</td>
+<td class="bar"><div class="petit" style="width: 33%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td> 1274.41</td>
+<td class="bar"><div class="plt" style="width: 5%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#matrix">matrix</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   18.74</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   39.43</td>
+<td class="bar"><div class="petit" style="width: 48%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  180.50</td>
+<td class="bar"><div class="plt" style="width: 10%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#maze">maze</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   11.81</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   25.50</td>
+<td class="bar"><div class="petit" style="width: 46%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  101.73</td>
+<td class="bar"><div class="plt" style="width: 12%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#mazefun">mazefun</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   16.02</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   40.30</td>
+<td class="bar"><div class="petit" style="width: 40%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  331.46</td>
+<td class="bar"><div class="plt" style="width: 5%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#nqueens">nqueens</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   67.21</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  167.68</td>
+<td class="bar"><div class="petit" style="width: 40%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td> 1726.34</td>
+<td class="bar"><div class="plt" style="width: 4%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#paraffins">paraffins</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   38.21</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   43.31</td>
+<td class="bar"><div class="petit" style="width: 88%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  142.97</td>
+<td class="bar"><div class="plt" style="width: 27%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#parsing">parsing</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   58.39</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  134.96</td>
+<td class="bar"><div class="petit" style="width: 43%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  433.29</td>
+<td class="bar"><div class="plt" style="width: 13%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#peval">peval</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   23.94</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   70.31</td>
+<td class="bar"><div class="petit" style="width: 34%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  333.24</td>
+<td class="bar"><div class="plt" style="width: 7%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#pi">pi</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   42.37</td>
+<td class="bar"><div class="larceny" style="width: 19%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  117.01</td>
+<td class="bar"><div class="petit" style="width: 7%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>    8.17</td>
+<td class="bar"><div class="plt" style="width: 100%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#primes">primes</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   14.34</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   27.90</td>
+<td class="bar"><div class="petit" style="width: 51%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  357.24</td>
+<td class="bar"><div class="plt" style="width: 4%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#quicksort">quicksort</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   46.34</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  118.76</td>
+<td class="bar"><div class="petit" style="width: 39%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  672.37</td>
+<td class="bar"><div class="plt" style="width: 7%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#ray">ray</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   31.87</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   69.69</td>
+<td class="bar"><div class="petit" style="width: 46%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  259.89</td>
+<td class="bar"><div class="plt" style="width: 12%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#scheme">scheme</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   49.95</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  138.82</td>
+<td class="bar"><div class="petit" style="width: 36%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  613.22</td>
+<td class="bar"><div class="plt" style="width: 8%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#simplex">simplex</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   72.52</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  176.67</td>
+<td class="bar"><div class="petit" style="width: 41%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  670.19</td>
+<td class="bar"><div class="plt" style="width: 11%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#slatex">slatex</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   56.44</td>
+<td class="bar"><div class="larceny" style="width: 99%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   56.05</td>
+<td class="bar"><div class="petit" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  162.17</td>
+<td class="bar"><div class="plt" style="width: 35%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#nboyer">nboyer</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   10.75</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   22.98</td>
+<td class="bar"><div class="petit" style="width: 47%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  108.87</td>
+<td class="bar"><div class="plt" style="width: 10%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#sboyer">sboyer</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   24.62</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   63.63</td>
+<td class="bar"><div class="petit" style="width: 39%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  358.42</td>
+<td class="bar"><div class="plt" style="width: 7%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#gcbench">gcbench</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   30.35</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   51.81</td>
+<td class="bar"><div class="petit" style="width: 59%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td> 1200.73</td>
+<td class="bar"><div class="plt" style="width: 3%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#mperm">mperm</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>  107.34</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  173.80</td>
+<td class="bar"><div class="petit" style="width: 62%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  865.02</td>
+<td class="bar"><div class="plt" style="width: 12%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#equal">equal</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   56.34</td>
+<td class="bar"><div class="larceny" style="width: 92%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>  149.14</td>
+<td class="bar"><div class="petit" style="width: 35%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>   51.98</td>
+<td class="bar"><div class="plt" style="width: 100%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#normalization">normalization</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   44.19</td>
+<td class="bar"><div class="larceny" style="width: 76%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   87.76</td>
+<td class="bar"><div class="petit" style="width: 38%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>   33.42</td>
+<td class="bar"><div class="plt" style="width: 100%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#listsort">listsort</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   15.20</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   37.00</td>
+<td class="bar"><div class="petit" style="width: 41%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  242.17</td>
+<td class="bar"><div class="plt" style="width: 6%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#vecsort">vecsort</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   14.69</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   36.25</td>
+<td class="bar"><div class="petit" style="width: 41%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>  200.87</td>
+<td class="bar"><div class="plt" style="width: 7%">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="benchmark" colspan="3"><a href="benchmarksAboutR6.html#hashtable0">hashtable0</a></td>
+</tr>
+<tr>
+<td>Larceny</td>
+<td>   19.97</td>
+<td class="bar"><div class="larceny" style="width: 100%">&nbsp;</td>
+</tr>
+<tr>
+<td>Petit Larceny</td>
+<td>   46.02</td>
+<td class="bar"><div class="petit" style="width: 43%">&nbsp;</td>
+</tr>
+<tr>
+<td>PLT</td>
+<td>   59.07</td>
+<td class="bar"><div class="plt" style="width: 34%">&nbsp;</td>
+</tr>
+
+</table>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+/* http://www.jakpsatweb.cz/css/css-vertical-center-solution.html */
+
+.passNumber {
+        position: relative;
+        left: 4px;
+        top: 3px;
+        width: 0px;
+        font: 12px Lucida Sans Unicode, Monaco;
+}
+
+.rpass {
+        height: 75px;
+        width: 125px;
+        border: 4px solid black;
+        overflow: hidden;
+        position: relative;
+        float: left;
+        margin-bottom: 1em;
+}
+
+.rnoArrow, .rpassArrow {
+        margin: 0;
+        padding: 0;
+        height: 75px;
+        width: 36px;
+        float: left;
+}
+
+.rnoArrow {
+        background: #FFFFFF;
+}
+
+.rpassArrow {
+        background: #f8f4ff url(images/right-arrow.png) no-repeat;
+        background-position: 0 33px;
+}
+
+#compilerDiagram {
+        text-align: center;
+        width: 220px;
+        margin: 1em 177px 1em 178px;
+}
+
+#compilerDiagram .twobit {
+        font: 24px Lucida Sans Unicode, Lucida Sans, Monaco;
+        width: 220px;
+        height: 80px;
+        margin: 0;
+        padding: 40px 0 0 0;
+        background: #f8f4ff url(images/oval.png) no-repeat;
+}
+
+.backends {
+        text-align: center;
+        width: 220px;
+}
+
+.backend {
+        height: 60px;
+        width: 60px;
+        border: 1px solid black;
+        overflow: hidden;
+        position: relative;
+        margin: 1em 5px;
+        float: left;
+}
+
+.middle { position: absolute; top: 50%; }
+
+#be1[id] { display: table; position: static; }
+#be2[id] { display: table; position: static; }
+#be3[id] { display: table; position: static; }
+
+#be1m[id] { display: table-cell; vertical-align: middle; position: static; }
+#be2m[id] { display: table-cell; vertical-align: middle; position: static; }
+#be3m[id] { display: table-cell; vertical-align: middle; position: static; }
+
+.backendInner {
+        position: relative;
+        top: -50%;
+        font: 13px Lucida Sans Unicode, Monaco;
+        text-align: center;
+}
+
+#be1i[id] { display: static; }
+#be2i[id] { display: static; }
+#be3i[id] { display: static; }
+
+.pass {
+        height: 75px;
+        width: 125px;
+        border: 4px solid black;
+        overflow: hidden;
+        position: relative;
+}
+
+.rpasses {
+        margin-bottom: 1em;
+        clear: both;
+}
+
+#rp1[id] { display: table; position: static; }
+#rp2[id] { display: table; position: static; }
+#rp3[id] { display: table; position: static; }
+#rp4[id] { display: table; position: static; }
+#rp5[id] { display: table; position: static; }
+#rp6[id] { display: table; position: static; }
+
+#p1m[id] { display: table-cell; vertical-align: middle; position: static; }
+#p2m[id] { display: table-cell; vertical-align: middle; position: static; }
+#p3m[id] { display: table-cell; vertical-align: middle; position: static; }
+#p4m[id] { display: table-cell; vertical-align: middle; position: static; }
+#p5m[id] { display: table-cell; vertical-align: middle; position: static; }
+#p6m[id] { display: table-cell; vertical-align: middle; position: static; }
+
+.passInner {
+        position: relative;
+        top: -50%;
+        font: 13px Lucida Sans Unicode, Monaco;
+        text-align: center;
+}
+
+#p1i[id] { position: static; }
+#p2i[id] { position: static; }
+#p3i[id] { position: static; }
+#p4i[id] { position: static; }
+#p5i[id] { position: static; }
+#p6i[id] { position: static; }
+
+.passArrow {
+        margin: 0;
+        padding: 0;
+        width: 125px;
+        height: 36px;
+        background: #f8f4ff url(images/down-arrow.png) no-repeat;
+        background-position: 62px 0;
+}
+

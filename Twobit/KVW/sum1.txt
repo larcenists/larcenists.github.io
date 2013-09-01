@@ -1,0 +1,12 @@
+; (sum inport) adds 1st fields of rn100
+
+(define inport (open-input-file "rn100"))
+
+(define (sumport port sum-so-far)
+	(let ((x (read port)))
+		(if (eof-object? x)
+			sum-so-far
+			(sumport port (+ x sum-so-far)))))
+
+(define (sum port)
+	(sumport port 0))

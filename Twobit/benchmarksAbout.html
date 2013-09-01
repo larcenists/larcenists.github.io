@@ -1,0 +1,412 @@
+<html>
+<title>
+Description of the Gambit benchmarks, with comments.
+</title>
+
+<body>
+
+<p>
+<h2>Description of Benchmarks</h2>
+
+<em>Note:</em> Our educated guesses concerning the reasons for
+a particular system's performance appear within [square brackets].
+
+<p>
+<h4><a name="geometricMean">geometricMean</a></h4>
+This pseudo-benchmark is an aggregate statistic that
+shows the geometric mean for all benchmarks.
+Where other benchmarks display timings in seconds,
+the numerical scores for the geometric mean show the
+(geometric) average ratio, over all benchmarks that
+a system was able to run, of the system's time to
+the fastest system's time.
+An average ratio of 1.0 is the lowest possible, and
+can be achieved only by a system that is fastest on
+every benchmark.
+
+<p>
+<hr>
+</p>
+
+<h3>Gabriel Benchmarks</h3>
+
+<p>
+<h4><a name="boyer"><a href="src/boyer.scm">boyer</a></a></h4>
+Bob Boyer's theorem proving benchmark, a Gabriel benchmark, 20 iterations.
+This benchmark uses association lists in place of the original benchmark's
+property lists.  The <code><a href="#nboyer">nboyer</a></code> benchmark
+is an updated and altogether better version of this benchmark.
+
+<p>
+<h4><a name="browse"><a href="src/browse.scm">browse</a></a></h4>
+Browsing a data base, a Gabriel benchmark, 600 iterations.
+[May be a test of <code>string->symbol</code> and/or
+<code>symbol->string</code>.]
+
+<p>
+<h4><a name="cpstak"><a href="src/cpstak.scm">cpstak</a></a></h4>
+The <code><a href="#tak">tak</a></code> benchmark in continuation-passing
+style, 1000 iterations.
+A test of closure creation.
+
+<p>
+<h4><a name="ctak"><a href="src/ctak.scm">ctak</a></a></h4>
+The <code><a href="#tak">tak</a></code> benchmark in continuation-capturing
+style, 100 iterations.
+A test of <code>call-with-current-continuation</code>.
+[Larceny's code for <code>call-with-current-continuation</code> is now
+written in C, and most of its time on this benchmark is spent crossing
+the Scheme/C barrier.]
+
+<p>
+<h4><a name="dderiv"><a href="src/dderiv.scm">dderiv</a></a></h4>
+Table-driven symbolic differentiation, a Gabriel benchmark,
+2000000 iterations.
+Uses association lists instead of the original benchmark's property lists.
+
+<p>
+<h4><a name="deriv"><a href="src/deriv.scm">deriv</a></a></h4>
+Symbolic differentiation, a Gabriel benchmark,
+2000000 iterations.
+
+<p>
+<h4><a name="destruc"><a href="src/destruc.scm">destruc</a></a></h4>
+Destructive list operations, a Gabriel benchmark, 500 iterations.
+
+<p>
+<h4><a name="diviter"><a href="src/diviter.scm">diviter</a></a></h4>
+Divides 200 by 2 using lists as a unary notation for integers,
+a Gabriel benchmark, 1000000 iterations.
+This benchmark tests
+<code>null?</code>, <code>cons</code>, <code>car</code>,
+<code>cdr</code>, and little else.
+
+<p>
+<h4><a name="divrec"><a href="src/divrec.scm">divrec</a></a></h4>
+This benchmark is the same as idiv2 except it uses deep recursion
+instead of iteration.
+
+<p>
+<h4><a name="puzzle"><a href="src/puzzle.scm">puzzle</a></a></h4>
+Combinatorial search of a state space, a Gabriel benchmark, 100 iterations.
+A test of arrays and classical compiler optimizations.
+This benchmark was originally written in Pascal by Forrest Baskett.
+
+<p>
+<h4><a name="takl"><a href="src/takl.scm">takl</a></a></h4>
+The <code><a href="#tak">tak</a></code> benchmark using lists to represent
+integers, a Gabriel benchmark, 300 iterations.
+
+<p>
+<h4><a name="triangl"><a href="src/triangl.scm">triangl</a></a></h4>
+Another combinatorial search similar to
+<code><a href="#puzzle">puzzle</a></code>,
+a Gabriel benchmark,
+10 iterations.
+
+<p>
+<hr>
+</p>
+
+<h3>Numerical Benchmarks</h3>
+
+The common characteristic of these numerical benchmarks is that
+they are easy to translate into C.
+
+<p>
+<h4><a name="fft"><a href="src/fft.scm">fft</a></a></h4>
+Fast Fourier Transform, 2000 iterations.
+A test of floating point arithmetic.
+
+<p>
+<h4><a name="fib"><a href="src/fib.scm">fib</a></a></h4>
+Doubly recursive computation of the 35th fibonacci number
+(9227465), using <code>(< n 2)</code> to terminate the
+recursion; 5 iterations.
+
+<p>
+<h4><a name="fibfp"><a href="src/fibfp.scm">fibfp</a></a></h4>
+Calculation of the 35th Fibonacci number using inexact numbers,
+with only 2 iterations.
+A test of floating point arithmetic.
+Uses essentially the same code as the <code><a href="#fib">fib</a></code>
+benchmark.
+
+<p>
+<h4><a name="mbrot"><a href="src/mbrot.scm">mbrot</a></a></h4>
+Generation of a Mandelbrot set, 100 iterations.
+A test of floating point arithmetic.
+
+<p>
+<h4><a name="nucleic"><a href="src/nucleic.scm">nucleic</a></a></h4>
+Determination of a nucleic acid's spatial structure, 5 iterations.
+A test of floating point arithmetic, and a real program.
+
+<p>
+<h4><a name="pnpoly"><a href="src/pnpoly.scm">pnpoly</a></a></h4>
+Testing to see whether a point is contained within a 2-dimensional
+polygon, 100000 iterations (with 12 tests per iteration).
+A test of floating point arithmetic.
+
+<p>
+<h4><a name="sum"><a href="src/sum.scm">sum</a></a></h4>
+Sums the integers from 0 to 10000, 10000 iterations.
+
+<p>
+<h4><a name="sumfp"><a href="src/sumfp.scm">sumfp</a></a></h4>
+Sums the integers from 0 to 10000, 10000 iterations.
+A test of floating point arithmetic.
+Uses essentially the same code as the <code><a href="#sum">sum</a></code>
+benchmark.
+
+<p>
+<h4><a name="tak"><a href="src/tak.scm">tak</a></a></h4>
+A triply recursive integer function related to the Takeuchi function,
+a Gabriel benchmark, 2000 iterations.
+A test of non-tail calls and arithmetic.
+Historical note:
+The Symbolics 3600 performed 1 iteration of this benchmark in 0.43 seconds
+using generic arithmetic; for 2000 iterations, that would be 860 seconds.
+
+<p>
+<hr>
+</p>
+
+<h3>Kernighan and Van Wyk Benchmarks</h3>
+
+Brian W Kernighan and Christopher J Van Wyk wrote a set of small
+<a href="http://cm.bell-labs.com/cm/cs/who/bwk/interps/pap.html">benchmarks</a>
+to compare the perforance of several scripting languages, including
+C and Scheme.  Marc Feeley and I have modified some of these
+benchmarks to correct bugs and to increase the number of iterations.
+
+<p>
+<h4><a name="ack"><a href="src/ack.scm">ack</a></a></h4>
+A version of the Ackermann function, with arguments 3,9.
+
+<p>
+<h4><a name="array1"><a href="src/array1.scm">array1</a></a></h4>
+This benchmark allocates, initializes, and copies some fairly
+large one-dimensional arrays.
+
+<p>
+<h4><a name="cat"><a href="src/cat.scm">cat</a></a></h4>
+This file-copying benchmark is a simple test of character i/o.
+
+<p>
+<h4><a name="string"><a href="src/string.scm">string</a></a></h4>
+This tests <code>string-append</code> and <code>substring</code>,
+and very little else.
+
+<p>
+<h4><a name="sum1"><a href="src/sum1.scm">sum1</a></a></h4>
+This benchmark reads and sums 100,000 floating point numbers.
+It is primarily a test of floating point input.
+
+<p>
+<h4><a name="sumloop"><a href="src/sumloop.scm">sumloop</a></a></h4>
+Increments a global variable 100000000 times.
+This benchmark was intended to test looping and arithmetic,
+but in Scheme it becomes a test of the garbage collector's
+write barrier.
+
+<p>
+<h4><a name="tail"><a href="src/tail.scm">tail</a></a></h4>
+This benchmark performs considerable character i/o.
+
+<p>
+<h4><a name="wc"><a href="src/wc.scm">wc</a></a></h4>
+Another character i/o benchmark.
+
+<p>
+<hr>
+</p>
+
+<h3>Other Benchmarks</h3>
+
+<p>
+<h4><a name="conform"><a href="src/conform.scm">conform</a></a></h4>
+A type checker written by Jim Miller, 40 iterations.
+
+<p>
+<h4><a name="dynamic"><a href="src/dynamic.scm">dynamic</a></a></h4>
+Dynamic type inference, self-applied, 20 iterations.
+Written by Fritz Henglein.
+A real program.
+
+<p>
+<h4><a name="earley"><a href="src/earley.scm">earley</a></a></h4>
+Earley's parsing algorithm, parsing a 9-symbol input according to one
+of the simplest ambiguous grammars, 200 iterations.
+A real program, applied to toy data.
+
+<p>
+<h4><a name="fibc"><a href="src/fibc.scm">fibc</a></a></h4>
+A version of <code>fib</code> that uses first class continuations;
+written by Kent Dybvig.  Calculates the 18th Fibonacci number
+500 times.
+
+<p>
+<h4><a name="graphs"><a href="src/graphs.scm">graphs</a></a></h4>
+This program was provided by Andrew Wright, but we don't know much
+about it, and would appreciate more information.
+This higher order program creates closures almost as often as it
+performs non-tail procedure calls.
+
+<p>
+<h4><a name="lattice"><a href="src/lattice.scm">lattice</a></a></h4>
+Another program that was provided by Andrew Wright,
+though it may have been written by Jim Miller.
+It enumerates the order-preserving maps between finite lattices.
+
+<p>
+<h4><a name="matrix"><a href="src/matrix.scm">matrix</a></a></h4>
+Another program that was provided by Andrew Wright.
+Computes maximal matrices; similar to some puzzle programs.
+
+<p>
+<h4><a name="maze"><a href="src/maze.scm">maze</a></a></h4>
+Constructs a maze on a hexagonal grid, 4000 iterations.
+Written by Olin Shivers.
+[The <code>maze</code> benchmark uses <code>bitwise-not</code>
+and <code>bitwise-and</code> procedures that are not standard
+in R5RS.  Implementations that provide these procedures as
+extensions probably have an advantage over implementations
+that use the portable versions we wrote for this benchmark.]
+
+<p>
+<h4><a name="mazefun"><a href="src/mazefun.scm">mazefun</a></a></h4>
+Constructs a maze on a rectangular grid using purely functional style,
+1000 iterations.
+Written by Marc Feeley.
+
+<p>
+<h4><a name="nqueens"><a href="src/nqueens.scm">nqueens</a></a></h4>
+Computes the number of solutions to the 8-queens problem,
+2000 times.
+
+<p>
+<h4><a name="paraffins"><a href="src/paraffins.scm">paraffins</a></a></h4>
+Computes the number of paraffins that have 17 carbon atoms,
+1000 times.
+
+<p>
+<h4><a name="peval"><a href="src/peval.scm">peval</a></a></h4>
+Partial evaluation of Scheme code, 200 iterations.
+Written by Marc Feeley.
+
+<p>
+<h4><a name="primes"><a href="src/primes.scm">primes</a></a></h4>
+Computes the primes less than 100, 100000 times, using
+a list-based Sieve of Eratosthenes.
+Written by Eric Mohr.
+
+<p>
+<h4><a name="ray"><a href="src/ray.scm">ray</a></a></h4>
+Ray tracing a simple scene, 5 iterations.
+A test of floating point arithmetic.
+This program is translated from the Common Lisp code in
+Example 9.8 of Paul Graham's book on ANSI Common Lisp.
+
+<p>
+<h4><a name="scheme"><a href="src/scheme.scm">scheme</a></a></h4>
+A Scheme interpreter evaluating a merge sort, 20000 iterations.
+Written by Marc Feeley.
+
+<p>
+<h4><a name="simplex"><a href="src/simplex.scm">simplex</a></a></h4>
+Simplex algorithm, 100000 iterations.
+A test of floating point arithmetic, and a real program.
+
+<p>
+<h4><a name="slatex"><a href="src/slatex.scm">slatex</a></a></h4>
+Scheme to LaTeX processor, 20 iterations.
+A test of file i/o and probably much else.
+Part of a real program written by Dorai Sitaram.
+
+<p>
+<h4><a name="perm9"><a href="src/perm9.scm">perm9</a></a></h4>
+Creates a list containing all 362880 permutations of a
+list of 9 integers, in Gray code order, using Zaks's
+algorithm, 10 iterations.
+<strong>Please note that this benchmark is not the same as the
+<code>10perm9</code> benchmark written by Will Clinger, because
+it does not retain the result of the previous iteration while
+computing the result of the current iteration.</strong>
+
+<p>
+As written by Will Clinger, the <code>10perm9</code> benchmark
+is a test of storage allocation and garbage collection.
+At the end of each iteration, the oldest half of the
+live storage becomes garbage.
+This benchmark is particularly difficult for generational garbage
+collectors, since it violates their assumption that young objects
+have a shorter future life expectancy than older objects.
+<strong>
+The <code>perm9</code> benchmark distributed by Marc Feeley
+does not have that property.
+</strong>
+
+<p>
+<h4><a name="nboyer"><a href="src/nboyer.scm">nboyer</a></a></h4>
+An updated and exponentially scalable version of the
+<code><a href="#boyer">boyer</a></code> benchmark.
+The <code>nboyer</code> benchmark's data structures are
+considerably more appropriate than the data structures used in the
+<code><a href="#boyer">boyer</a></code> benchmarks.
+These timings are for 100 iterations of
+a problem of size 0, which is the same size as for
+<code>boyer</code>, and is way too small for modern machines.
+A test of lists, vectors, and garbage collection.
+
+<p>
+<h4><a name="sboyer"><a href="src/sboyer.scm">sboyer</a></a></h4>
+A version of <a href="#nboyer">nboyer</a> that has been tuned (by Henry
+Baker) to reduce storage allocation, making it less of a garbage collection
+benchmark and more of a compiler benchmark.  Only 4 lines of code were
+changed, and another 7 lines of code were added.
+
+<p>
+<h4><a name="gcbench"><a href="src/gcbench.scm">gcbench</a></a></h4>
+This program was written to mimic the phase structure that has been
+conjectured for a class of application programs for which garbage
+collection may represent a significant fraction of the execution time.
+This benchmark warms up by allocating and then dropping a binary tree
+of height 18.
+Then it allocates a permanent tree of height 16 and a permanent array
+of 500000 floating point numbers.
+Then it allocates about 350 megabytes of tree storage in seven phases,
+allocating about 50 megabytes per phase.
+The first phase allocates 67648 trees of height 4, dropping each tree
+before allocating the next.
+The second phase allocates and drops 16512 trees of height 6,
+and so on to the last phase, which allocates 8 trees of height 16.
+Each phase is divided into two subphases.  The first subphase allocates
+trees top-down using side effects, while the second subphase allocates
+trees bottom-up without using side effects.
+This benchmark was written in Java by John Ellis and Pete Kovac,
+modified by Hans Boehm, and translated into Scheme, Standard ML,
+C++, and C by William Clinger.
+
+<p>
+<h4><a name="parsing"><a href="src/parsing.scm">parsing</a></a></h4>
+Parses the <code>nboyer</code> benchmark 1000 times
+using a scanner and parser generated using Will Clinger's
+LexGen and ParseGen.
+[The MIT Scheme compiler cannot compile single procedures
+that are as large as this benchmark, so the timing shown
+is for the MIT Scheme interpreter.]
+
+<p>
+<h4><a name="gcold"><a href="src/gcold.scm">gcold</a></a></h4>
+A synthetic garbage collection benchmark written by David Detlefs
+and translated to Scheme by Will Clinger and Lars Hansen.
+
+<p>
+<hr>
+
+<p>
+Last updated 16 February 2007.
+
+</body>
+</html>
