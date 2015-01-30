@@ -97,37 +97,37 @@ Twobit is based on viewing lambda expressions as assembly language labels that h
 Most optimizations used in Twobit are well-known, but a few are new
 or unusual:
 </p><ul>
-    <li><a href="../Twobit/p2lifting.html">Incremental lambda lifting</a>
+    <li><a href="Twobit/p2lifting.html">Incremental lambda lifting</a>
 
         gives the compiler more flexibility than global lambda lifting,
         without the complexity
         of global lambda lifting followed by lambda dropping.
-    </li><li><a href="../Twobit/p2custom.html#targeting">Interprocedural register
+    </li><li><a href="Twobit/p2custom.html#targeting">Interprocedural register
         targeting</a> is performed by reordering arguments during
         lambda lifting.  This optimization relies upon
-        <a href="../Twobit/p4pao.html">parallel assignment optimization</a>
+        <a href="Twobit/p4pao.html">parallel assignment optimization</a>
         during flow analysis or code generation.
-    </li><li><a href="../Twobit/p2saa.html">Single assignment analysis</a>
+    </li><li><a href="Twobit/p2saa.html">Single assignment analysis</a>
         is a Scheme-specific first order
         closure analysis.  This optimization was used in MacScheme
         and possibly in the Orbit compiler but had not been described.
-    </li><li><a href="../Twobit/p2sae.html">Single assignment elimination</a>
+    </li><li><a href="Twobit/p2sae.html">Single assignment elimination</a>
         is complicated by the presence
         of Scheme's <code>call-with-current-continuation</code>.
-    </li><li><a href="../Twobit/p4reuse.html">Frame optimization</a>
+    </li><li><a href="Twobit/p4reuse.html">Frame optimization</a>
 
         tends to reduce the number of continuation frames that are
         allocated by a procedure.
-    </li><li><a href="../Twobit/p4phantom.html">Redundant loads and stores are
+    </li><li><a href="Twobit/p4phantom.html">Redundant loads and stores are
         eliminated</a>
         by a backpatching algorithm similar to that used for frame
         optimization.
 </li></ul>
 <p>
 The intermediate form used by the front end is a
-<a href="../Twobit/syntax.html">restricted subset of Scheme</a>.
+<a href="Twobit/syntax.html">restricted subset of Scheme</a>.
 The intermediate form used by the back end is assembly code for a
-hypothetical <a href="../Twobit/mmachine.html">MacScheme machine</a>.
+hypothetical <a href="Twobit/mmachine.html">MacScheme machine</a>.
 </p>
                 </div>
 		<div class="post">
@@ -136,21 +136,21 @@ hypothetical <a href="../Twobit/mmachine.html">MacScheme machine</a>.
 
 <div class="rpasses">
 <div class="rpassArrow"></div>
-<div class="rpass" id="rp1"><div class="passNumber">1</div><div class="middle" id="p1m"><div class="passInner" id="p1i"><a href="../Twobit/pass1.html">Standardization<br />of syntax</a></div></div></div>
+<div class="rpass" id="rp1"><div class="passNumber">1</div><div class="middle" id="p1m"><div class="passInner" id="p1i"><a href="Twobit/pass1.html">Standardization<br />of syntax</a></div></div></div>
 <div class="rpassArrow"></div>
-<div class="rpass" id="rp2"><div class="passNumber">2</div><div class="middle" id="p2m"> <div class="passInner" id="p2i"><a href="../Twobit/pass2.html">Optimization</a></div></div></div>
+<div class="rpass" id="rp2"><div class="passNumber">2</div><div class="middle" id="p2m"> <div class="passInner" id="p2i"><a href="Twobit/pass2.html">Optimization</a></div></div></div>
 <div class="rpassArrow"></div>
-<div class="rpass" id="rp3"><div class="passNumber">3</div><div class="middle" id="p3m"> <div class="passInner" id="p3i"><!-- a href="../Twobit/pass3.html" -->Flow analysis<!-- /a --></div></div></div>
+<div class="rpass" id="rp3"><div class="passNumber">3</div><div class="middle" id="p3m"> <div class="passInner" id="p3i"><!-- a href="Twobit/pass3.html" -->Flow analysis<!-- /a --></div></div></div>
 <div class="rpassArrow"></div>
 </div>
 
 <div class="rpasses">
 <div class="rpassArrow"></div>
-<div class="rpass" id="rp4"><div class="passNumber">4</div><div class="middle" id="p4m"> <div class="passInner" id="p4i"><a href="../Twobit/pass4.html">Code<br />generation</a></div></div></div>
+<div class="rpass" id="rp4"><div class="passNumber">4</div><div class="middle" id="p4m"> <div class="passInner" id="p4i"><a href="Twobit/pass4.html">Code<br />generation</a></div></div></div>
 <div class="rpassArrow"></div>
-<div class="rpass" id="rp5"><div class="passNumber">5</div><div class="middle" id="p5m"> <div class="passInner" id="p5i"><a href="../Twobit/pass5.html">Local<br />optimization</a></div></div></div>
+<div class="rpass" id="rp5"><div class="passNumber">5</div><div class="middle" id="p5m"> <div class="passInner" id="p5i"><a href="Twobit/pass5.html">Local<br />optimization</a></div></div></div>
 <div class="rpassArrow"></div>
-<div class="rpass" id="rp6"><div class="passNumber">6</div><div class="middle" id="p6m"> <div class="passInner" id="p6i"><a href="../Twobit/assembly.html">Assembly</a></div></div></div>
+<div class="rpass" id="rp6"><div class="passNumber">6</div><div class="middle" id="p6m"> <div class="passInner" id="p6i"><a href="Twobit/assembly.html">Assembly</a></div></div></div>
 <div class="rpassArrow"></div>
 </div>
 
@@ -158,17 +158,17 @@ hypothetical <a href="../Twobit/mmachine.html">MacScheme machine</a>.
 </div>
 
 <!--
-                        <div class="pass" id="p1"><div class="middle" id="p1m"> <div class="passInner" id="p1i"><a href="../Twobit/pass1.html">Standardization<br />of syntax</a></div></div></div>
+                        <div class="pass" id="p1"><div class="middle" id="p1m"> <div class="passInner" id="p1i"><a href="Twobit/pass1.html">Standardization<br />of syntax</a></div></div></div>
                         <div class="passArrow"></div>
-                        <div class="pass" id="p2"><div class="middle" id="p2m"> <div class="passInner" id="p2i"><a href="../Twobit/pass2.html">Optimization</a></div></div></div>
+                        <div class="pass" id="p2"><div class="middle" id="p2m"> <div class="passInner" id="p2i"><a href="Twobit/pass2.html">Optimization</a></div></div></div>
                         <div class="passArrow"></div>
                         <div class="pass" id="p3"><div class="middle" id="p3m"> <div class="passInner" id="p3i">Flow analysis</div></div></div>
                         <div class="passArrow"></div>
-                        <div class="pass" id="p4"><div class="middle" id="p4m"> <div class="passInner" id="p4i"><a href="../Twobit/pass4.html">Code<br />generation</a></div></div></div>
+                        <div class="pass" id="p4"><div class="middle" id="p4m"> <div class="passInner" id="p4i"><a href="Twobit/pass4.html">Code<br />generation</a></div></div></div>
                         <div class="passArrow"></div>
-                        <div class="pass" id="p5"><div class="middle" id="p5m"> <div class="passInner" id="p5i"><a href="../Twobit/pass5.html">Local<br />optimization</a></div></div></div>
+                        <div class="pass" id="p5"><div class="middle" id="p5m"> <div class="passInner" id="p5i"><a href="Twobit/pass5.html">Local<br />optimization</a></div></div></div>
                         <div class="passArrow"></div>
-                        <div class="pass" id="p6"><div class="middle" id="p6m"> <div class="passInner" id="p6i"><a href="../Twobit/pass6.html">Assembly</a></div></div></div>
+                        <div class="pass" id="p6"><div class="middle" id="p6m"> <div class="passInner" id="p6i"><a href="Twobit/pass6.html">Assembly</a></div></div></div>
 -->
 
                         </div>
@@ -230,7 +230,7 @@ hypothetical <a href="../Twobit/mmachine.html">MacScheme machine</a>.
 </div>
 
 <p>
-Last updated (not yet checked in!) 17 February 2010.
+Last updated 30 January 2015.
 </p -->
 
 </div>
