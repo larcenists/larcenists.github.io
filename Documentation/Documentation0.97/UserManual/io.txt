@@ -1,0 +1,155 @@
+Input, Output, and Files
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `(rnrs io ports)` and `(rnrs files)` libraries now
+provide a set of procedures that may supersede some
+of the procedures described below.
+If one of Larceny's procedures duplicates the semantics of
+an R6RS procedure whose name is different, then Larceny's
+name is deprecated.
+
+proc:close-open-files[args="",result="unspecified"]
+
+Closes all open files.
+
+proc:console-input-port[args="",result="input-port"]
+
+Returns a character input port such that no read from the port has
+signalled an error or returned the end-of-file object.
+
+_Rationale:_ console-input-port and console-output-port are artifacts
+of Unix interactive I/O conventions, where an interactive end-of-file
+does not mean "quit" but rather "done here". Under these conventions
+the console port should be reset following an end-of-file. Resetting
+conflicts with the semantics of ports in Scheme, so console-input-port
+and console-output-port return a new port if the current port is
+already at end-of-file.
+
+Since it is convenient to handle errors in the same manner as
+end-of-file, these procedures also return a new port if an error has
+been signalled during an I/O operation on the port.
+
+Console-input-port and console-output-port simply call the port
+generators installed in the parameters console-input-port-factory and
+console-output-port-factory, which allow user programs to install
+their own console port generators.
+
+proc:console-output-port[args="",result="output-port"]
+
+Returns a character output port such that no write to the port has
+signalled an error.
+
+See console-input-port for a full explanation.
+
+anchor:console-input-port-factory[]
+indexterm:[console-input-port-factory]
+_Parameter console-input-port-factory_     
+
+The value of this parameter is a procedure that returns a character
+input port such that no read from the port has signalled an error or
+returned the end-of-file object.
+
+See console-input-port for a full explanation.
+
+anchor:console-output-port-factory[]
+indexterm:[console-output-port-factory]
+_Parameter console-output-port-factory_     
+
+The value of this parameter is a procedure that returns a character
+output port such that no write the port has signalled an error.
+
+See console-input-port for a full explanation.
+
+anchor:current-input-port[]
+indexterm:[current-input-port]
+_Parameter current-input-port_     
+
+The value of this parameter is a character input port.
+
+anchor:current-output-port[]
+indexterm:[current-output-port]
+_Parameter current-output-port_     
+
+The value of this parameter is a character output port.
+
+proc:delete-file[args="filename",result="unspecified"]
+
+Deletes the named file. No error is signalled if the file does not
+exist.
+
+proc:eof-object[args="",result="end-of-file object"]
+
+_Eof-object_ returns an end-of-file object.
+
+proc:file-exists?[args="filename",result="boolean"]
+
+File-exists? returns #t if the named file exists at the time the
+procedure is called.
+
+proc:file-modification-time[args="filename",result="vector or #f"]
+
+File-modification-time returns the time of last modification of the
+file as a vector, or #f if the file does not exist. The vector has six
+elements: year, month, day, hour, minute, second, all of which are
+exact nonnegative integers. The time returned is relative to the local
+timezone.
+
+// FIXME maybe we should update this timestamp.  :)
+
+++     (file-modification-time "larceny") => #(1997 2 6 12 51 13)++
+
+++     (file-modification-time "geekdom") => #f++
+    
+proc:flush-output-port[args="",result="unspecified"]
+proctempl:flush-output-port[args="port",result="unspecified"]
+
+Write any buffered data in the port to the underlying output medium.
+
+proc:get-output-string[args="string-output-port",result="string"]
+
+Retrieve the output string from the given string output port.
+
+proc:open-input-string[args="string",result="input-port"]
+
+Creates an input port that reads from _string_. The string may be
+shared with the caller. A string input port does not need to be
+closed, although closing it will prevent further reads from it.
+
+proc:open-output-string[args="",result="output-port"]
+
+Creates an output port where any output is written to a string. The
+accumulated string can be retrieved with
+<<get-output-string>> at any time.
+
+proc:port?[args="object",result="boolean"]
+
+Tests whether its argument is a port.
+
+proc:port-name[args="port",result="string"]
+
+Returns the name associated with the port; for file ports, this is the file name.
+
+proc:port-position[args="port",result="fixnum"]
+
+Returns the number of characters that have been read from or written to the port.
+
+proc:rename-file[args="from to",result="unspecified"]
+
+Renames the file _from_ and gives it the name _to_. No error is
+signalled if _from_ does not exist or _to_ exists.
+
+proc:reset-output-string[args="port",result="unspecified"]
+
+Given a _port_ created with _open-output-string_, deletes from the
+port all the characters that have been output so far.
+
+proc:with-input-from-port[args="input-port thunk",result="object"]
+
+Calls _thunk_ with current input bound to _input-port_ in the dynamic
+extent of _thunk_. Returns whatever value was returned from _thunk_.
+
+proc:with-output-to-port[args="output-port thunk",result="object"]
+
+Calls _thunk_ with current output bound to _output-port_ in the
+dynamic extent of _thunk_. Returns whatever value was returned from
+_thunk_.

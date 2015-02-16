@@ -1,0 +1,101 @@
+Procedures
+~~~~~~~~~~
+
+_Operations on procedures_
+
+proctempl:make-procedure[args="length",result="procedure"]
+proctempl:procedure-length[args="procedure",result="fixnum"]
+proctempl:procedure-ref[args="procedure offset",result="object"]
+proctempl:procedure-set![args="procedure offset object",result="unspecified"]
+
+These procedures operate on the representations of procedures and
+allow user programs to construct, inspect, and alter procedures.
+
+proc:procedure-copy[args="procedure",result="procedure"]
+
+Returns a shallow copy of the procedure.
+
+The procedures above are deprecated because they
+violate abstraction barriers and make your code
+representation-dependent; they are useful mainly to
+Larceny developers, who might otherwise be tempted to
+write some low-level operations in C or assembly language.
+
+The rest of this section describes some procedures that
+reach through abstraction barriers in a more controlled way
+to extract heuristic information from procedures for debugging
+purposes.
+
+[NOTE]
+================================================================
+The following
+text is copied from a straw proposal authored by Will Clinger and sent
+to rrr-authors on 09 May 1996. The text has been edited lightly. See
+the end for notes about the Larceny implementation.
+================================================================
+
+The procedures that extract heuristic information from procedures are
+permitted to return any result whatsoever. If the type of a result is
+not among those listed below, then the result represents an
+implementation-dependent extension to this interface, which may safely
+be interpreted as though no information were available from the
+procedure. Otherwise the result is to be interpreted as described
+below.
+
+proc:procedure-arity[args="proc"]
+
+Returns information about the arity of _proc_. If the result is `#f`,
+then no information is available. If the result is an exact
+non-negative integer _k_, then _proc_ requires exactly _k_
+arguments. If the result is an inexact non-negative integer _n_, then
+_proc_ requires _n_ or more arguments. If the result is a pair, then
+it is a list of non-negative integers, each of which indicates a
+number of arguments that will be accepted by _proc_; the list is not
+necessarily exhaustive.
+
+proc:procedure-documentation-string[args="proc"]
+
+Returns general information about _proc_. If the result is `#f`, then no
+information is available. If the result is a string, then it is to be
+interpreted as a "documentation string" (see Common Lisp).
+
+proc:procedure-name[args="proc"]
+
+Returns information about the name of _proc_. If the result is `#f`,
+then no information is available. If the result is a symbol or string,
+then it represents a name. If the result is a pair, then it is a list
+of symbols and/or strings representing a path of names; the first
+element represents an outer name and the last element represents an
+inner name.
+
+proc:procedure-source-file[args="proc"]
+
+Returns information about the name of a file that contains the source
+code for _proc_. If the result is `#f`, then no information is
+available. If the result is a string, then the string is the name of a
+file.
+
+proc:procedure-source-position[args="proc"]
+
+Returns information about the position of the source code for _proc_
+whithin the source file specified by procedure-source-file. If the
+result is `#f`, then no information is available. If the result is an
+exact integer _k_, then _k_ characters precede the opening parenthesis
+of the source code for _proc_ within that source file.
+
+proc:procedure-expression[args="proc"]
+
+Returns information about the source code for _proc_. If the result is
+`#f`, then no information is available. If the result is a pair, then it
+is a lambda expression in the traditional representation of a list.
+
+proc:procedure-environment[args="proc"]
+
+Returns information about the environment of _proc_. If the result is
+`#f`, then no information is available. In any case the result may be
+passed to any of the <<SectionEnvironments,environment inquiry functions>>.
+
+**Notes on the Larceny implementation**
+
+Twobit does not yet produce data for all of these functions, so some
+of them always return `#f`.

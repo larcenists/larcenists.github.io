@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>7. ERR5RS standard libraries</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="Larceny User Manual" /><link rel="up" href="index.html" title="Larceny User Manual" /><link rel="prev" href="ar01s06.html" title="6. Compiling files and libraries" /><link rel="next" href="ar01s08.html" title="8. R6RS standard libraries" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ar01s06.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s08.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Err5rsChapter"></a>7. ERR5RS standard libraries</h2></div></div></div><p><a class="link" href="ar01s12.html" title="12. Standards">ERR5RS</a> is still being developed, so the specifications
+described below are subject to change as its standard libraries
+are revised.</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="Err5rsLoadSection"></a>7.1. Load</h3></div></div></div><p>This section describes the <code class="literal">(err5rs load)</code> library.</p><p><a id="load"></a>
+<span class="emphasis"><em> Procedure load</em></span>
+<p>
+<a id="id2549436" class="indexterm"></a>
+<code class="literal">(load <span class="emphasis"><em>filename</em></span>) </code>
+</p></p><p>Loads ERR5RS code from <span class="emphasis"><em>filename</em></span>, evaluating each form
+as though it had been entered at the interactive
+read/eval/print loop.</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>The <code class="literal">load</code> procedure should be used only at an interactive top
+level and in files that will be loaded into an interactive top
+level.  Calls to the <code class="literal">load</code> procedure have no effect at compile
+time, and should not appear in files that will be compiled
+separately; use the <code class="literal">library</code> and <code class="literal">import</code> syntaxes instead.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="Err5rsRecordsSection"></a>7.2. Records</h3></div></div></div><p>When a procedure is said to be equivalent to an R6RS
+procedure, the equivalence holds only when all arguments
+have the properties required of them by the R6RS
+specification.  ERR5RS does not mandate R6RS exception
+semantics for programs that violate the specification.</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="Err5rsRecordsProceduralSection"></a>7.2.1. Procedural layer</h4></div></div></div><p>This section describes the <code class="literal">(err5rs records procedural)</code> library.</p><p><a id="make-rtd"></a>
+<span class="emphasis"><em> Procedure make-rtd</em></span>
+<p>
+<a id="id2549547" class="indexterm"></a>
+<code class="literal">(make-rtd <span class="emphasis"><em>name fieldspecs</em></span>) </code>
+</p>
+<p><code class="literal">(make-rtd <span class="emphasis"><em>name fieldspecs parent-rtd</em></span>) </code></p>
+<p><code class="literal">(make-rtd <span class="emphasis"><em>name fieldspecs parent-rtd option …</em></span>) </code></p></p><p><span class="emphasis"><em>name</em></span> is a symbol, which matters only to the
+<a class="link" href="ar01s07.html#rtd-name"><code class="literal">rtd-name</code></a> procedure of the inspection layer.
+<span class="emphasis"><em>fieldspecs</em></span> is a vector of field specifiers, where
+each field specifier is one of</p><div class="itemizedlist"><ul type="disc"><li>
+a symbol naming the (mutable) field;
+</li><li>
+a list of the form <code class="literal">(mutable <span class="emphasis"><em>name</em></span>)</code>,
+where <span class="emphasis"><em>name</em></span> is a symbol naming the mutable field;
+</li><li>
+a list of the form <code class="literal">(immutable <span class="emphasis"><em>name</em></span>)</code>,
+where <span class="emphasis"><em>name</em></span> is a symbol naming the immutable field.
+</li></ul></div><p>The optional parent is an rtd or <code class="literal">#f</code>. It is an error for
+any of the symbols in fieldspecs to name more than one
+of the fields specified by fieldspecs, but the field names
+in fieldspecs may shadow field names in the parent rtd.</p><p><a class="link" href="ar01s07.html#make-rtd"><code class="literal">make-rtd</code></a> returns an R6RS-compatible record-type
+descriptor.</p><p>Larceny allows the following optional arguments to follow
+the optional <span class="emphasis"><em>parent-rtd</em></span> argument:</p><div class="itemizedlist"><ul type="disc"><li>
+the symbol <code class="literal">sealed</code> means the new rtd cannot be used
+as the parent of other rtds;
+</li><li>
+the symbol <code class="literal">opaque</code> means the <a class="link" href="ar01s07.html#record?"><code class="literal">record?</code></a> predicate
+will not recognize instances of the new rtd;
+</li><li>
+the symbol <code class="literal">uid</code>, followed by another symbol <span class="emphasis"><em>id</em></span>,
+means the new rtd is non-generative with uid <span class="emphasis"><em>id</em></span>; the
+semantics of this extension is the same as in the R6RS.
+</li></ul></div><p>These Larceny-specific options may be used in any
+combination, giving Larceny's ERR5RS records the same
+expressive power as R6RS records, with which they are
+fully interoperable.</p><p><a id="rtd?"></a>
+<span class="emphasis"><em> Procedure rtd?</em></span>
+<p>
+<a id="id2549774" class="indexterm"></a>
+<code class="literal">(rtd? <span class="emphasis"><em>obj</em></span>) </code>
+</p></p><p>This predicate returns true if and only if its argument
+is a record-type descriptor.
+<code class="literal">rtd?</code> is equivalent to the <code class="literal">record-type-descriptor?</code>
+procedure of the R6RS.</p><p><a id="rtd-constructor"></a>
+<span class="emphasis"><em> Procedure rtd-constructor</em></span>
+<p>
+<a id="id2549820" class="indexterm"></a>
+<code class="literal">(rtd-constructor <span class="emphasis"><em>rtd</em></span>) </code>
+</p>
+<p><code class="literal">(rtd-constructor <span class="emphasis"><em>rtd fieldspecs</em></span>) </code></p></p><p><span class="emphasis"><em>rtd</em></span> is a record-type descriptor, and <span class="emphasis"><em>fieldspecs</em></span> is
+an optional vector of symbols.</p><p>If no <span class="emphasis"><em>fieldspecs</em></span> argument is supplied,
+then <code class="literal">rtd-constructor</code> returns a procedure that expects
+one argument for each field of the record-type described
+by <span class="emphasis"><em>rtd</em></span> and returns an instance of that record-type
+with its fields initialized to the corresponding
+arguments.
+Arguments that correspond to the fields of the
+record-type's parent (if any) come first.</p><p>If <span class="emphasis"><em>fieldspecs</em></span> is supplied, then <code class="literal">rtd-constructor</code>
+returns a procedure that expects one argument for each
+element of <span class="emphasis"><em>fieldspecs</em></span> and returns an instance of the
+record-type described by <span class="emphasis"><em>rtd</em></span> with the named fields
+initialized to the corresponding arguments.</p><p>It is an error if some symbol occurs more than once in
+<span class="emphasis"><em>fieldspecs</em></span>.  Fields of a derived record-type shadow
+fields of the same name in its parent; the <span class="emphasis"><em>fieldspecs</em></span>
+argument cannot be used to initialize a shadowed field.</p><p><a id="rtd-predicate"></a>
+<span class="emphasis"><em> Procedure rtd-predicate</em></span>
+<p>
+<a id="id2549936" class="indexterm"></a>
+<code class="literal">(rtd-predicate <span class="emphasis"><em>rtd</em></span>) </code>
+</p></p><p>Equivalent to the <code class="literal">record-predicate</code> procedure of the R6RS.</p><p><a id="rtd-accessor"></a>
+<span class="emphasis"><em> Procedure rtd-accessor</em></span>
+<p>
+<a id="id2549974" class="indexterm"></a>
+<code class="literal">(rtd-accessor <span class="emphasis"><em>rtd field</em></span>) </code>
+</p></p><p><span class="emphasis"><em>field</em></span> is a symbol that names a field of the
+record-type described by the record-type descriptor <span class="emphasis"><em>rtd</em></span>.
+Returns a unary procedure that accepts instances of <span class="emphasis"><em>rtd</em></span>
+(or any record-type that inherits from <span class="emphasis"><em>rtd</em></span>) and
+returns the current value of the named field.</p><p>Fields in derived record-types shadow fields of the same
+name in a parent record-type.</p><p><a id="rtd-mutator"></a>
+<span class="emphasis"><em> Procedure rtd-mutator</em></span>
+<p>
+<a id="id2550032" class="indexterm"></a>
+<code class="literal">(rtd-mutator <span class="emphasis"><em>rtd field</em></span>) </code>
+</p></p><p><span class="emphasis"><em>field</em></span> is a symbol that names a field of the
+record-type described by the record-type descriptor <span class="emphasis"><em>rtd</em></span>.
+Returns a binary procedure that accepts instances of <span class="emphasis"><em>rtd</em></span>
+(or any record-type that inherits from <span class="emphasis"><em>rtd</em></span>) and a new
+value to be stored into the named field, performs that
+side effect, and returns an unspecified value.</p><p>Fields in derived record-types shadow fields of the same
+name in a parent record-type.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="Err5rsRecordsInspectionSection"></a>7.2.2. Inspection layer</h4></div></div></div><p>This section describes the <code class="literal">(err5rs records inspection)</code> library.</p><p><a id="record?"></a>
+<span class="emphasis"><em> Procedure record?</em></span>
+<p>
+<a id="id2550110" class="indexterm"></a>
+<code class="literal">(record? <span class="emphasis"><em>obj</em></span>) </code>
+</p></p><p>Equivalent to its R6RS namesake.</p><p><a id="record-rtd"></a>
+<span class="emphasis"><em> Procedure record-rtd</em></span>
+<p>
+<a id="id2550143" class="indexterm"></a>
+<code class="literal">(record-rtd <span class="emphasis"><em>record</em></span>) </code>
+</p></p><p>Equivalent to its R6RS namesake.</p><p><a id="rtd-name"></a>
+<span class="emphasis"><em> Procedure rtd-name</em></span>
+<p>
+<a id="id2550176" class="indexterm"></a>
+<code class="literal">(rtd-name <span class="emphasis"><em>rtd</em></span>) </code>
+</p></p><p>Equivalent to the <code class="literal">record-type-name</code> procedure of the R6RS.</p><p><a id="rtd-parent"></a>
+<span class="emphasis"><em> Procedure rtd-parent</em></span>
+<p>
+<a id="id2550214" class="indexterm"></a>
+<code class="literal">(rtd-parent <span class="emphasis"><em>rtd</em></span>) </code>
+</p></p><p>Equivalent to the <code class="literal">record-type-parent</code> procedure of the R6RS.</p><p><a id="rtd-field-names"></a>
+<span class="emphasis"><em> Procedure rtd-field-names</em></span>
+<p>
+<a id="id2550251" class="indexterm"></a>
+<code class="literal">(rtd-field-names <span class="emphasis"><em>rtd</em></span>) </code>
+</p></p><p>Equivalent to the <code class="literal">record-type-field-names</code> procedure of the R6RS.
+(That is, it returns a vector of the symbols that name the fields
+of the record-type represented by <span class="emphasis"><em>rtd</em></span>, excluding the fields of
+parent record-types.)</p><p><a id="rtd-all-field-names"></a>
+<span class="emphasis"><em> Procedure rtd-all-field-names</em></span>
+<p>
+<a id="id2550298" class="indexterm"></a>
+<code class="literal">(rtd-all-field-names <span class="emphasis"><em>rtd</em></span>) </code>
+</p></p><p>Returns a vector of the symbols that name the fields of
+the record-type represented by <span class="emphasis"><em>rtd</em></span>, including the fields
+of its parent record-types, if any, with the fields of
+parent record-types coming before the fields of its children,
+with each subsequence in the same order as in the vectors
+that would be returned by calling <a class="link" href="ar01s07.html#rtd-field-names"><code class="literal">rtd-field-names</code></a>
+on <span class="emphasis"><em>rtd</em></span> and on all its ancestral record-type descriptors.</p><p><a id="rtd-field-mutable?"></a>
+<span class="emphasis"><em> Procedure rtd-field-mutable?</em></span>
+<p>
+<a id="id2550357" class="indexterm"></a>
+<code class="literal">(rtd-field-mutable? <span class="emphasis"><em>rtd field</em></span>) </code>
+</p></p><p><span class="emphasis"><em>rtd</em></span> is a record-type descriptor, and <span class="emphasis"><em>field</em></span> is a
+symbol naming a field of the record-type described by <span class="emphasis"><em>rtd</em></span>.
+Returns <code class="literal">#t</code> if the named field is mutable; otherwise returns <code class="literal">#f</code>.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="Err5rsRecordsSyntacticSection"></a>7.2.3. Syntactic layer</h4></div></div></div><p>This section describes the <code class="literal">(err5rs records syntactic)</code> library.</p><p>The syntactic layer consists of
+<a class="ulink" href="http://srfi.schemers.org/srfi-9/" target="_top">SRFI 9</a>
+extended with single inheritance and (optional) implicit naming.</p><p>All ERR5RS record-type definitions are generative (unless
+Larceny's optional <code class="literal">uid</code> feature is used), but
+ERR5RS drops the SRFI 9 restriction to top level, mainly
+because the R6RS allows generative definitions wherever
+a definition may appear.</p><p>The syntax of an ERR5RS record-type definition is</p><pre class="screen">    &lt;definition&gt;
+      -&gt; &lt;record type definition&gt;           ; addition to 7.1.6 in R5RS
+
+    &lt;record type definition&gt;
+      -&gt; (define-record-type &lt;type spec&gt;
+           &lt;constructor spec&gt;
+           &lt;predicate spec&gt;
+           &lt;field spec&gt; ...)
+
+    &lt;type spec&gt;  -&gt; &lt;type name&gt;
+                 -&gt; (&lt;type name&gt; &lt;parent&gt;)
+
+    &lt;constructor spec&gt;
+                 -&gt; #f
+                 -&gt; #t
+                 -&gt; &lt;constructor name&gt;
+                 -&gt; (&lt;constructor name&gt; &lt;field name&gt; ...)
+
+    &lt;predicate spec&gt;
+                 -&gt; #f
+                 -&gt; #t
+                 -&gt; &lt;predicate name&gt;
+
+    &lt;field spec&gt; -&gt; &lt;field name&gt;
+                 -&gt; (&lt;field name&gt;)
+                 -&gt; (&lt;field name&gt; &lt;accessor name&gt;)
+                 -&gt; (&lt;field name&gt; &lt;accessor name&gt; &lt;mutator name&gt;)
+
+    &lt;parent&gt;           -&gt; &lt;expression&gt;
+
+    &lt;type name&gt;        -&gt; &lt;identifier&gt;
+    &lt;constructor name&gt; -&gt; &lt;identifier&gt;
+    &lt;predicate name&gt;   -&gt; &lt;identifier&gt;
+    &lt;accessor name&gt;    -&gt; &lt;identifier&gt;
+    &lt;mutator name&gt;     -&gt; &lt;identifier&gt;
+    &lt;field name&gt;       -&gt; &lt;identifier&gt;</pre><p>The semantics of a record type definition is the same
+as in SRFI 9: the record type definition macro-expands
+into a cluster of definitions that</p><div class="itemizedlist"><ul type="disc"><li>
+defines the <code class="literal">&lt;type name&gt;</code> as the record-type descriptor
+for the new record-type;
+</li><li>
+defines a constructor for instances of the new
+record-type (unless the constructor spec is <code class="literal">#f</code>);
+</li><li>
+defines a predicate that recognizes instances of the
+new record-type and its subtypes (unless the predicate spec is <code class="literal">#f</code>);
+</li><li>
+defines an accessor for each field name;
+</li><li>
+defines a mutator for each mutable field name.
+</li></ul></div><p>An ERR5RS record type definition extends SRFI 9 with the
+following additional options:</p><div class="itemizedlist"><ul type="disc"><li>
+If a <code class="literal">&lt;parent&gt;</code> expression is specified, then it must
+evaluate to an rtd that serves as the parent record-type
+for the record-type being defined.
+</li><li>
+If <code class="literal">#f</code> is specified for the constructor or predicate,
+then no constructor or predicate procedure is defined.
+(This is useful when the record-type being defined will
+be used as an abstract base class.)
+</li><li>
+If <code class="literal">#t</code> is specified for the constructor or predicate,
+then the name of the constructor is the type name prefixed
+by <code class="literal">make-</code>, and the name of the predicate is the type name
+followed by a question mark (<code class="literal">?</code>).
+</li><li>
+If the constructor name is specified as <code class="literal">#t</code> or as an
+identifier, then the constructor's arguments correspond
+to the fields of the parent (if any) followed by the new
+fields added by this record-type definition.
+</li><li><p>
+If a field spec consists of a single identifier, then
+</p><div class="itemizedlist"><ul type="circle"><li>
+the field is immutable;
+</li><li>
+the name of its accessor is the type name followed by
+a hyphen (<code class="literal">-</code>) followed by the field name.
+</li></ul></div></li><li><p>
+If a field spec consists of a list of one identifier, then
+</p><div class="itemizedlist"><ul type="circle"><li>
+the field is mutable;
+</li><li>
+the name of its accessor is the type name followed
+by a hyphen (<code class="literal">-</code>) followed by the field name;
+</li><li>
+the name of its mutator is the type name followed by
+a hyphen (<code class="literal">-</code>) followed by the field name followed by <code class="literal">-set!</code>.
+</li></ul></div></li></ul></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="RecordIdentitySection"></a>7.2.4. Record identity</h4></div></div></div><p>Two ERR5RS records with fields are <code class="literal">eqv?</code> if and only if
+they were created by the same (dynamic) call to some
+record constructor.
+Two ERR5RS records are <code class="literal">eq?</code> if and only if they are <code class="literal">eqv?</code>.</p><p>Apart from the usual constraint that equivalence according
+to <code class="literal">eqv?</code> implies equivalence according to <code class="literal">equal?</code>, the
+behavior of <code class="literal">equal?</code> on ERR5RS records is unspecified.
+(This is compatible with the R6RS.)</p><p>A <code class="literal">define-record-type</code> form macro-expands into code that
+calls <a class="link" href="ar01s07.html#make-rtd"><code class="literal">make-rtd</code></a> each time the expanded record-type
+definition is executed.
+Two ERR5RS record-type descriptors are <code class="literal">eqv?</code> if and only if
+they were created by the same (dynamic) call to
+<a class="link" href="ar01s07.html#make-rtd"><code class="literal">make-rtd</code></a>.</p></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s06.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s08.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

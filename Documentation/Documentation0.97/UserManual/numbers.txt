@@ -1,0 +1,30 @@
+Numbers
+~~~~~~~
+
+Larceny has six representations for numbers: _fixnums_ are small,
+exact integers; _bignums_ are unlimited-precision exact integers;
+_ratnums_ are exact rationals; _flonums_ are inexact rationals;
+_rectnums_ are exact complexes; and _compnums_ are inexact complexes.
+
+////////////////////////////////////////////////////////////////
+FIXME
+You can read more about the number representations
+<<LarcenyNoteRepr,here>>.
+////////////////////////////////////////////////////////////////
+
+_Number-representation predicates_
+
+proctempl:fixnum?[args="obj",result="boolean"]
+proctempl:bignum?[args="obj",result="boolean"]
+proctempl:ratnum?[args="obj",result="boolean"]
+proctempl:flonum?[args="obj",result="boolean"]
+proctempl:rectnum?[args="obj",result="boolean"]
+proctempl:compnum?[args="obj",result="boolean"]
+
+These predicates test whether an object is a number of a particular
+representation and return `#t` if so, `#f` if not.
+
+proc:random[args="limit",result="exact integer"]
+
+Returns a pseudorandom nonnegative exact integer in the range 0
+through _limit_-1.

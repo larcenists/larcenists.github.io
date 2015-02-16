@@ -1,0 +1,29 @@
+Vectors
+~~~~~~~
+
+proc:vector-copy[args="vector",result="vector"]
+
+Returns a shallow copy of its argument. 
+
+_Operations on vector-like structures_
+
+proctempl:vector-like?[args="object",result="boolean"]
+proctempl:vector-like-length[args="vector-like",result="fixnum"]
+proctempl:vector-like-ref[args="vector-like k",result="object"]
+proctempl:vector-like-set![args="vector-like k object",result="unspecified"]
+
+A vector-like structure is a low-level representation
+for indexed arrays of Scheme objects.  Vector-like
+structures are used to represent types such as vectors,
+records, symbols, and ports.
+
+There is no way to construct a "generic" vector-like structure;
+use the constructors for specific data types.
+
+The vector-like operations operate on all vector-like structures.
+All are integrable.
+All are deprecated because they
+violate abstraction barriers and make your code
+representation-dependent; they are useful mainly to
+Larceny developers, who might otherwise be tempted to
+write some low-level operations in C or assembly language.

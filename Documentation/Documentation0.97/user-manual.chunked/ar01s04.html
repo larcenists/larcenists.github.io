@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>4. Lexical syntax</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="Larceny User Manual" /><link rel="up" href="index.html" title="Larceny User Manual" /><link rel="prev" href="ar01s03.html" title="3. Running Larceny" /><link rel="next" href="ar01s05.html" title="5. File naming conventions" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ar01s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s05.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="LexicalChapter"></a>4. Lexical syntax</h2></div></div></div><p>Larceny's default lexical syntax extends the lexical syntax
+required by the R5RS, R6RS, and ERR5RS <a class="link" href="ar01s12.html" title="12. Standards">standards</a>.</p><p>The R6RS forbids most lexical extensions, however, so Larceny
+provides several mechanisms for turning its lexical extensions
+on and off.</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="FlagsSection"></a>4.1. Flags</h3></div></div></div><p>By default, Larceny recognizes several Larceny-specific flags
+of the form permitted by the R6RS.  The flag you are most
+likely to encounter represents one of Larceny's unspecified
+values:</p><pre class="screen">    #!unspecified</pre><p>Certain other flags have special meanings to Larceny's
+<code class="literal">read</code> and <code class="literal">get-datum</code> procedures.  They are described below.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="CaseFoldingSection"></a>4.2. Case-sensitivity</h3></div></div></div><p>By default, Larceny is case-sensitive.
+This global default can be overridden by specifying
+<code class="literal">—foldcase</code> or <code class="literal">—nofoldcase</code> on Larceny's command line,
+or by changing the value of Larceny's <code class="literal">case-sensitive?</code> parameter.</p><p>The case-sensitivity of a particular textual input port
+is affected by reading one of the following flags from
+the port using the <code class="literal">read</code> or <code class="literal">get-datum</code> procedures:</p><pre class="screen">    #!fold-case
+    #!no-fold-case</pre><p>The <code class="literal">#!fold-case</code> flag enables case-folding on data read from
+the port by the <code class="literal">read</code> and <code class="literal">get-datum</code> procedures, while the
+<code class="literal">#!no-fold-case</code> flag disables case-folding.  The behavior
+established by one of these flags extends to the next flag
+read from the port by <code class="literal">read</code> or <code class="literal">get-datum</code>.</p><p>Both <code class="literal">#!fold-case</code> and <code class="literal">#!no-fold-case</code> evaluate to an
+unspecified value.  To obtain the effect of one of these flags
+while treating it as a comment, place <code class="literal">#;</code> in front of the flag.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="LexicalExtensionsSection"></a>4.3. Lexical extensions</h3></div></div></div><p>When a port is first opened, the Larceny-specific lexical
+extensions that are accepted on the port are determined
+by Larceny's <a class="link" href="ar01s04.html#LexicalParametersSection" title="4.4. Lexical parameters">lexical parameters</a>.</p><p>The following flags change the case-sensitivity and lexical
+extensions on the specific port from which they are read:</p><pre class="screen">    #!r6rs         ; implies #!no-fold-case, negates other flags
+    #!r5rs         ; implies #!fold-case, #!err5rs
+    #!err5rs       ; allows Larceny-specific extensions
+    #!larceny      ; implies #!no-fold-case, #!err5rs</pre><p>The <code class="literal">#!r6rs</code> flag is a comment, while all of Larceny's other
+flags evaluate to an unspecified value.  To obtain the effect
+of a flag other than <code class="literal">#!r6rs</code> while treating it as a comment,
+place <code class="literal">#;</code> in front of the flag.</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>The R6RS requires implementations to treat <code class="literal">#!r6rs</code> as a
+comment; it is the only flag that implementations of the R6RS
+are required to treat as a comment.  Since the <code class="literal">#!r6rs</code> flag
+behaves differently from all other flags, it is deprecated.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="LexicalParametersSection"></a>4.4. Lexical parameters</h3></div></div></div><p>When given no argument, these parameters return the current
+default for some aspect of the lexical syntax that will be
+accepted on newly created ports.
+When given an argument, these procedures change the default
+as specified by the argument.</p><p><a id="case-sensitive?"></a>
+<span class="emphasis"><em> Procedure case-sensitive?</em></span>
+<p>
+<a id="id2547938" class="indexterm"></a>
+<code class="literal">(case-sensitive? <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p>
+<p><code class="literal">(case-sensitive? <span class="emphasis"><em>boolean</em></span>) </code></p></p><p>Determines whether newly created textual ports default to
+case-sensitive.</p><p><a id="read-larceny-weirdness?"></a>
+<span class="emphasis"><em> Procedure read-larceny-weirdness?</em></span>
+<p>
+<a id="id2547984" class="indexterm"></a>
+<code class="literal">(read-larceny-weirdness? <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p>
+<p><code class="literal">(read-larceny-weirdness? <span class="emphasis"><em>boolean</em></span>) </code></p></p><p>Determines whether newly created textual ports allow
+Larceny's usual extensions to R5RS lexical syntax.
+This parameter also determines whether newly created
+ports allow <code class="literal">#</code> as an insignificant digit; this is
+required by the R5RS, but disallowed by the R6RS.</p><p><a id="read-traditional-weirdness?"></a>
+<span class="emphasis"><em> Procedure read-traditional-weirdness?</em></span>
+<p>
+<a id="id2548039" class="indexterm"></a>
+<code class="literal">(read-traditional-weirdness? <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p>
+<p><code class="literal">(read-traditional-weirdness? <span class="emphasis"><em>boolean</em></span>) </code></p></p><p>Determines whether newly created textual ports allow
+certain lexical extensions that are deprecated in Larceny.
+These extensions include symbols enclosed by vertical
+bars and read-time evaluation.</p><p>For the current semantics of these parameters, please consult
+the Larceny developers' web page that describes
+<a class="ulink" href="https://github.com/larcenists/larceny/wiki/LexicalConversion" target="_top">Larceny's
+lexical syntax</a>.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s03.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

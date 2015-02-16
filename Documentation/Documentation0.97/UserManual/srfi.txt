@@ -1,0 +1,29 @@
+SRFI Support
+~~~~~~~~~~~~
+
+The SRFIs (Scheme Requests For Implementations) is an Internet-based
+collection of Scheme code designed and provided by Scheme
+programmers. The SRFI effort is open to anyone, and is described at
+http://srfi.schemers.org[].
+
+The fundamental SRFI is SRFI-0, "Feature-based conditional expansion
+construct", which allows a program to query the underlying
+implementation about the available SRFIs (and potentially about other
+implementation features) at macro expansion time. The design documents
+for this and other SRFIs are available at the web site shown above.
+
+Larceny currently supports many SRFIs, but not as many as it should.
+Some SRFIs are built into Larceny, but most must be loaded dynamically
+using Larceny's `require` procedure:
+
+----------------------------------------------------------------
+    > (require 'srfi-0)
+----------------------------------------------------------------
+
+Larceny provides the following nonstandard SRFI keys for use in
+SRFI 0:
+    
+----------------------------------------------------------------
+    larceny
+----------------------------------------------------------------
+    

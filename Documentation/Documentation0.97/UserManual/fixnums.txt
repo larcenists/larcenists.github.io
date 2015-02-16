@@ -1,0 +1,129 @@
+[[FixnumPrimitives]]
+Fixnum primitives
+~~~~~~~~~~~~~~~~~
+
+Fixnums are small exact integers that are likely to be
+represented without heap
+allocation. Larceny never represents a number that can be
+represented as a fixnum any other way, so programs that can use
+fixnums will do so automatically. However, operations that work only
+on fixnums can sometimes be substantially faster than generic
+operations, and the following primitives are provided for use in those
+programs that need especially good performance.
+
+The `(rnrs arithmetic fixnums)` library now
+provides a large set of procedures that, in Larceny, are
+defined using the procedures described below.
+If one of Larceny's procedures duplicates the semantics of
+an R6RS procedure whose name is different, then Larceny's
+name is deprecated.
+
+All arguments to the following procedures must be fixnums.
+
+proc:fixnum?[args="obj",result="boolean"]
+
+Returns `#t` if its argument is a fixnum, and `#f` otherwise.
+
+proc:fx+[args="fix1 fix2",result="fixnum"]
+
+Returns the fixnum sum of its arguments. If the result is not
+representable as a fixnum, then an error is signalled (unless error
+checking has been disabled).
+
+proc:fx-[args="fix1 fix2,result="fixnum"]
+
+Returns the fixnum difference of its arguments. If the result is not
+representable as a fixnum, then an error is signalled.
+
+proc:fx--[args="fix1",result="fixnum"]
+
+Returns the fixnum negative of its argument. If the result is not
+representable as a fixnum, then an error is signalled.
+
+proc:fx*[args="fix1 fix2",result="fixnum"]
+
+Returns the fixnum product of its arguments. If the result is not
+representable as a fixnum, then an error is signalled.
+
+proc:fx=[args="fix1 fix2",result="boolean"]
+
+Returns `#t` if its arguments are equal, and `#f` otherwise.
+
+proc:fx<[args="fix1 fix2",result="boolean"]
+
+Returns `#t` if _fix1_ is less than _fix2_, and `#f` otherwise.
+
+proc:fx<=[args="fix1 fix2",result="boolean"]
+
+Returns `#t` if _fix1_ is less than or equal to _fix2_, and `#f`
+otherwise.
+
+proc:fx>[args="fix1 fix2",result="boolean"]
+
+Returns `#t` if _fix1_ is greater than _fix2_, and `#f` otherwise.
+
+proc:fx>=[args="fix1 fix2",result="boolean"]
+
+Returns `#t` if _fix1_ is greater than or equal to _fix2_, and `#f`
+otherwise.
+
+proc:fxnegative?[args="fix",result="boolean"]
+
+Returns `#t` if its argument is less than zero, and `#f` otherwise.
+
+proc:fxpositive?[args="fix",result="boolean"]
+
+Returns `#t` if its argument is greater than zero, and `#f` otherwise.
+
+proc:fxzero?[args="fix",result="boolean"]
+
+Returns `#t` if its argument is zero, and `#f` otherwise.
+
+// FIXME these names have changed
+
+proc:fxlogand[args="fix1 fix2",result="fixnum"]
+
+Returns the bitwise _and_ of its arguments.
+
+proc:fxlogior[args="fix1 fix2",result="fixnum"]
+
+Returns the bitwise _inclusive or_ of its arguments.
+
+proc:fxlognot[args="fix",result="fixnum"]
+
+Returns the bitwise _not_ of its argument.
+
+proc:fxlogxor[args="fix1 fix2",result="fixnum"]
+
+Returns the bitwise _exclusive or_ of its arguments.
+
+proc:fxlsh[args="fix1 fix2",result="fixnum"]
+
+Returns _fix1_ shifted left _fix2_ places, shifting in zero bits at
+the low end. If the shift count exceeds the number of bits in the
+machine's word size, then the results are machine-dependent.
+
+proc:most-positive-fixnum[args="",result="fixnum"]
+
+Returns the largest representable positive fixnum.
+
+proc:most-negative-fixnum[args="",result="fixnum"]
+
+Returns the smallest representable negative fixnum.
+
+proc:fxrsha[args="fix1 fix2",result="fixnum"]
+
+Returns _fix1_ shifted right _fix2_ places, shifting in a copy of the
+sign bit at the left end. If the shift count exceeds the number of
+bits in the machine's word size, then the results are
+machine-dependent.
+
+proc:fxrshl[args="fix1 fix2",result="fixnum"]
+
+Returns _fix1_ shifted right _fix2_ places, shifting in zero bits at
+the high end. If the shift count exceeds the number of bits in the
+machine's word size, then the results are machine-dependent.
+
+
+
+

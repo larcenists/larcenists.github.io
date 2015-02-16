@@ -1,0 +1,126 @@
+Hashtables and hash functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hashtables represent finite mappings from keys to values.
+If the hash function is a good one, then the value associated
+with a key may be looked up in constant time (on the average).
+
+[NOTE]
+================================================================
+The R6RS hashtables library are a big improvement
+over Larceny's traditional hash tables, and should be used
+instead of the API described below.
+================================================================
+
+[NOTE]
+================================================================
+To resolve a clash of names and semantics with the
+R6RS `make-hashtable` procedure, Larceny's traditional
+`make-hashtable` procedure has been renamed to
+`make-oldstyle-hashtable`.
+================================================================
+
+==== Hash tables
+
+proc:make-oldstyle-hashtable[args="hash-function bucket-searcher size",result="hashtable"]
+
+Returns a newly allocated mutable hash table using _hash-function_ as
+the hash function and _bucket-searcher_, e.g. `assq`, `assv`, `assoc`, to
+search a bucket with _size_ buckets at first, expanding the number of
+buckets as needed. The _hash-function_ must accept a key and return a
+non-negative exact integer.
+
+proctempl:make-oldstyle-hashtable[args="hash-function bucket-searcher",result="hashtable"]
+
+Equivalent to `(make-oldstyle-hashtable _hash-function bucket-searcher n_)` for
+some value of _n_ chosen by the implementation.
+
+proctempl:make-oldstyle-hashtable[args="hash-function",result="hashtable"]
+
+Equivalent to `(make-oldstyle-hashtable _hash-function_ assv)`.
+
+proctempl:make-oldstyle-hashtable[args="",result="hashtable"]
+
+Equivalent to `(make-oldstyle-hashtable object-hash assv)`.
+
+proc:hashtable-contains?[args="hashtable key",result="bool"]
+
+Returns true iff the _hashtable_ contains an entry for _key_.
+
+proc:hashtable-fetch[args="hashtable key flag",result="object"]
+
+Returns the value associated with _key_ in the _hashtable_ if the
+_hashtable_ contains _key_; otherwise returns _flag_.
+
+proc:hashtable-get[args="hashtable key",result="object"]
+
+Equivalent to `(hashtable-fetch  #f)`.
+
+proc:hashtable-put![args="hashtable key value",result="unspecified"]
+
+Changes the _hashtable_ to associate _key_ with _value_, replacing any
+existing association for _key_.
+
+proc:hashtable-remove![args="hashtable key",result="unspecified"]
+
+Removes any association for _key_ within the _hashtable_. 
+
+proc:hashtable-clear![args="hashtable",result="unspecified"]
+
+Removes all associations from the _hashtable_.
+
+proc:hashtable-size[args="hashtable",result="integer"]
+
+Returns the number of keys contained within the _hashtable_.
+
+proc:hashtable-for-each[args="procedure hashtable",result="unspecified"]
+
+The _procedure_ must accept two arguments, a key and the value
+associated with that key. Calls the _procedure_ once for each
+key-value association in _hashtable_. The order of these calls is
+indeterminate.
+
+proc:hashtable-map[args="procedure hashtable",results="unspecified"]
+
+The _procedure_ must accept two arguments, a key and the value
+associated with that key. Calls the _procedure_ once for each
+key-value association in _hashtable_, and returns a list of the
+results. The order of the calls is indeterminate.
+
+proc:hashtable-copy[args="hashtable",result="hashtable"]
+
+Returns a copy of the _hashtable_.
+
+==== Hash functions
+
+The _hash values_ returned by these functions are nonnegative exact
+integer suitable as hash values for the hashtable functions.
+
+proc:equal-hash[args="object",result="integer"]
+
+Returns a hash value for _object_ based on its contents.
+
+proc:object-hash[args="object",result="integer"]
+
+Returns a hash value for _object_ based on its identity.
+
+[WARNING]
+================================================================
+This hash function performs extremely poorly on pairs,
+vectors, strings, and bytevectors, which are the objects
+with which it is mostly likely to be used.
+For efficient hashing on object identity, create the
+hashtable with `make-eq-hashtable` or `make-eqv-hashtable`
+of the `(rnrs hashtables)` library.
+================================================================
+
+proc:string-hash[args="string",result="fixnum"]
+
+Returns a hash value for _string_ based on its content.
+
+proc:symbol-hash[args="symbol",result="fixnum"]
+
+Returns a hash value for _symbol_ based on its print name.
+The `symbol-hash`
+is very fast, because the hash code is cached in the symbol data
+structure.

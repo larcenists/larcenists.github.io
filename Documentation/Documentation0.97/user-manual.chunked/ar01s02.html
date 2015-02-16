@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2. Installing Larceny</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="Larceny User Manual" /><link rel="up" href="index.html" title="Larceny User Manual" /><link rel="prev" href="index.html" title="Larceny User Manual" /><link rel="next" href="ar01s03.html" title="3. Running Larceny" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="index.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s03.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="InstallationChapter"></a>2. Installing Larceny</h2></div></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="VarietiesSection"></a>2.1. Varieties of Larceny</h3></div></div></div><p>There are three main varieties of Larceny.</p><p>Native Larceny is the fastest and most convenient variety
+of Larceny.  It compiles directly to native machine code
+for Intel x86-32 or SPARC microprocessors running Windows,
+Linux, MacOS X, or Solaris operating systems.</p><p>Petit Larceny compiles to C instead of machine code.  It
+runs on most Unix machines, including PowerPC Macintoshes
+with MacOS X.</p><p>Common Larceny compiles to JIT-compiled IL on Microsoft's
+Common Language Runtime (CLR) or Mono.  It provides access
+to the .NET libraries from Scheme.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="DownloadingSection"></a>2.2. Downloading</h3></div></div></div><p>The current versions of Larceny are available for
+download at
+<a class="ulink" href="http://larceny.ccs.neu.edu/" target="_top">Larceny's main web page</a>.</p><p>Twobit and Larceny are distributed in two forms: as a precompiled
+binary, or as source code that can be used to reconstruct
+any of the precompiled binary distributions.
+Unless you intend to modify Larceny yourself, you do not
+need to download the source code.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="InstallationSection"></a>2.3. Installing the programs</h3></div></div></div><p>If you are installing or running Common Larceny, please
+consult the
+<a class="ulink" href="http://larceny.ccs.neu.edu" target="_top">Common Larceny User Manual</a>
+instead of becoming confused by the instructions in this
+manual.</p><p>Unpack the distribution files with an appropriate command such
+as one of the following:</p><pre class="literallayout">tar -xzf larceny-X.Y-bin-native-sparc-solaris.tar.gz
+tar -xzf larceny-X.Y-bin-native-ia32-macosx.tar.gz
+tar -xzf larceny-X.Y-bin-native-ia32-linux86.tar.gz
+tar -xzf larceny-X.Y-bin-native-ia32-win32.tar.gz
+tar -xzf larceny-X.Y-bin-petit-stdc-macosx.tar.gz
+tar -xzf larceny-X.Y-src.tar.gz</pre><p>That will create a directory with a similar name (but without
+the <code class="literal">.tar.gz</code> suffix) in your current working directory.
+That is the Larceny root directory, which you may rename
+to something shorter, such as <code class="literal">larceny</code>; the rest of this
+section will refer to it by that name.</p><p>Assuming you have unpacked a binary distribution, the <code class="literal">larceny</code>
+directory will contain the following files:</p><pre class="literallayout">larceny.bin         Run-time system
+larceny.heap        Heap image with all libraries, FFI, and compiler
+larceny             Shell script that runs larceny.heap
+scheme-script       Shell script that runs Scheme scripts
+compile-stale       Scheme script that compiles ERR5RS/R6RS libraries
+startup.sch         Pathnames for the require and autoload features</pre><p>If you unpacked a binary distribution, then you should be able to
+run it immediately by making the <code class="literal">larceny</code> directory your current
+working directory and invoking <code class="literal">./larceny</code> or perhaps just <code class="literal">larceny</code>.</p><p>If you unpacked the source code there will be many other files and
+directories, but <code class="literal">larceny.bin</code> and <code class="literal">larceny.heap</code> will not be present.</p><div class="tip" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Tip</h3><p>You can reconstruct the <code class="literal">larceny.bin</code> and <code class="literal">larceny.heap</code> files from their
+source code, but that process requires a working version of Larceny
+or PLT Scheme v37x; unless you're porting Larceny or Petit Larceny to a
+brand new target architecture, it's easier to obtain those
+files from a binary distribution of Larceny.</p></div><p>You may add the <code class="literal">larceny</code> directory to your standard path,
+or you may install Larceny into a directory that is already
+part of your standard path.</p><p>Suppose, for example, that you want to install Larceny
+in <code class="literal">/usr/local/bin</code> and <code class="literal">/usr/local/lib/larceny</code>.
+Copy <code class="literal">larceny</code> and <code class="literal">scheme-script</code> to <code class="literal">/usr/local/bin</code>
+and edit the definition of <code class="literal">LARCENY_PATH</code> at the head
+of each file to point to the correct directory:</p><pre class="literallayout">LARCENY_PATH=/usr/local/lib/larceny</pre><p>Then move the entire <code class="literal">larceny</code> directory to <code class="literal">/usr/local/lib/larceny</code>,
+or copy <code class="literal">larceny.bin</code>, <code class="literal">larceny.heap</code>, <code class="literal">startup.sch</code>, and the <code class="literal">lib</code>
+directory to <code class="literal">/usr/local/lib/larceny</code>.</p><p>You should now be able to run Larceny from any directory
+by typing "<code class="literal">larceny</code>" at a prompt.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="CompilingStdLibSection"></a>2.4. Compiling the R6RS standard libraries</h3></div></div></div><p>Before you can run Larceny in ERR5RS or R6RS modes, you may
+have to compile the ERR5RS/R6RS runtime and standard libraries.
+This step is definitely required if you are using Petit Larceny
+or building any variety of Larceny from source code.
+With the prebuilt native varieties of Larceny, however, this step
+should not be necessary unless you change one of the files in
+<code class="literal">lib/R6RS</code> or <code class="literal">lib/SRFI</code>.</p><div class="tip" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Tip</h3><p>If the <code class="literal">lib/R6RS</code> directory and its subdirectories are read-only,
+then the standard libraries will not be touched, modified, or
+recompiled by accident.</p></div><p>Compiling the ERR5RS/R6RS runtime and standard libraries is
+accomplished as follows:</p><pre class="screen">    $ ./larceny
+    Larceny v0.96 "Fluoridation" (...)
+    &gt; (require 'r6rsmode)
+    &gt; (larceny:compile-r6rs-runtime)
+    &gt; (exit)</pre><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>Compiling the ERR5RS/R6RS runtime as shown above causes
+all previously compiled ERR5RS/R6RS libraries and top-level
+programs to become <a class="link" href="ar01s06.html" title="6. Compiling files and libraries">stale</a>.  That means
+those previously compiled files will need to be recompiled
+or removed.</p></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="index.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

@@ -1,0 +1,22 @@
+Sorting
+~~~~~~~
+
+The `(rnrs sorting)` library now
+provides a small set of procedures that supersede most
+of the procedures described below.
+All of the procedures described below are therefore
+deprecated.
+
+_Procedures sort and sort!_
+
+proctempl:sort[args="list less?",result="list"]
+proctempl:sort[args="vector less?",result="vector"]
+proctempl:sort![args="list less?",result="list"]
+proctempl:sort![args="vector less?",result="vector"]
+
+These procedures sort their argument (a list or a vector) according to
+the predicate _less?_, which must implement a total order on the
+elements in the data structures that are sorted.
+
+`sort` returns a fresh data structure containing the sorted data;
+`sort!` sorts the data structure in-place.

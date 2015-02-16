@@ -1,0 +1,149 @@
+[[LarcenyCompilerSection]]
+
+Compiler
+~~~~~~~~
+
+The `(larceny compiler)` library exports the
+`load` and `r5rs:require` procedures of `(larceny load)`,
+the
+<<current-require-path,`current-require-path`>>
+procedure, the
+<<compile-file,`compile-file`>>,
+<<compile-library,`compile-library`>>, and
+<<compile-stale-libraries,`compile-stale-libraries`>>
+procedures described below,
+and the
+<<compiler-switches,`compiler-switches`>> procedure.
+
+These procedures can be used to compile ERR5RS/R6RS
+libraries and top-level programs before they are imported
+or executed.
+This is especially important for Petit Larceny, which
+would otherwise use an interpreter.  For native Larceny,
+whose just-in-time compiler generates native machine code
+as source libraries and programs are loaded, imported, or
+executed, the main advantage of separate compilation is
+that compiled libraries and programs will load much
+faster than source libraries and programs.
+
+The main disadvantage of separate compilation is that
+compiled libraries and programs go _stale_ when their
+source code is changed or when a library on which they
+depend is changed or recompiled.  Stale libraries and
+programs can be dangerously inconsistent with libraries
+on which they depend, so Larceny checks for staleness
+and refuses to execute a stale library or program.
+The <<compile-stale-libraries,`compile-stale-libraries`>>
+procedure provides a convenient way to recompile stale
+libraries and programs.
+
+proctempl:compile-file[args="sourcefile",optarg="slfaslfile"]
+
+Compiles _sourcefile_, which must be a string naming
+a file that contains source code for one or more
+ERR5RS/R6RS libraries or a top-level program.
+If _slfaslfile_ is supplied as a second argument,
+then it must be a string naming the file that will
+contain the compiled code; otherwise the name of
+the compiled file is obtained from _sourcefile_
+by replacing the "`.sls`" suffix with "`.slfasl`".
+
+proc:compile-library[args="sourcefile",optarg="slfaslfile"]
+
+Compiles _sourcefile_, which must be a string naming
+a file that contains source code for one or more
+ERR5RS/R6RS libraries.
+Apart from its unwillingness to compile top-level
+programs, `compile-library` behaves the same as
+`compile-file` above.
+
+proc:compile-stale-libraries[args=""]
+proctempl:compile-stale-libraries[args="changedfile"]
+
+If no argument is supplied, then all "`.sls`" files that
+lie within the current directory or a subdirectory are
+recompiled.
+
+If _changedfile_ is supplied, then it must be a string
+giving the absolute pathname of a file.
+(In typical usage, _changedfile_ is a source file that
+has been modified, making it necessary to recompile all
+files that depend upon it.)
+Compiles all ERR5RS/R6RS library files that lie within
+the same directory as _changedfile_ or a subdirectory,
+and have not yet been compiled or whose compiled files
+are older than _changedfile_.
+
+[NOTE]
+================================================================
+In future versions of Larceny, `compile-stale-libraries`
+might compile only the source files that depend upon
+_changedfile_.
+================================================================
+
+proc:compiler-switches[args=""]
+proctempl:compiler-switches[args="mode"]
+
+If no argument is supplied, then the current settings
+of all compiler switches are displayed.  Each of those
+switches is itself a parameter that is exported by the
+`(larceny compiler)` library.  Calling any individual
+compiler switch with no arguments will return its current
+setting.  Calling any individual compiler switch with an
+argument (usually a boolean) will change its setting to
+that argument.
+
+The `compiler-switches` procedure may also be called with
+one of the following symbols as its argument:
+
+`default`
+sets most compiler switches to their default settings.
+
+`fast-safe`
+enables all optimizations but continues to generate
+code to perform all run-time type and range checks that
+are needed for safety
+(in the traditional sense, not the R6RS sense).
+
+`fast-unsafe`
+enables all optimizations and also disables type and
+range checking.  This setting is deprecated because it
+compromises safety (in the traditional sense).
+
+`slow`
+turns off all optimizations.
+
+`standard`
+sets compiler switches for maximal conformance to the
+R5RS and R6RS standards.
+
+[WARNING]
+================================================================
+The `standard` setting is deprecated because it generates
+very slow code (because the R5RS makes it difficult to
+inline standard procedures), disables most compile-time
+checking (because the R6RS forbids rejection of programs
+with obvious errors unless the R6RS classifies the errors
+as syntactic), and may also compromise the portability or
+interoperability of ERR5RS/R6RS libraries and programs
+(because the R6RS outlaws several extensions that Larceny
+uses to improve its compatibility with other implementations
+of the R5RS and R6RS as well as interoperability between
+Larceny's own R5RS and ERR5RS/R6RS modes).
+================================================================
+
+[TIP]
+================================================================
+Selective toggling of compiler switches is almost always
+better than using the `standard` setting.
+To improve R5RS conformance without sacrificing too much
+performance, set the `benchmark-mode` switch to false and
+set the `integrate-procedures` switch to false only when
+compiling files that need to be sensitive to redefinitions
+of standard procedures.
+For R6RS libraries and programs, setting the `benchmark-mode`
+and `global-optimization` switches to false will eliminate a
+couple of minor conformance issues with only a small loss
+of performance and without sacrificing compile-time checking
+or portability.
+================================================================

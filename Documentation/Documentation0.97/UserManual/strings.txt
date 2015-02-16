@@ -1,0 +1,14 @@
+Strings
+~~~~~~~
+
+Larceny provides Unicode strings with
+http://www.r6rs.org/[R6RS]
+semantics.
+
+The `string-downcase` and `string-upcase` procedures
+perform Unicode-compatible case folding, which can result
+in a string whose length is different from that of the original.
+
+Larceny may still provide `string-downcase!` and `string-upcase!`
+procedures, but they are deprecated.
+

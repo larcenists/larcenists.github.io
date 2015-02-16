@@ -1,0 +1,230 @@
+Building Larceny
+18 August 2009
+
+
+WHAT YOU NEED
+
+Most users of Larceny will never need to build Larceny from source,
+and can ignore this documentation.
+
+If you want to recompile the Scheme sources entirely from source, you
+will need the source code plus a Scheme system that can host Larceny's
+build process: either Larceny itself (recommended) or MzScheme 37x [1].
+See README-FIRST.txt for more details.
+
+If you want to build Larceny or Petit Larceny entirely from source,
+you will also need a C compiler (such as gcc).  For x86-32 targets,
+you will also need the NASM assembler [2].
+
+To build Common Larceny, see the Common Larceny documentation in
+doc/CommonLarceny/user-manual.txt.
+
+
+WHAT TO DO
+
+Building Larceny has four major steps:
+
+1. Set up the Larceny development environment.
+
+Run your host Scheme (either another Larceny or MzScheme), and change to
+the root directory of the Larceny tree.
+
+    > (load "setup.sch")
+    > (setup 'scheme: ${SCHEME} 'host: ${HOST} [ 'native | 'sassy | 'common ]
+             'string-rep: ${STREP})
+
+The call to setup (above) has several options that let you
+declare which implementation of Scheme you want to use for
+the build process (SCHEME) and which OS you are using as
+both the host and target of the build (HOST):
+
+        SCHEME      ::= 'larceny | 'mzscheme | 'petite | 'chez
+        HOST        ::= 'macosx | 'macosx-el | 'solaris | 'linux86 | 'win32
+        STRING-REP  ::= 'flat4  |  'flat1
+
+The HOST option macosx-el is for Intel-based Macintosh computers.
+
+The optional 'native flag will build native Larceny (SPARC)
+on Solaris.
+
+The optional 'sassy flag will build native Larceny (x86-32) on
+Linux, Windows, or Mac OS X.  The 'sassy flag is necessary if
+you want to use dynamic loading on Win32, and is strongly
+recommended for that operating system.  There are several
+other optional flags that change the compiler's behavior [3].
+
+[FIXME: support for Common Larceny is just a prototype.]
+The optional 'common flag will build Common Larceny for the CLR
+on Windows, and might work for Mono on other operating systems.
+If you are building Common Larceny, however, then you should
+follow the steps outlined in doc/CommonLarceny/user-manual.txt
+instead of the steps described below.
+
+The STRING-REP option determines the representation used
+for strings.  The flat4 representation uses 4 bytes per
+character, is the default on all versions of Larceny, and
+is the only representation that can be used when building
+Common Larceny or Petit Larceny.  The flat1 representation
+of strings uses 1 byte per character, which limits it to
+strings of Latin-1 characters.  Native Larceny (SPARC or
+x86-32) can be built to use either the flat4 or flat1
+representations; be sure to perform a full build when
+switching from one representation to the other.  (In the
+future, we expect to support yet another representation
+of Unicode strings.)
+
+Some useful examples which are known to work:
+
+To build native Larceny:
+    > (setup 'scheme: 'larceny  'host: 'solaris 'native)
+    > (setup 'scheme: 'larceny  'host: 'solaris 'native 'string-rep: 'flat1)
+    > (setup 'scheme: 'mzscheme 'host: 'win32 'sassy)
+    > (setup 'scheme: 'larceny  'host: 'linux86 'sassy)
+    > (setup 'scheme: 'larceny  'host: 'linux86 'sassy 'string-rep: 'flat1)
+    > (setup 'scheme: 'mzscheme 'host: 'macosx-el 'sassy)
+
+To build Petit Larceny:
+    > (setup 'scheme: 'mzscheme 'host: 'linux86)
+    > (setup 'scheme: 'larceny  'host: 'solaris)
+    > (setup 'scheme: 'mzscheme 'host: 'macosx)
+
+
+2. Build Larceny components
+
+After the development environment is setup, you should compile the core
+system:
+
+    > (build-config-files)              ; [4]
+    > (load-compiler)
+    > (build-heap)
+    > (build-runtime)
+    > (build-executable)
+
+You will now have a working Larceny interpreter and minimal heap image.
+
+To build a complete Larceny user system, including the Twobit compiler:
+
+    > (build-larceny-files)
+
+You may want the Twobit compiler development environment; on
+Petit, you must build it separately:
+
+    > (build-twobit)
+
+
+
+3. Create heap images
+
+Step 2 above creates a bootstrap heap (petit.heap, sparc.heap, or
+sasstrap.heap).  To create the user and development heap images, exit
+the host Scheme back to your command shell.  Then perform one of the
+following three sets of commands (omitting those for twobit unless
+you want the Twobit compiler development environment):
+
+On Native Larceny (SPARC):
+
+    % ./larceny.bin -stopcopy -- src/Build/sparc-larceny-heap.fasl
+    > (exit)
+
+    % ./larceny.bin -stopcopy -- src/Build/sparc-twobit-heap.fasl
+    > (exit)
+
+On IAssassin Larceny (Intel) [5]:
+
+    % "./larceny.bin" -stopcopy -- src/Build/iasn-larceny-heap.fasl
+    > (exit)
+
+    % "./larceny.bin" -stopcopy -- src/Build/iasn-twobit-heap.fasl
+    > (exit)
+
+On Petit Larceny:
+
+    % ./petit-larceny.bin -stopcopy -- src/Build/petit-larceny-heap.sch
+    > (exit)
+
+    % ./twobit.bin -stopcopy -- src/Build/petit-twobit-heap.sch
+    > (exit)
+
+Then, if you want the Twobit compiler development environment:
+
+  On *NIX:
+    % cp larceny twobit
+
+  On Windows:
+    > copy larceny.bat twobit.bat
+
+You can now run "./larceny" (and maybe "./twobit") in its default
+-r5rs mode, but the -err5rs and -r6rs modes won't work until you
+do step 4.
+
+
+
+4. Compile the ERR5RS/R6RS standard libraries.
+
+Run Larceny in its default -r5rs mode, and compile the
+ERR5RS/R6RS standard libraries as follows.
+
+    % larceny
+    Larceny v0.97 "Funny in the Head" (...)
+
+    > (require 'r6rsmode)
+    > (larceny:compile-r6rs-runtime)
+    > (exit)
+
+Larceny should now run correctly in all modes.  If you want
+to use Larceny to run Scheme scripts on a Unix system, then
+you should make sure that the Larceny root directory is in
+your execution path, ahead of any other directories that
+may contain a file named scheme-script.
+
+
+
+----------------------------------------------------------------
+
+NOTES
+
+[1] For the build process, we recommend using a prebuilt version of
+Larceny itself.  MzScheme 37x seems to work.  In the past, several
+other implementations of Scheme could be used for the build process,
+but they haven't been tested lately and aren't likely to work any
+more.  MzScheme v4.x.x may work, but we regard Larceny's support
+for v4.x.x as experimental; see src/Compat/PLT-R5RS/README.
+
+[2] http://sourceforge.net/projects/nasm
+
+Some versions of nasm may not work.  For Ubuntu Linux, we use
+NASM version 2.05.01.  For MacOS X, we use NASM version 0.98.40.
+
+For the 'sassy backend on 'win32, Microsoft's development tools
+and NASM must both be in your search path.
+
+[3] Some other potentially useful flags, given optionally at the end of
+the call to setup:
+
+    'code-cov
+        This enables loading of the instrumented files generated by the
+        stcov tool when loading the compiler. Use this to test code
+        coverage of the compiler testsuite
+
+    'rebuild-code-cov
+        This causes the stcov files to be regenerated before loading.
+        This implies 'code-cov.
+
+    'always-source
+        Don't load compiled fasl files when loading the development
+        environment under Larceny.  This is useful under Petit Larceny
+        if the executable gets out of sync with the fasl files.
+
+    'nasm
+        Build a Petit Larceny which targets the NASM assembler (IA32)
+        rather than Standard C.  This option is deprecated in favor of
+        the Sassy backend; indeed, we suspect that it no longer builds
+        correctly now that we have added the string-rep: parameter to
+        setup.
+
+[4] This is only strictly necessary the first time and when the options
+given to setup have changed, but it should be safe to do every time.
+
+[5] The quotation marks around "./larceny.bin" are a uniform syntax that
+works on both Microsoft Windows and UNIX-like shells.  The reason is
+left as an exercise for the reader.

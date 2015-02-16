@@ -1,0 +1,188 @@
+[[InstallationChapter]]
+
+Installing Larceny
+------------------
+
+[[VarietiesSection]]
+
+Varieties of Larceny
+~~~~~~~~~~~~~~~~~~~~
+
+There are three main varieties of Larceny.
+
+Native Larceny is the fastest and most convenient variety
+of Larceny.  It compiles directly to native machine code
+for Intel x86-32 or SPARC microprocessors running Windows,
+Linux, MacOS X, or Solaris operating systems.
+
+Petit Larceny compiles to C instead of machine code.  It
+runs on most Unix machines, including PowerPC Macintoshes
+with MacOS X.
+
+Common Larceny compiles to JIT-compiled IL on Microsoft's
+Common Language Runtime (CLR) or Mono.  It provides access
+to the .NET libraries from Scheme.
+
+[[DownloadingSection]]
+
+Downloading
+~~~~~~~~~~~
+
+The current versions of Larceny are available for
+download at
+http://larceny.ccs.neu.edu/[Larceny's main web page].
+
+Twobit and Larceny are distributed in two forms: as a precompiled
+binary, or as source code that can be used to reconstruct
+any of the precompiled binary distributions.
+Unless you intend to modify Larceny yourself, you do not
+need to download the source code.
+
+[[InstallationSection]]
+
+Installing the programs
+~~~~~~~~~~~~~~~~~~~~~~~
+
+If you are installing or running Common Larceny, please
+consult the
+http://larceny.ccs.neu.edu[Common Larceny User Manual]
+instead of becoming confused by the instructions in this
+manual.
+
+Unpack the distribution files with an appropriate command such
+as one of the following:
+
+
+        tar -xzf larceny-X.Y-bin-native-sparc-solaris.tar.gz
+        tar -xzf larceny-X.Y-bin-native-ia32-macosx.tar.gz
+        tar -xzf larceny-X.Y-bin-native-ia32-linux86.tar.gz
+        tar -xzf larceny-X.Y-bin-native-ia32-win32.tar.gz
+        tar -xzf larceny-X.Y-bin-petit-stdc-macosx.tar.gz
+        tar -xzf larceny-X.Y-src.tar.gz
+    
+
+That will create a directory with a similar name (but without
+the `.tar.gz` suffix) in your current working directory.
+That is the Larceny root directory, which you may rename
+to something shorter, such as `larceny`; the rest of this
+section will refer to it by that name.
+
+Assuming you have unpacked a binary distribution, the `larceny`
+directory will contain the following files:
+    
+    
+        larceny.bin         Run-time system
+        larceny.heap        Heap image with all libraries, FFI, and compiler
+        larceny             Shell script that runs larceny.heap
+        scheme-script       Shell script that runs Scheme scripts
+        compile-stale       Scheme script that compiles ERR5RS/R6RS libraries
+        startup.sch         Pathnames for the require and autoload features
+    
+
+If you unpacked a binary distribution, then you should be able to
+run it immediately by making the `larceny` directory your current
+working directory and invoking `./larceny` or perhaps just `larceny`.
+
+If you unpacked the source code there will be many other files and
+directories, but `larceny.bin` and `larceny.heap` will not be present.
+
+[TIP]
+================================================================
+You can reconstruct the `larceny.bin` and `larceny.heap` files from their
+source code, but that process requires a working version of Larceny
+or PLT Scheme v37x; unless you're porting Larceny or Petit Larceny to a
+brand new target architecture, it's easier to obtain those
+files from a binary distribution of Larceny.
+================================================================
+
+You may add the `larceny` directory to your standard path,
+or you may install Larceny into a directory that is already
+part of your standard path.
+
+Suppose, for example, that you want to install Larceny
+in `/usr/local/bin` and `/usr/local/lib/larceny`.
+Copy `larceny` and `scheme-script` to `/usr/local/bin`
+and edit the definition of `LARCENY_PATH` at the head
+of each file to point to the correct directory:
+    
+    
+        LARCENY_PATH=/usr/local/lib/larceny
+    
+
+Then move the entire `larceny` directory to `/usr/local/lib/larceny`,
+or copy `larceny.bin`, `larceny.heap`, `startup.sch`, and the `lib`
+directory to `/usr/local/lib/larceny`.
+
+You should now be able to run Larceny from any directory
+by typing "`larceny`" at a prompt.
+
+
+[[CompilingStdLibSection]]
+
+=== Compiling the R6RS standard libraries
+
+Before you can run Larceny in ERR5RS or R6RS modes, you may
+have to compile the ERR5RS/R6RS runtime and standard libraries.
+This step is definitely required if you are using Petit Larceny
+or building any variety of Larceny from source code.
+With the prebuilt native varieties of Larceny, however, this step
+should not be necessary unless you change one of the files in
++lib/R6RS+ or +lib/SRFI+.
+
+[TIP]
+================================================================
+If the +lib/R6RS+ directory and its subdirectories are read-only,
+then the standard libraries will not be touched, modified, or
+recompiled by accident.
+================================================================
+
+Compiling the ERR5RS/R6RS runtime and standard libraries is
+accomplished as follows:
+
+----------------------------------------------------------------
+    $ ./larceny
+    Larceny v0.96 "Fluoridation" (...)
+    > (require 'r6rsmode)
+    > (larceny:compile-r6rs-runtime)
+    > (exit)
+----------------------------------------------------------------
+
+
+[WARNING]
+================================================================
+Compiling the ERR5RS/R6RS runtime as shown above causes
+all previously compiled ERR5RS/R6RS libraries and top-level
+programs to become <<CompilingChapter,stale>>.  That means
+those previously compiled files will need to be recompiled
+or removed.
+================================================================
+
+////////////////////////////////////////////////////////////////////////
+=== Twobit
+
+Unless you are doing compiler development, you should use the
+"`larceny`" script, not the "`twobit`" script. The difference
+is that `larceny` runs the heap image named "larceny.heap"
+while `twobit` runs the heap image named "twobit.heap".
+
+Both of these heap images contain the Twobit compiler and the
+`compile-file` procedure that is used to compile files of Scheme code,
+but they differ in other ways.
+
+In "`larceny.heap`", every expression is compiled before it is
+evaluated, but the internals of the Twobit compiler are hidden
+(except for compilation switches).
+
+In "`twobit.heap`", some of the libraries that are present in
+"`larceny.heap`" are missing, and all internals of Twobit are exposed:
+every top-level name in Twobit is bound in the interaction environment
+and may be changed interactively, with immediate effect.  Since
+compiler development can be a risky business, "`twobit.heap`" uses an
+interpreter to evaluate the Scheme code you load and type -- the
+interpreter is unaffected by changes to Twobit.
+
+If you are using "`twobit.heap`" for compiler development,
+you will need the source code as well as a binary distribution
+of Larceny.
+////////////////////////////////////////////////////////////////////////
+
