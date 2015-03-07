@@ -36,8 +36,75 @@ of all submitted bugs</a> are also available.
 
 <p>
 Some of the more important bugs that have been discovered in
-<a href="http://larceny.ccs.neu.edu/">Larceny</a> v0.97 "Funny in the Head"
+<a href="http://larceny.ccs.neu.edu/">Larceny</a> v0.98 "General Ripper"
 include:
+</p>
+
+<div align="center">
+<table border="2">
+<tr>
+
+<td width="400">
+    <a href="https://github.com/larcenists/larceny/issues/713">
+    <code>cond-expand</code> doesn't work at expression level
+    </a>
+</td>
+<td width="275">
+    <span class="unfixed">not yet fixed</span>
+</td>
+</tr>
+
+<td width="400">
+    <a href="https://github.com/larcenists/larceny/issues/699">
+    arbitrary ellipsis feature of R7RS <code>syntax-rules</code>
+    is not yet implemented
+    </a>
+</td>
+<td width="275">
+    <span class="unfixed">not yet fixed</span>
+</td>
+</tr>
+
+<td width="400">
+    <a href="https://github.com/larcenists/larceny/issues/697">
+    <code>eval</code> allows assignments to imported primitives
+    </a>
+</td>
+<td width="275">
+    <span class="unfixed">not yet fixed</span>
+</td>
+</tr>
+
+<td width="400">
+    <a href="https://github.com/larcenists/larceny/issues/655">
+    R7RS/R6RS libraries that are defined in the same file with
+    a program that imports them can be invoked more than once
+    </a>
+</td>
+<td width="275">
+    <span class="unfixed">not yet fixed</span>
+</td>
+</tr>
+
+<td width="400">
+    <a href="https://github.com/larcenists/larceny/issues/602">
+    <code>compile-stale-libraries</code> often recompiles files
+    unnecessarily
+    </a>
+</td>
+<td width="275">
+    <span class="unfixed">not yet fixed</span>
+</td>
+</tr>
+
+</table>
+</div>
+
+<h2>Bugs fixed in Larceny v0.98</h2>
+
+<p>
+Some of the more important bugs in v0.97 that have
+been fixed in v0.98 include:
 </p>
 
 <div align="center">
@@ -66,695 +133,66 @@ include:
 </table>
 </div>
 
-<h2>Bugs fixed in Larceny v0.97</h2>
+<h2>Enhancements added in Larceny v0.98</h2>
 
 <p>
-Some of the more important bugs in v0.96 that have
-been fixed in v0.97 include:
+Some of the more important improvements added in v0.98 include:
 </p>
 
 <div align="center">
 <table border="2">
-
 <tr>
+
 <td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/519">
-    <code>write-char</code> and <code>put-char</code>
-    are inlined incorrectly, evaluating their character argument twice
+    <a href="https://github.com/larcenists/larceny/issues/689">
+    R7RS programs and <code>define-library</code> now work
     </a>
 </td>
 <td width="275">
-    <span class="fixed">fixed</span> in v0.961
+    <span class="fixed">done in v0.98</span>
 </td>
 </tr>
 
-<tr>
 <td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/521">
-    assertion failure in <code>transcoded-port</code>
+    <a href="https://github.com/larcenists/larceny/issues/687">
+    R7RS syntax and procedures are now implemented
     </a>
 </td>
 <td width="275">
-    <span class="fixed">fixed</span> in v0.962
+    <span class="fixed">done in v0.98</span>
 </td>
 </tr>
 
-<tr>
 <td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/523">
-    fencepost error in <code>get-string-n</code>
+    <a href="https://github.com/larcenists/larceny/issues/94">
+    circular structures are now written using R7RS syntax
     </a>
 </td>
 <td width="275">
-    <span class="fixed">fixed</span> in v0.962
+    <span class="fixed">done in v0.98</span>
 </td>
 </tr>
 
-<tr>
 <td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/524">
-    blocking bug in <code>get-bytevector-n!</code>
+    <a href="https://github.com/larcenists/larceny/issues/672">
+    Larceny has been upgraded to Unicode 7.0.0
     </a>
 </td>
 <td width="275">
-    <span class="fixed">fixed</span> in v0.962
+    <span class="fixed">done in v0.98</span>
 </td>
 </tr>
 
-<tr>
 <td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/525">
-    contract violation in <code>get-bytevector-n!</code>
-    </a>
+    Larceny now supports SRFI 101, 112, 113, 114, 115, and 116
 </td>
 <td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/530">
-    <code>bytevector-s32-set!</code> doesn't work when storing negative numbers
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/538">
-    <code>command-line</code> should always return a non-empty list
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/539">
-    options for <code>file-options</code> work only in R5RS mode
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/540">
-    options for <code>buffer-mode</code> don't work
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/549">
-    <code>define-condition-type</code> doesn't work
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/550">
-    Scheme scripts don't always pass <code>command-line</code>
-        arguments correctly
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/551">
-    self-executable Scheme scripts don't redirect standard input properly
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/552">
-    infinite loop in <code>assp</code>
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/554">
-    <code>bitwise-and</code> incorrect on large bignums
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/555">
-    <code>bitwise-if</code> returns incorrect results on large bignums
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/556">
-    <code>bitwise-copy-field</code> incorrect on large bignums
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/557">
-    <code>log</code> should also accept two arguments
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/558">
-    <code>(rnrs base)</code> should export <code>angle</code>
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/560">
-    <code>(rnrs)</code> should export <code>record-type-descriptor</code>
-        and <code>record-constructor-descriptor</code>
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/562">
-    <code>(rnrs io ports)</code> should export <code>standard-error-port</code>
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/563">
-    all elements of <code>(command-line)</code> should be strings
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/564">
-    <code>vector-sort!</code> must modify its argument
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/566">
-    <code>fold-left</code> and <code>fold-right</code>
-        should accept 3 or more arguments
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/567">
-    <code>fxrotate-bit-field</code> doesn't work
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/568">
-    <code>fixnum->flonum</code> doesn't work
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/571">
-    <code>quotient</code> incorrect when dividing least fixnum by -1
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/527">
-    no exception when opening an existing file for output
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.97b1
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/518">
-    heap dumping breaks <code>eq?</code> and <code>eqv?</code>
-    hashtables
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span>
-    in development system
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/519">
-    <code>write-char</code> and <code>put-char</code>
-    are inlined incorrectly, evaluating their character argument twice
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.961
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/521">
-    assertion failure in <code>transcoded-port</code>
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/523">
-    fencepost error in <code>get-string-n</code>
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/524">
-    blocking bug in <code>get-bytevector-n!</code>
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/525">
-    contract violation in <code>get-bytevector-n!</code>
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/530">
-    <code>bytevector-s32-set!</code> doesn't work when storing negative numbers
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/538">
-    <code>command-line</code> should always return a non-empty list
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/539">
-    options for <code>file-options</code> work only in R5RS mode
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/540">
-    options for <code>buffer-mode</code> don't work
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/549">
-    <code>define-condition-type</code> doesn't work
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/550">
-    Scheme scripts don't always pass <code>command-line</code>
-        arguments correctly
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/551">
-    self-executable Scheme scripts don't redirect standard input properly
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.962
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/552">
-    infinite loop in <code>assp</code>
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/554">
-    <code>bitwise-and</code> incorrect on large bignums
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/555">
-    <code>bitwise-if</code> returns incorrect results on large bignums
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/556">
-    <code>bitwise-copy-field</code> incorrect on large bignums
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/557">
-    <code>log</code> should also accept two arguments
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/558">
-    <code>(rnrs base)</code> should export <code>angle</code>
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/560">
-    <code>(rnrs)</code> should export <code>record-type-descriptor</code>
-        and <code>record-constructor-descriptor</code>
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/562">
-    <code>(rnrs io ports)</code> should export <code>standard-error-port</code>
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/563">
-    all elements of <code>(command-line)</code> should be strings
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/564">
-    <code>vector-sort!</code> must modify its argument
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/566">
-    <code>fold-left</code> and <code>fold-right</code>
-        should accept 3 or more arguments
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/567">
-    <code>fxrotate-bit-field</code> doesn't work
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/568">
-    <code>fixnum->flonum</code> doesn't work
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/571">
-    <code>quotient</code> incorrect when dividing least fixnum by -1
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.963
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/527">
-    no exception when opening an existing file for output
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.97b1
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/518">
-    heap dumping breaks <code>eq?</code> and <code>eqv?</code>
-    hashtables
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">fixed</span> in v0.97
+    <span class="fixed">done in v0.98</span>
 </td>
 </tr>
 
 </table>
 </div>
-
-
-
-<h2>Enhancements added in Larceny v0.97</h2>
-
-<p>
-Some of the more important improvements added in
-<a href="http://larceny.ccs.neu.edu/">Larceny</a> v0.97
-include:
-</p>
-
-<div align="center">
-<table border="2">
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/159">
-    update FFI documentation
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">done</span> in v0.97
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/517">
-    ERR5RS/R6RS library file extensions should be a parameter
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">added</span> in v0.97
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="http://srfi.schemers.org/srfi-97/">
-    SRFI 97: SRFI Libraries
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">added</span> in v0.97 (42 of the 49 SRFIs)
-</td>
-</tr>
-
-</table>
-</div>
-
 
 <hr />
 
@@ -770,7 +208,7 @@ include:
 </div>
 
 <p>
-Last updated 30 January 2015.
+Last updated 7 March 2015.
 </p>
 
 </body>

@@ -1,44 +1,66 @@
+Notes on R7RS benchmarking
+==========================
+7 March 2015
+
+
+Larceny v0.98 runs all benchmarks successfully.
+
+Petit Larceny v0.98 fails on the compiler benchmark.
+
+Chibi Scheme 0.7 fails on the following benchmarks:
+
+    pi          timed out after an hour
+
+Chicken Scheme 4.9.0.1 fails on the following benchmarks:
+
+    earley      ran out of heap memory
+
+Foment Scheme 0.4 (debug) fails on the following benchmarks:
+
+    divrec      mysterious early exit from program
+    pi          mysterious early exit from program
+    ack         mysterious early exit from program
+    array1      mysterious early exit from program
+    string      mysterious early exit from program
+    compiler    assertion failure (623)../src/execute.cpp
+    dynamic     mysterious early exit from program
+    earley      timed out after an hour
+    graphs      segmentation fault
+    paraffins   mysterious early exit from program
+    primes      mysterious early exit from program
+    quicksort   mysterious early exit from program
+    nboyer      timed out after an hour
+    sboyer      timed out after an hour
+    perm        segmentation fault
+    equal       timed out after an hour
+
+Gauche 0.9.4 fails on the following benchmarks:
+
+    browse      read error while parsing source program
+    dynamic     error reported during execution of program
+    gcbench     allows record type definitions only at top level
+
+Kawa 2.0 fails on the following benchmarks:
+
+    cpstak      java.lang.StackOverflowError
+    ack         java.lang.StackOverflowError
+    compiler    claims proper-definition? is unbound
+    earley      timed out after an hour
+    graphs      java.lang.StackOverflowError
+    nboyer      returned incorrect result very quickly
+    sboyer      improperly rejects at expansion time
+    equal       timed out after an hour
+
+
 Notes on R6RS benchmarking
 ==========================
-3 September 2009
+7 March 2015
 
 
-Petite Chez Scheme v7.9.3 runs all benchmarks successfully.
-PLT Scheme v4.2.1 runs all benchmarks successfully.
-Ypsilon 0.9.6-update3 runs all benchmarks successfully.
+Larceny v0.98 runs all benchmarks successfully.
+Petite Chez Scheme v8.4 runs all benchmarks successfully.
+Racket Scheme v6.1.1 runs all benchmarks successfully.
 
-On Pentium machines, Larceny v0.97 runs all benchmarks successfully.
-On SPARC machines, Larceny fails on the following benchmarks:
+Petit Larceny v0.98 fails on the compiler benchmark.
 
-    compiler      (bug in assembler; code segment is too large)
-    bv2string     (bug in assembler; code segment is too large)
-
-Petit Larceny v0.97 fails on the following benchmark:
-
-    compiler      (looks like it may be a bug in gcc)
-
-Ikarus 0.0.3 appears to go into an infinite loop on equal.
-Ikarus fails on the following benchmarks:
-
-    dderiv        (make-hashtable primitive not supported yet)
-    mbrotZ        (exception incorrectly raised on complex number syntax)
-    cat3          (utf-16-codec not supported yet)
-    read3         (utf-16-codec not supported yet)
-    bibfreq2      (make-hashtable primitive not supported yet)
-    equal         (infinite loop?)
-    normalization (string-normalize-nfkd primitive not supported yet)
-    hashtable0    (make-eqv-hashtable primitive not supported yet)
-
-Mosh 0.2.0 appears to go into an infinite loop on earley.
-Mosh fails on the following benchmarks:
-
-    sumfp         (1e6 etc incorrectly read as exact)
-    sum1          (1e6 etc incorrectly read as exact)
-    read0         (incorrect results, then fails with unhandled exception)
-    earley        (infinite loop?)
-    ray           (1e6 etc incorrectly read as exact)
-    equal         (segmentation fault)
-    normalization (incorrect results)
-    bv2string     (incorrect results)
-    listsort      (segmentation fault)
-
+Vicare 0.3d7 appears to go into an infinite loop on gcbench.

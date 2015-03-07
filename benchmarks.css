@@ -26,15 +26,21 @@ table.benchmarks .larceny093 { background-color:#000000; }
 table.benchmarks .petit      { background-color:#5000a0; }
 table.benchmarks .bigloo     { background-color:#000080; }
 table.benchmarks .chez       { background-color:#004040; }
-table.benchmarks .chicken    { background-color:#A06000; }
+table.benchmarks .chibi      { background-color:#20c020; }
+table.benchmarks .chicken    { background-color:#a08040; }
+table.benchmarks .foment     { background-color:#604040; }
 table.benchmarks .gambit     { background-color:#400060; }
+table.benchmarks .gauche     { background-color:#60e020; }
 table.benchmarks .ikarus     { background-color:#205050; }
+table.benchmarks .kawa       { background-color:#608040; }
 table.benchmarks .mit        { background-color:#2000c0; }
 table.benchmarks .mosh       { background-color:#c02040; }
 table.benchmarks .mzscheme   { background-color:#008020; }
 table.benchmarks .plt        { background-color:#008020; }
-table.benchmarks .petite     { background-color:#304080; }
+table.benchmarks .petite     { background-color:#801040; }
+table.benchmarks .racket     { background-color:#008020; }
 table.benchmarks .scheme48   { background-color:#602040; }
+table.benchmarks .vicare     { background-color:#802080; }
 table.benchmarks .ypsilon    { background-color:#a04020; }
 
 dl.benchmarks {

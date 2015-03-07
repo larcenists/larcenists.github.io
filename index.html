@@ -45,14 +45,13 @@ Created originally as a test vehicle for research on
 collection</a> and
 <a href="twobit.html">compiler
 optimizations</a>,
-Larceny has grown into a major multiplatform system,
-and is one of the very few implementations
-that support all four de facto standards for Scheme:
+Larceny has grown into a major multiplatform system.
+Larceny supports the four most important standards for Scheme:
 IEEE/ANSI,
 <a href="http://www.schemers.org/Documents/Standards/R5RS/">R5RS</a>,
-<a href="http://scheme-punks.org/wiki/index.php?title=ERR5RS:Charter">ERR5RS</a>,
-and the
-<a href="http://www.r6rs.org/">R6RS</a>.
+<a href="http://www.r6rs.org/">R6RS</a>,
+and
+<a href="http://www.scheme-reports.org/">R7RS</a>.
 Development of Larceny has been supported by
 NSF, Sun Microsystems, and Microsoft.
 </p>
@@ -63,25 +62,25 @@ NSF, Sun Microsystems, and Microsoft.
 
 <div class="entry">
 <p>
-Four different code generators serve as the basis for three
+Two different code generators serve as the basis for two
 different varieties of Larceny:
 </p>
 <div>
 <ol>
 <li><a href="download.html"><strong>Larceny</strong></a>
     compiles directly to native machine code for the
-    Intel IA32 or SPARC architectures.
-    </li>
+    Intel IA32 (x86, x64) architecture.
+</li>
 <li><strong><a href="download-petit.html">Petit Larceny</a></strong>
     is a portable implementation
     that compiles to C instead of machine code.
-    </li>
-<li><strong><a href="CommonLarceny/download.html">Common
+</li>
+<!-- li><strong><a href="CommonLarceny/download.html">Common
     Larceny</a></strong>
     runs in the Common Language Runtime (CLR) of Microsoft .NET,
     generating IL, which is JIT-compiled to native machine code
     by the CLR.
-    </li>
+</li -->
 </ol>
 </div>
 </div>
@@ -93,34 +92,46 @@ different varieties of Larceny:
 
 <div class="entry">
 <p>
-Version 0.97 "Funny in the Head" is now available for downloading:
+Version 0.98 "General Ripper" is now available for downloading:
 </p>
+
 <ul>
 <li><a href="download.html"><strong>Larceny</strong></a> for
     Intel IA32 (Windows, Linux, Mac OS X with Intel processors)
-    and SPARC (Solaris)</li>
+</li>
 <li><strong><a href="download-petit.html">Petit Larceny</a></strong>
-    (most 32-bit Unix systems, including Mac OS X on PowerPC processors)
-    </li>
-<li><strong><a href="CommonLarceny/download.html">Common Larceny
+    (prebuilt for Linux with Intel processors;
+    can be built from source for most Unix systems)
+</li>
+<!-- li><strong><a href="CommonLarceny/download.html">Common Larceny
     for .NET CLR</a></strong>
     (Windows XP)
-    </li>
+</li -->
 </p>
 </ul>
+
 <p>
-Version 0.98b1 "General Ripper" is also available
-(prebuilt for
- <a href="LarcenyReleases/larceny-0.98b1-bin-native-ia32-linux86.tar.gz"
-    >Linux86/IA32</a>
- or
- <a href="LarcenyReleases/larceny-0.98b1-bin-native-ia32-macosx.tar.gz"
-    >MacOSX/IA32</a> only)
-for beta testing of the new
-<a href="research.html">regional garbage collector</a>,
-and version 0.98b2 (prebuilt for
+Version 0.98b2 "General Ripper" (prebuilt for
  <a href="LarcenyReleases/larceny-0.98b2-bin-native-armv7l-linux.tar.gz"
-    >Linux/ARMv7l</a>) for beta testing the new ARM backend.
+    >Linux/ARMv7l</a>) is available for beta testing of a new ARM backend.
+</p>
+
+<p>
+Version 0.97 "Funny in the Head" is still available for two platforms
+that are not supported by version 0.98:
+</p>
+
+<ul>
+<li><a href="LarcenyReleases/larceny-0.97-bin-native-sparc-solaris.tar.gz">
+    prebuilt for Solaris/SPARC</a>;
+    gzip'ed tar file (7 MBy), no source
+</li>
+<li><strong><a href="CommonLarceny/download.html">Common Larceny
+    for .NET CLR</a></strong>
+</li>
+</p>
+</ul>
+
 </div>
 </div>
 

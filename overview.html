@@ -46,14 +46,16 @@ Created originally as a test vehicle for research on
 <a href="http://www.cesura17.net/~will/Professional/Research/Presentations/GC/index.html">garbage
 collection</a> and
 <a href="twobit.html">compiler optimizations</a>,
-Larceny has grown into a major multiplatform system,
-and is currently the only implementation
-that supports all four de facto standards for Scheme:
-IEEE/ANSI,
+Larceny has grown into a major multiplatform system.
+Larceny now supports the four most important standards for Scheme
+(IEEE/ANSI,
 <a href="http://www.schemers.org/Documents/Standards/R5RS/">R5RS</a>,
-<a href="http://scheme-punks.org/wiki/index.php?title=ERR5RS:Charter">ERR5RS</a>,
-and the
-<a href="http://www.r6rs.org/">R6RS</a>.
+<a href="http://www.r6rs.org/">R6RS</a>,
+and
+<a href="http://www.scheme-reports.org/">R7RS</a>)
+together with many of the
+<a href="http://srfi.schemers.org/">Scheme Requests for Implementation</a>
+(SRFIs).
 </p>
 
 <p>
@@ -69,34 +71,40 @@ Major goals of Larceny are:
      SML of New Jersey, and commercial Common Lisp systems.
 </li>
 <li> Implements all four de facto standards for Scheme:
-     IEEE/ANSI,
-     <a href="http://www.schemers.org/Documents/Standards/R5RS/">R5RS</a>,
-     <a href="http://scheme-punks.org/wiki/index.php?title=ERR5RS:Charter">ERR5RS</a>,
-     and the <a href="http://www.r6rs.org/">R6RS</a>.
-
+    IEEE/ANSI,
+    <a href="http://www.schemers.org/Documents/Standards/R5RS/">R5RS</a>,
+    <a href="http://www.r6rs.org/">R6RS</a>,
+    and
+    <a href="http://www.scheme-reports.org/">R7RS</a>.
 </li>
 <li> Built around an optimizing Scheme compiler:
      <a href="twobit.html">Twobit</a>.
 </li>
-<li> Supports pluggable garbage collectors.  At one time there were five:
+<li> Supports pluggable garbage collectors.
+     The following garbage collectors have been supported
+     at one time or another:
      <ul>
      <li> a traditional stop-and-copy collector</li>
      <li> a traditional copying younger-first generational collector</li>
 
      <li> a copying hybrid renewal-older-first generational collector</li>
      <li> a copying hybrid deferred-older-first generational collector</li>
+     <li> a regional collector</li>
      <li> the Boehm-Demers-Weiser conservative collector</li>
      </ul>
     The current version
-    of Larceny offers a choice between the first three garbage collectors
-    listed above.  Younger-first generational collection is the current
+    of Larceny offers a choice between the
+    stop-and-copy collector,
+    the traditional younger-first generational collector,
+    and the new regional collector.
+    Younger-first generational collection is the current
     default.  
     The hybrid deferred-older-first and conservative collectors
     are no longer supported, as they seldom performed as well as
     the younger-first or hybrid renewal-older-first collectors.
-    <br/>
-    <br/>
-    A radical new garbage collector is under development.
+    The hybrid renewal-older-first collector seldom performs as
+    well as the newer regional collector, which also has better
+    worst-case performance.
 </li>
 </ul>
 <p>
