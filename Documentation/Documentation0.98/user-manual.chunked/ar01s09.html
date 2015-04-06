@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>9. Larceny's R7RS/R6RS libraries</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="Larceny User Manual" /><link rel="up" href="index.html" title="Larceny User Manual" /><link rel="prev" href="ar01s08.html" title="8. R6RS standard libraries" /><link rel="next" href="ar01s10.html" title="10. ERR5RS standard libraries" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ar01s08.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s10.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="LarcenyErr5rsLibrariesChapter"></a>9. Larceny's R7RS/R6RS libraries</h2></div></div></div><p>Larceny provides libraries for compiling
+R7RS/R6RS libraries and for timing benchmarks.</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="LarcenyLoadSection"></a>9.1. Load</h3></div></div></div><p>The <code class="literal">(larceny load)</code> library exports both the
+<code class="literal">load</code> procedure of <code class="literal">(scheme load)</code>
+and Larceny's <code class="literal">r5rs:require</code> procedure, which is a renaming of
+the <a class="link" href="ar01s05.html#require"><code class="literal">require</code></a> procedure used by
+Larceny's R5RS mode.</p><p>In Larceny's R7RS mode,
+the <code class="literal">load</code> procedure can load
+R5RS libraries and programs as well as R7RS/R6RS
+libraries.</p><p>The <code class="literal">r5rs:require</code> procedure should be used only for dynamic loading of
+R5RS libraries into Larceny's underlying R5RS system.  The
+variables defined by that library can be imported into
+an R7RS session or R7RS/R6RS library or program using a
+<a class="link" href="ar01s03.html#R7rsPrimitivesSection" title="3.3.6. Importing procedures from Larceny's underlying R5RS system"><code class="literal">primitives</code></a>
+clause in an <code class="literal">import</code> form.</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>These procedures should be used only at an interactive top
+level and in files that will be loaded into an interactive top
+level.  Calls to these procedures have no effect at compile
+time, and should not appear in files that will be compiled
+separately; use the <code class="literal">define-library</code> and <code class="literal">import</code> syntaxes
+instead.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="LarcenyCompilerSection"></a>9.2. Compiler</h3></div></div></div><p>The <code class="literal">(larceny compiler)</code> library exports the
+<code class="literal">load</code> and <code class="literal">r5rs:require</code> procedures of <code class="literal">(larceny load)</code>,
+the
+<a class="link" href="ar01s05.html#current-require-path"><code class="literal">current-require-path</code></a>
+procedure, the
+<a class="link" href="ar01s06.html#compile-file"><code class="literal">compile-file</code></a>,
+<a class="link" href="ar01s09.html#compile-library"><code class="literal">compile-library</code></a>, and
+<a class="link" href="ar01s09.html#compile-stale-libraries"><code class="literal">compile-stale-libraries</code></a>
+procedures described below,
+and the
+<a class="link" href="ar01s09.html#compiler-switches"><code class="literal">compiler-switches</code></a> procedure.</p><p>These procedures can be used to compile R7RS/R6RS
+libraries and top-level programs before they are imported
+or executed.
+This is especially important for Petit Larceny, which
+would otherwise use an interpreter.  For native Larceny,
+whose just-in-time compiler generates native machine code
+as source libraries and programs are loaded, imported, or
+executed, the main advantage of separate compilation is
+that compiled libraries and programs will load much
+faster than source libraries and programs.</p><p>The main disadvantage of separate compilation is that
+compiled libraries and programs go <span class="emphasis"><em>stale</em></span> when their
+source code is changed or when a library on which they
+depend is changed or recompiled.  Stale libraries and
+programs can be dangerously inconsistent with libraries
+on which they depend, so Larceny checks for staleness
+and refuses to execute a stale library or program.
+The <a class="link" href="ar01s09.html#compile-stale-libraries"><code class="literal">compile-stale-libraries</code></a>
+procedure provides a convenient way to recompile stale
+libraries and programs.</p><p><p><code class="literal">(compile-file <span class="emphasis"><em>sourcefile</em></span> <span class="emphasis"><em>[slfaslfile]</em></span>) </code></p></p><p>Compiles <span class="emphasis"><em>sourcefile</em></span>, which must be a string naming
+a file that contains source code for one or more
+R7RS/R6RS libraries or a top-level program.
+If <span class="emphasis"><em>slfaslfile</em></span> is supplied as a second argument,
+then it must be a string naming the file that will
+contain the compiled code; otherwise the name of
+the compiled file is obtained from <span class="emphasis"><em>sourcefile</em></span>
+by replacing the "<code class="literal">.sld</code>" or "<code class="literal">.sls</code>" suffix with "<code class="literal">.slfasl</code>".</p><p><a id="compile-library"></a>
+<span class="emphasis"><em> Procedure compile-library</em></span>
+<p>
+<a id="id2552113" class="indexterm"></a>
+<code class="literal">(compile-library <span class="emphasis"><em>sourcefile</em></span> <span class="emphasis"><em>[slfaslfile]</em></span>) </code>
+</p></p><p>Compiles <span class="emphasis"><em>sourcefile</em></span>, which must be a string naming
+a file that contains source code for one or more
+R7RS/R6RS libraries.
+Apart from its unwillingness to compile top-level
+programs, <code class="literal">compile-library</code> behaves the same as
+<code class="literal">compile-file</code> above.</p><p><a id="compile-stale-libraries"></a>
+<span class="emphasis"><em> Procedure compile-stale-libraries</em></span>
+<p>
+<a id="id2552169" class="indexterm"></a>
+<code class="literal">(compile-stale-libraries <span class="emphasis"><em></em></span>) </code>
+</p>
+<p><code class="literal">(compile-stale-libraries <span class="emphasis"><em>changedfile</em></span>) </code></p></p><p>If no argument is supplied, then all "<code class="literal">.sld</code>" and "<code class="literal">.sls</code>" files that
+lie within the current directory or a subdirectory are
+recompiled.</p><p>If <span class="emphasis"><em>changedfile</em></span> is supplied, then it must be a string
+giving the absolute pathname of a file.
+(In typical usage, <span class="emphasis"><em>changedfile</em></span> is a source file that
+has been modified, making it necessary to recompile all
+files that depend upon it.)
+Compiles all R7RS/R6RS library files that lie within
+the same directory as <span class="emphasis"><em>changedfile</em></span> or a subdirectory,
+and have not yet been compiled or whose compiled files
+are older than <span class="emphasis"><em>changedfile</em></span>.</p><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>In future versions of Larceny, <code class="literal">compile-stale-libraries</code>
+might compile only the source files that depend upon
+<span class="emphasis"><em>changedfile</em></span>.</p></div><p><a id="compiler-switches"></a>
+<span class="emphasis"><em> Procedure compiler-switches</em></span>
+<p>
+<a id="id2552271" class="indexterm"></a>
+<code class="literal">(compiler-switches <span class="emphasis"><em></em></span>) </code>
+</p>
+<p><code class="literal">(compiler-switches <span class="emphasis"><em>mode</em></span>) </code></p></p><p>If no argument is supplied, then the current settings
+of all compiler switches are displayed.  Each of those
+switches is itself a parameter that is exported by the
+<code class="literal">(larceny compiler)</code> library.  Calling any individual
+compiler switch with no arguments will return its current
+setting.  Calling any individual compiler switch with an
+argument (usually a boolean) will change its setting to
+that argument.</p><p>The <code class="literal">compiler-switches</code> procedure may also be called with
+one of the following symbols as its argument:</p><p><code class="literal">default</code>
+sets most compiler switches to their default settings.</p><p><code class="literal">fast-safe</code>
+enables all optimizations but continues to generate
+code to perform all run-time type and range checks that
+are needed for safety
+(in the traditional sense, not the R6RS sense).</p><p><code class="literal">fast-unsafe</code>
+enables all optimizations and also disables type and
+range checking.  This setting is deprecated because it
+compromises safety (in the traditional sense).</p><p><code class="literal">slow</code>
+turns off all optimizations.</p><p><code class="literal">standard</code>
+sets compiler switches for maximal conformance to the
+R5RS and R6RS standards.</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>The <code class="literal">standard</code> setting is deprecated because it generates
+very slow code (because the R5RS makes it difficult to
+inline standard procedures), disables most compile-time
+checking (because the R6RS forbids rejection of programs
+with obvious errors unless the R6RS classifies the errors
+as syntactic), and may also compromise the portability or
+interoperability of R7RS/R6RS libraries and programs
+(because the R6RS outlaws several extensions that Larceny
+uses to improve its compatibility with other implementations
+of the R5RS, R6RS, and R7RS as well as interoperability between
+Larceny's own R5RS and R7RS/R6RS modes).</p></div><div class="tip" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Tip</h3><p>Selective toggling of compiler switches is almost always
+better than using the <code class="literal">standard</code> setting.
+To improve R5RS conformance without sacrificing too much
+performance, set the <code class="literal">benchmark-mode</code> switch to false and
+set the <code class="literal">integrate-procedures</code> switch to false only when
+compiling files that need to be sensitive to redefinitions
+of standard procedures.
+For R6RS libraries and programs, setting the <code class="literal">benchmark-mode</code>
+and <code class="literal">global-optimization</code> switches to false will eliminate a
+couple of minor conformance issues with only a small loss
+of performance and without sacrificing compile-time checking
+or portability.
+For R7RS libraries and programs, the compiler's default settings
+already conform to the R7RS.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="LarcenyBenchmarkingSection"></a>9.3. Benchmarking</h3></div></div></div><p>The <code class="literal">(larceny benchmarking)</code> library exports the
+<code class="literal">time</code> syntax and <code class="literal">run-benchmark</code> procedure described
+below.</p><p><span class="emphasis"><em>Syntax time</em></span></p><p><code class="literal">(time expression)</code></p><p>Evaluates <span class="emphasis"><em>expression</em></span> and returns its result
+after printing approximations to the storage
+allocated and time taken during evaluation of
+<span class="emphasis"><em>expression</em></span>.</p><pre class="screen">    &gt; (time (fib 30))
+    Words allocated: 0
+    Words reclaimed: 0
+    Elapsed time...: 49 ms (User: 48 ms; System: 0 ms)
+    Elapsed GC time: 0 ms (CPU: 0 in 0 collections.)
+    832040</pre><p><p><code class="literal">(run-benchmark <span class="emphasis"><em>name iterations thunk predicate</em></span>) </code></p></p><p>Given the <span class="emphasis"><em>name</em></span> of a benchmark, the number of
+<span class="emphasis"><em>iterations</em></span> to be performed, a zero-argument
+procedure <span class="emphasis"><em>thunk</em></span> that runs the benchmark,
+and a unary <span class="emphasis"><em>predicate</em></span> that checks the result
+of <span class="emphasis"><em>thunk</em></span>, prints approximations to the storage
+allocated and time taken by <span class="emphasis"><em>iterations</em></span> calls
+to <span class="emphasis"><em>thunk</em></span>.</p><pre class="screen">    &gt; (run-benchmark "fib30"
+                     100
+                     (lambda () (fib 30))
+                     (lambda (x) (= x 832040)))
+
+    --------------------------------------------------------
+    fib30
+    Words allocated: 0
+    Words reclaimed: 0
+    Elapsed time...: 4828 ms (User: 4824 ms; System: 4 ms)
+    Elapsed GC time: 0 ms (CPU: 0 in 0 collections.)</pre></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="RecordsPrinterSection"></a>9.4. Records printer</h3></div></div></div><p>The <code class="literal">(larceny records printer)</code> library exports the
+two procedures described below.  These procedures
+can be used to override Larceny's usual printing
+of records and opaque types that were defined using
+the records libraries.</p><p><a id="rtd-printer"></a>
+<span class="emphasis"><em> Procedure rtd-printer</em></span>
+<p>
+<a id="id2552622" class="indexterm"></a>
+<code class="literal">(rtd-printer <span class="emphasis"><em>rtd</em></span>)  =&gt; <span class="emphasis"><em>maybe-procedure</em></span></code>
+</p></p><p>Given a record type descriptor, returns its custom
+print procedure, or returns false if the rtd has no
+custom print procedure.</p><p><a id="rtd-printer-set!"></a>
+<span class="emphasis"><em> Procedure rtd-printer-set!</em></span>
+<p>
+<a id="id2552660" class="indexterm"></a>
+<code class="literal">(rtd-printer-set! <span class="emphasis"><em>rtd printer</em></span>) </code>
+</p></p><p>Given a record type descriptor <span class="emphasis"><em>rtd</em></span> and a
+<span class="emphasis"><em>printer</em></span> for instances of that rtd, installs
+<span class="emphasis"><em>printer</em></span> as a custom print procedure for <span class="emphasis"><em>rtd</em></span>.
+The <span class="emphasis"><em>printer</em></span> should be a procedure that,
+given an instance of the rtd and a textual
+output port, writes a representation of the
+instance to the port.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s08.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s10.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>12. Debugging</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="Larceny User Manual" /><link rel="up" href="index.html" title="Larceny User Manual" /><link rel="prev" href="ar01s11.html" title="11. Larceny's R5RS libraries" /><link rel="next" href="ar01s13.html" title="13. Standards" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ar01s11.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s13.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id2567952"></a>12. Debugging</h2></div></div></div><p>Larceny's debugging functionality is implemented in Scheme, using some
+of Larceny's extensions for catching exceptions and inspecting the
+continuation structure.</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2567966"></a>12.1. Entering the debugger</h3></div></div></div><p>When Larceny detects an error or a keyboard interrupt, or when it hits
+a breakpoint, it signals the condition by printing a message on the
+console. Larceny then enters the debugger, which signals its presence
+with a short banner and the debugger prompt:</p><pre class="literallayout">Entering debugger; type "?" for help.
+debug&gt;</pre><p>You can also re-enter the debugger by evaluating (debug).</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2567995"></a>12.2. Debugger commands</h3></div></div></div><p>The debugger is still in an immature state. The following commands are available (commands can be typed in upper or lower case):</p><p><span class="strong"><strong>B</strong></span>     Print backtrace of continuation.</p><p><span class="strong"><strong>C</strong></span>     Print source code of procedure, if available.</p><p><span class="strong"><strong>D</strong></span>     Move down to previous (earlier) activation record.</p><p><span class="strong"><strong>E <span class="emphasis"><em>n expr</em></span></strong></span>      <span class="emphasis"><em>Expr</em></span> is evaluated in the current
+interaction environment and must evaluate to a procedure.
+It is passed the contents of slot <span class="emphasis"><em>n</em></span> from the current
+activation record, and the result, if not unspecified,
+is printed.</p><p><span class="strong"><strong>E <span class="emphasis"><em>(n1 … nk) expr</em></span></strong></span>      <span class="emphasis"><em>Expr</em></span> is evaluated in the current
+interaction environment and must evaluate to a procedure. It is
+passed the contents of slots <span class="emphasis"><em>n1</em></span> through <span class="emphasis"><em>nk</em></span> from the current
+activation record, and the result, if not unspecified, is printed.</p><p><span class="strong"><strong>I <span class="emphasis"><em>n</em></span></strong></span>      Inspect the procedure in slot <span class="emphasis"><em>n</em></span> of the current
+activation record.</p><p><span class="strong"><strong>I @_</strong></span>      Inspect the active procedure.</p><p><span class="strong"><strong>Q</strong></span>      Quit the debugger and abort the computation.</p><p><span class="strong"><strong>R</strong></span>      Return from the debugger and continue the computation.</p><p><span class="strong"><strong>S</strong></span>      Summarize the contents of the current activation record.</p><p><span class="strong"><strong>U</strong></span>      Up to the next (later) activation record.</p><p><span class="strong"><strong>X</strong></span>      Examine the contents of the current activation record.</p><p>The <span class="strong"><strong>B</strong></span>, <span class="strong"><strong>D</strong></span>, and <span class="strong"><strong>U</strong></span> commands can be prefixed with a count, for example, 5 U moves up five activation records, and 10 B displays the next 10 activation records. The default for <span class="strong"><strong>B</strong></span> is to display all the activations; the default count for <span class="strong"><strong>D</strong></span> and <span class="strong"><strong>U</strong></span> is 1.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2568195"></a>12.3. Breakpoints</h3></div></div></div><p>You can set breakpoints either in program text with the break primitive or interactively at the start of a procedure with the break-entry procedure. When Larceny reaches a breakpoint during execution, the program is suspended and the debugger is entered to allow you to inspect the program.</p><p><a id="larceny-break"></a>
+<span class="emphasis"><em> Procedure larceny-break</em></span>
+<p>
+<a id="id2568224" class="indexterm"></a>
+<code class="literal">(larceny-break <span class="emphasis"><em></em></span>) </code>
+</p></p><p>Invokes the breakpoint handler.</p><p><a id="break-entry"></a>
+<span class="emphasis"><em> Procedure break-entry</em></span>
+<p>
+<a id="id2568261" class="indexterm"></a>
+<code class="literal">(break-entry <span class="emphasis"><em>procedure</em></span>) </code>
+</p></p><p>Set a breakpoint at the start of the <span class="emphasis"><em>procedure</em></span>.</p><p><a id="unbreak"></a>
+<span class="emphasis"><em> Procedure unbreak</em></span>
+<p>
+<a id="id2568303" class="indexterm"></a>
+<code class="literal">(unbreak <span class="emphasis"><em>procedure …</em></span>) </code>
+</p></p><p><p><code class="literal">(unbreak <span class="emphasis"><em></em></span>) </code></p></p><p>In the first form, remove any breakpoint set by break-entry at the start of the <span class="emphasis"><em>procedure_s. In the second form, remove all breakpoints set by _break-entry</em></span>.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2568342"></a>12.4. Tracing</h3></div></div></div><p><a id="trace-entry"></a>
+<span class="emphasis"><em> Procedure trace-entry</em></span>
+<p>
+<a id="id2568363" class="indexterm"></a>
+<code class="literal">(trace-entry <span class="emphasis"><em>procedure</em></span>) </code>
+</p></p><p>Set a trace point on entry to the <span class="emphasis"><em>procedure</em></span>, removing any other trace points on the procedure. When the <span class="emphasis"><em>procedure</em></span> is entered, information about the call is printed on the console: the name of the procedure and the actual arguments.</p><p><a id="trace-exit"></a>
+<span class="emphasis"><em> Procedure trace-exit</em></span>
+<p>
+<a id="id2568411" class="indexterm"></a>
+<code class="literal">(trace-exit <span class="emphasis"><em>procedure</em></span>) </code>
+</p></p><p>Set a trace point on exit from the <span class="emphasis"><em>procedure</em></span>, removing any other trace points on the procedure. When the <span class="emphasis"><em>procedure</em></span> returns, information about the return is printed on the console: the name of the procedure and the returned values.</p><p>Note that trace-exit destroys the tail recursion properties of the instrumented procedure. Where the <span class="emphasis"><em>procedure</em></span> would normally "return" by tail-calling another procedure, the instrumented procedure will call the other procedure by a non-tail call and then return, at which point the procedure name and return values will be printed. Thus use of trace-exit may destroy the space properties of the program.</p><p><a id="trace"></a>
+<span class="emphasis"><em> Procedure trace</em></span>
+<p>
+<a id="id2568478" class="indexterm"></a>
+<code class="literal">(trace <span class="emphasis"><em>procedure</em></span>) </code>
+</p></p><p>Set trace points on <span class="emphasis"><em>procedure</em></span> both at entry and exit.</p><p><a id="untrace"></a>
+<span class="emphasis"><em> Procedure untrace</em></span>
+<p>
+<a id="id2568519" class="indexterm"></a>
+<code class="literal">(untrace <span class="emphasis"><em>procedure …</em></span>) </code>
+</p></p><p><p><code class="literal">(untrace <span class="emphasis"><em></em></span>) </code></p></p><p>The first form removes any trace points from the specified procedures.
+The second form removes all untrace points.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2568556"></a>12.5. Other functionality</h3></div></div></div><p><a id="break-handler"></a>
+<a id="id2568571" class="indexterm"></a>
+<span class="emphasis"><em>Parameter break-handler</em></span></p><p>The value of break-handler is a procedure that is called when a breakpoint or tracepoint is encountered. The procedure takes two arguments: the procedure in which the breakpoint was set, and the byte offset within the procedure's code vector of the breakpoint.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s11.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s13.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>
