@@ -63,9 +63,12 @@
 <div class="entry">
 <p>
 Larceny/IA32 runs on Intel IA32 and compatible (x86, x64) architectures.
-Larceny/IA32 is prebuilt for Mac OS X, Linux, and Windows,
-and can probably be built from source for similar operating
-systems.
+Larceny/ARM runs on ARMv7 and compatible (ARMv8) architectures.
+Larceny/IA32 is prebuilt for Mac OS X, Linux, and Windows;
+Larceny/ARM is prebuilt for Linux ARM.
+Both Larceny/IA32 and Larceny/ARM can be built from source for these
+operating systems, and can probably be built from source for similar
+operating systems.
 </p>
 </div>
 </div>
@@ -75,10 +78,15 @@ systems.
 <h2 class="title">Downloads</h2>
 
 <div class="entry">
+
 <ul>
 <li><a href="LarcenyReleases/larceny-0.98-bin-native-ia32-linux86.tar.gz">
     prebuilt for Linux86/IA32</a>;
     gzip'ed tar file (8 MBy), no source
+</li>
+<li><a href="LarcenyReleases/larceny-0.98-bin-native-armv7l-linux.tar.gz">
+    prebuilt for Linux/armv7l</a> (beta release);
+    gzip'ed tar file (7 MBy), no source
 </li>
 <li><a href="LarcenyReleases/larceny-0.98-bin-native-ia32-macosx.tar.gz">
     prebuilt for Macintosh OS X/IA32</a>;
@@ -110,6 +118,8 @@ systems.
 </li>
 </ul>
 
+</div>
+
 <h2 class="title">Older Downloads</h2>
 
 <p>
@@ -127,7 +137,7 @@ that are not supported by version 0.98:
 </li>
 </ul>
 
-<h2 class="title">Acknowledgement</h2>
+<h2 class="title">Acknowledgements</h2>
 
 <p>
 The
@@ -136,6 +146,12 @@ assembler is a large component of Larceny/IA32.
 The Larceny development team is grateful 
 to Jonathan Kraut for developing Sassy and releasing it 
 under the LGPL.
+</p>
+
+<p>
+The new ARMv7 code generator was written by Lars T Hansen,
+who wrote Larceny's original runtime as well as the code
+generators for Sparc and IA32 processors.
 </p>
 
 </div>
@@ -197,10 +213,8 @@ under the LGPL.
 </div>
 
 <p>
-Last updated 6 April 2015.
+Last updated 9 May 2015.
 </p -->
-
-</div>
 
 <!-- start footer -->
 
