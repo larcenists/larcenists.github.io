@@ -36,7 +36,7 @@ of all submitted bugs</a> are also available.
 
 <p>
 Some of the more important bugs that have been discovered in
-<a href="http://larceny.ccs.neu.edu/">Larceny</a> v0.98 "General Ripper"
+<a href="http://larceny.ccs.neu.edu/">Larceny</a> v0.99 "Goldie"
 include:
 </p>
 
@@ -44,195 +44,299 @@ include:
 <table border="2">
 
 <tr>
-<td width="400">
-    <a href="https://github.com/larcenists/larceny/issues/713">
-    <code>cond-expand</code> doesn't work at expression level
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/747">
+    <code>program</code>, <code>primitives</code> should not be reserved words
     </a>
 </td>
-<td width="275">
+<td width="207">
     <span class="unfixed">not yet fixed</span>
 </td>
 </tr>
 
 <tr>
-<td width="400">
-    <a href="https://github.com/larcenists/larceny/issues/699">
-    arbitrary ellipsis feature of R7RS <code>syntax-rules</code>
-    is not yet implemented
-    </a>
-</td>
-<td width="275">
-    <span class="unfixed">not yet fixed</span>
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="https://github.com/larcenists/larceny/issues/720">
-    R7RS <code>syntax-rules</code> doesn't allow ellipsis or
-    underscore as matched literals
-    </a>
-</td>
-<td width="275">
-    <span class="unfixed">not yet fixed</span>
-</td>
-</tr>
-
-<tr>
-<td width="400">
+<td width="463">
     <a href="https://github.com/larcenists/larceny/issues/697">
     <code>eval</code> allows assignments to imported primitives
     </a>
 </td>
-<td width="275">
+<td width="207">
     <span class="unfixed">not yet fixed</span>
 </td>
 </tr>
 
 <tr>
-<td width="400">
+<td width="463">
     <a href="https://github.com/larcenists/larceny/issues/655">
     R7RS/R6RS libraries that are defined in the same file with
     a program that imports them can be invoked more than once
     </a>
 </td>
-<td width="275">
+<td width="207">
     <span class="unfixed">not yet fixed</span>
 </td>
 </tr>
 
 <tr>
-<td width="400">
+<td width="463">
     <a href="https://github.com/larcenists/larceny/issues/602">
     <code>compile-stale-libraries</code> often recompiles files
     unnecessarily
     </a>
 </td>
-<td width="275">
+<td width="207">
     <span class="unfixed">not yet fixed</span>
 </td>
 </tr>
 
+</table>
+</div>
+
+<h2>Bugs fixed in Larceny v0.99</h2>
+
+<p>
+Some of the more important bugs in v0.98 that have
+been fixed in v0.99 include:
+</p>
+
+<div align="center">
+<table border="2">
+
 <tr>
-<td width="400">
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/686">
+    x86 code generator can violate GC invariants
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/688">
+    x86 code generator generates incorrect code when a lambda
+    expression closes over exactly 31 free variables
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/723">
+    rare/intermittent segfault on ARM (incorrect save of FP registers)
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/724">
+    rare/intermittent illegal instruction error on ARM
+    (incomplete flushing of instruction cache)
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/757">
+    uncaught divide-by-zero exception on ARM
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/713">
+    <code>cond-expand</code> doesn't work at expression level
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/699">
+    arbitrary ellipsis feature of R7RS <code>syntax-rules</code>
+    is not yet implemented
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/720">
+    R7RS <code>syntax-rules</code> doesn't allow ellipsis or
+    underscore as matched literals
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
     <a href="https://github.com/larcenists/larceny/issues/717">
     <code>(srfi 42 eager-comprehensions)</code> works but<br />
     <code>(srfi 42)</code> doesn't
     </a>
 </td>
-<td width="275">
-    <span class="unreleased">fixed in development version</span>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
 </td>
 </tr>
 
 <tr>
-<td width="400">
+<td width="463">
     <a href="https://github.com/larcenists/larceny/issues/714">
     SRFI 114 hash functions don't work on empty strings/vectors
     </a>
 </td>
-<td width="275">
-    <span class="unreleased">fixed in development version</span>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/722">
+    <code>exit</code> ignores argument
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/733">
+    <code>cond-expand</code> errors
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/738">
+    <code>define-values</code> raises exception
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/739">
+    SRFI-99 immutable record fields are mutable
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/748">
+    <code>read-line</code> doesn't accept all end-of-line conventions
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/749">
+    <code>open-file-input/output-port</code> should work when
+    file does not exist
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/750">
+    bug in <code>string-titlecase</code>
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
+</td>
+</tr>
+
+<tr>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/759">
+    <code>bytevector-ref</code>, <code>bytevector-set!</code>
+    not imported by <code>--r7r6</code> option
+    </a>
+</td>
+<td width="207">
+    <span class="fixed">fixed in v0.99</span>
 </td>
 </tr>
 
 </table>
 </div>
 
-<h2>Bugs fixed in Larceny v0.98</h2>
+<h2>Enhancements added in Larceny v0.99</h2>
 
 <p>
-Some of the more important bugs in v0.97 that have
-been fixed in v0.98 include:
+Some of the more important improvements added in v0.99 include:
 </p>
 
 <div align="center">
 <table border="2">
 
 <tr>
-<td width="400">
-    <code>+i</code> reads as <code>0-1i</code>
-</td>
-<td width="275">
-    <a href="http://github.com/larcenists/larceny/issues/667">
-    <span class="unreleased">fixed in v0.98b1</span>
+<td width="463">
+    <a href="https://github.com/larcenists/larceny/issues/756">
+    SRFI 113 (sets) now uses SRFI 128 comparators instead of SRFI 114
     </a>
+</td>
+<td width="207">
+    <span class="fixed">done in v0.99</span>
 </td>
 </tr>
 
 <tr>
-<td width="400">
-    <a href="http://github.com/larcenists/larceny/issues/647">
-    ERR5RS/R6RS <code>(or)</code> returns <code>#t</code>
-    </a>
+<td width="463">
+    Larceny now supports SRFI 117, 121, 123, 124, 125, 126, 127, 128, 129,
+    130, 131, 132, 133, and 134
 </td>
-<td width="275">
-    <span class="unreleased">fixed in v0.98b1</span>
-</td>
-</tr>
-
-</table>
-</div>
-
-<h2>Enhancements added in Larceny v0.98</h2>
-
-<p>
-Some of the more important improvements added in v0.98 include:
-</p>
-
-<div align="center">
-<table border="2">
-
-<tr>
-<td width="400">
-    <a href="https://github.com/larcenists/larceny/issues/689">
-    R7RS programs and <code>define-library</code> now work
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">done in v0.98</span>
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="https://github.com/larcenists/larceny/issues/687">
-    R7RS syntax and procedures are now implemented
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">done in v0.98</span>
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="https://github.com/larcenists/larceny/issues/94">
-    circular structures are now written using R7RS syntax
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">done in v0.98</span>
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    <a href="https://github.com/larcenists/larceny/issues/672">
-    Larceny has been upgraded to Unicode 7.0.0
-    </a>
-</td>
-<td width="275">
-    <span class="fixed">done in v0.98</span>
-</td>
-</tr>
-
-<tr>
-<td width="400">
-    Larceny now supports SRFI 101, 112, 113, 114, 115, and 116
-</td>
-<td width="275">
-    <span class="fixed">done in v0.98</span>
+<td width="207">
+    <span class="fixed">done in v0.99</span>
 </td>
 </tr>
 
@@ -253,7 +357,7 @@ Some of the more important improvements added in v0.98 include:
 </div>
 
 <p>
-Last updated 6 April 2015.
+Last updated 24 May 2016.
 </p>
 
 </body>

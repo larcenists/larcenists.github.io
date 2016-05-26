@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>Larceny v0.98 Documentation</title>
+<body>
+
+<h2>Larceny v0.98 User Manual</h2>
+
+<p>
+The Larceny User Manual is available in four formats:
+</p>
+
+<div>
+<table>
+<tr><th>PDF </th>
+    <td><a href="user-manual.pdf"     >DocBook PDF      </a></td>
+</tr>
+<tr><th>HTML</th>
+    <td><a href="user-manual-alt.html">AsciiDoc, unchunked  </a></td>
+</tr>
+<tr><th>HTML</th>
+    <td><a href="user-manual.html"    >DocBook, unchunked </a></td>
+</tr>
+<td>
+<tr><th>HTML</th>
+    <td><a href="user-manual.chunked" >DocBook, chunked  </a></td>
+</tr>
+</table>
+</div>
+
+<h2>Standards</h2>
+
+<p>
+Larceny v0.98 supports the following standards:
+</p>
+
+<div>
+<table>
+<tr><th>R7RS</th>
+    <td><a href="r7rs.pdf"     >Revised<sup>7</sup>
+        Report on the Algorithmic Language Scheme      </a></td>
+</tr>
+<tr><th>R6RS</th>
+    <td><a href="r6rs.pdf"     >Revised<sup>6</sup>
+        Report on the Algorithmic Language Scheme      </a></td>
+</tr>
+<tr><th>R6RS Libraries</th>
+    <td><a href="r6rs-lib.pdf"     >Revised<sup>6</sup>
+        Report on the Algorithmic Language Scheme
+        (Standard Libraries)      </a></td>
+</tr>
+<tr><th>R5RS</th>
+    <td><a href="r5rs.pdf"     >Revised<sup>5</sup>
+        Report on the Algorithmic Language Scheme      </a></td>
+</tr>
+</table>
+</div>
+
+</body>
+</html>

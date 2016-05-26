@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>3. Running Larceny</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="Larceny User Manual" /><link rel="up" href="index.html" title="Larceny User Manual" /><link rel="prev" href="ar01s02.html" title="2. Installing Larceny" /><link rel="next" href="ar01s04.html" title="4. R7RS/R6RS Libraries" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ar01s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s04.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="RunningChapter"></a>3. Running Larceny</h2></div></div></div><p>Larceny can run in any of these distinct modes:</p><pre class="literallayout">R5RS              traditional read/eval/print loop (the default)
+R6RS              batch execution of R6RS top-level programs
+R7RS              R7RS read/eval/print loop or batch execution
+Scheme script     batch execution of R7RS/R6RS Scheme scripts</pre><p><a class="link" href="ar01s03.html#R5rsSection" title="3.1. R5RS mode">R5RS mode</a>
+extends the Scheme language described by the R5RS and
+IEEE/ANSI Std 1178 by adding R7RS/R6RS lexical syntax and most
+of the procedures described by the newer R6RS and R7RS standards.</p><p><a class="link" href="ar01s03.html#R6rsSection" title="3.2. R6RS mode">R6RS mode</a>
+is largely redundant with Larceny's R7RS mode (because
+every reasonable R6RS library and program could just as well be
+executed in R7RS mode).  There is only one difference between
+those two modes: R6RS mode enforces the R6RS mandates that, among
+other things, forbid read/eval/print loops and most extensions
+to R6RS lexical syntax.</p><p><a class="link" href="ar01s03.html#R7rsSection" title="3.3. R7RS mode">R7RS mode</a>
+will accept any combination of R7RS and R6RS libraries
+and programs.  In Larceny, R6RS Scheme becomes a proper subset of
+R7RS Scheme.</p><p><a class="link" href="ar01s03.html#SchemeScriptsSection" title="3.4. Scheme scripts">Scheme scripts</a>
+are directly executable R7RS/R6RS programs.</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="R5rsSection"></a>3.1. R5RS mode</h3></div></div></div><p>When you start Larceny in R5RS mode (the default), you
+will be presented with a banner message and the
+read-eval-print loop's prompt:</p><pre class="screen">    % larceny
+    Larceny vX.Y "&lt;version_name&gt;" (MMM DD YYYY HH:MM:SS, ...)
+    larceny.heap, built ...
+
+    &gt;</pre><p>You can enter a Scheme expression at the prompt.
+After a complete expression has been read, it will
+be evaluated and its results printed.</p><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>In native Larceny, the expression is evaluated by
+compiling it to native machine code, which is then executed.
+In Petit Larceny, the expression is evaluated by
+an interpreter because compiling to C, running the
+C compiler, and loading the compiled C code would
+take too long.  Interpreted code behaves like compiled code,
+so most of what this manual says about the compiler is also
+true of Petit Larceny's interpreter.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="R6rsSection"></a>3.2. R6RS mode</h3></div></div></div><p>To execute a top-level R6RS program that is contained
+within a file named <code class="literal">pgm</code>, type:</p><pre class="screen">    larceny -r6rs -program pgm</pre><p>The <code class="literal">-program</code> option can be omitted, in which case
+Larceny will read the top-level program from standard
+input:</p><pre class="screen">    larceny -r6rs &lt; pgm</pre><p>If you omit the <code class="literal">-program</code> option and do not redirect
+standard input, then Larceny will wait patiently
+for you to type a complete top-level program into
+standard input, terminating it with an end-of-file.</p><p>You probably don't want to do that.  Had you wanted to
+type R6RS code at Larceny, you'd be using Larceny's R7RS
+read/eval/print loop instead.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="R7rsSection"></a>3.3. R7RS mode</h3></div></div></div><p>To execute a top-level R7RS/R6RS program that is contained
+within a file named <code class="literal">pgm</code>, type:</p><pre class="screen">    larceny -r7rs -program pgm</pre><p>To interact with Larceny's R7RS read/eval/print loop,
+omit the <code class="literal">-program</code> option:</p><pre class="screen">    % larceny -r7rs
+    Larceny v0.98 "General Ripper" (...)</pre><p>The <code class="literal">(scheme base)</code> library has already been imported,
+but you may want to import other libraries as well.
+For example:</p><pre class="screen">    &gt; (import (scheme read)
+              (scheme write)
+              (scheme file)
+              (scheme cxr)
+              (scheme inexact)
+              (scheme complex)
+              (scheme char)
+              (scheme load))</pre><p>If you'd rather have Larceny import all of the standard R7RS and
+R6RS libraries at startup, along with a few Larceny-specific
+procedures, you can use the <code class="literal">-r7r6</code> option instead of <code class="literal">r7rs</code>:</p><pre class="screen">    % larceny -r7r6
+    Larceny v0.98 "General Ripper" (...)</pre><p>Using the <code class="literal">-r7r6</code> option is equivalent to using the <code class="literal">-r7rs</code>
+option and then importing the <code class="literal">(larceny r7r6)</code> library.</p><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>One name conflict could not be resolved by adding R7RS extensions
+to the conflicting R6RS procedure or syntax.  When the <code class="literal">-r7r6</code>
+option is used, the <code class="literal">bytevector-copy!</code> procedure is imported with
+R7RS semantics, and the older R6RS version of that procedure is
+renamed to <code class="literal">r6rs:bytevector-copy!</code>.</p></div><p>The <code class="literal">features</code> procedure will return a list of all <code class="literal">cond-expand</code>
+features, including the names of
+<a class="link" href="ar01s04.html#R7rsPreDefinedSection" title="4.4. Predefined libraries">libraries currently available</a>
+for import.
+That procedure reads
+the source code for all library files found in your current
+<a class="link" href="">Larceny library path</a>, so don't be
+surprised if it takes a few seconds.</p><pre class="screen">    &gt; (features)
+    (r7rs r6rs larceny larceny-0.98
+     exact-closed ratios exact-complex complex ieee-float
+     full-unicode full-unicode-strings unicode-7
+     posix unix gnu-linux i386 ilp32 little-endian
+     ...
+     (rnrs arithmetic bitwise (6))
+     (rnrs arithmetic fixnums (6))
+     (rnrs arithmetic flonums (6))
+     (rnrs bytevectors (6))
+     ...
+     (rnrs (6))
+     (scheme base)
+     (scheme case-lambda)
+     (scheme char)
+     (scheme complex)
+     (scheme cxr)
+     (scheme eval)
+     (scheme file)
+     (scheme inexact)
+     (scheme lazy)
+     (scheme load)
+     (scheme process-context)
+     (scheme r5rs)
+     (scheme read)
+     (scheme repl)
+     (scheme time)
+     (scheme write)
+     (srfi 1)
+     (srfi 1 lists)
+     ...)</pre></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="SchemeScriptsSection"></a>3.4. Scheme scripts</h3></div></div></div><p>On most Unix systems (including Linux and Apple's OS X), Larceny's
+<code class="literal">scheme-script</code> will execute Scheme scripts as described in R6RS
+non-normative appendix D, with or without the optional script
+header.  To make Scheme scripts executable in their own
+right, without executing <code class="literal">scheme-script</code> directly, add Larceny's
+root directory to your path as described in <code class="literal">doc/HOWTO-INSTALL</code>,
+or edit <code class="literal">scheme-script</code> to define <code class="literal">LARCENY_ROOT</code> and copy that
+edited <code class="literal">scheme-script</code> to a directory in your path.</p><p>Suppose, for example, that <code class="literal">/home/myself/hello</code> is an R7RS/R6RS
+Scheme script whose first line is the optional script header
+shown below:</p><pre class="screen">#!/usr/bin/env scheme-script</pre><p>If you do not have execute permission for this script,
+or Larceny's root directory is not in your path,
+you can still run the script from
+Larceny's root directory as follows:</p><pre class="screen">    % ./scheme-script /home/myself/hello</pre><p>If you have execute permission for the script, and Larceny's
+root directory is in your path, you can also run the
+script as follows:</p><pre class="screen">    % /home/myself/hello</pre><p>If, in addition, the directory that contains the script is
+in your path, you can run the script as follows:</p><pre class="screen">    % hello</pre><p>You may also pass command-line arguments to a Scheme script.</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>We emphasize that Scheme scripts are not portable.
+Scheme scripts are specified only by a non-binding appendix
+to the R6RS, not by the R6RS proper.
+Other implementations of the R7RS or R6RS may not support Scheme
+scripts at all, or may give them a semantics incompatible
+with Larceny's.</p></div><p>On Unix systems, standard input and output can be redirected
+in the usual way.  In Larceny, standard input corresponds to
+the textual port initially returned by <code class="literal">current-input-port</code>,
+and standard output corresponds to the textual port initially
+returned by <code class="literal">current-output-port</code>.</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>We emphasize that redirection of standard input and output
+is non-portable.
+Other implementations of the R7RS or R6RS may not allow redirection,
+or may identify the standard input and output with ports
+other than those initially returned by <code class="literal">current-input-port</code>
+and <code class="literal">current-output-port</code>.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="R5rsScriptSection"></a>3.5. R5RS scripting</h3></div></div></div><p>Suppose <code class="literal">hello.sch</code> contains the following R5RS code:</p><pre class="screen">    (display "Hello world!")
+    (newline)
+    (exit)</pre><p>You can run <code class="literal">hello.sch</code> as a script by executing Larceny as
+follows:</p><pre class="screen">    % larceny -nobanner -- hello.sch</pre><p>You can redirect Larceny's standard input, in which case
+you may want to eliminate the herald announcement and the
+read/eval/print loop's prompt:</p><pre class="screen">    % larceny -nobanner -- -e "(begin (herald #f) (repl-prompt values))" \
+              &lt; hello.sch</pre><p>For an explanation of why that works, which may suggest other
+creative uses of Larceny, ask for help:</p><pre class="screen">    % larceny -help</pre></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="ErrorsSection"></a>3.6. Errors</h3></div></div></div><p>In R6RS mode, which is batch-only, errors should result in an
+error message followed by a clean exit from the program.</p><p>If your program encounters an error in an interactive mode
+(R5RS or R7RS), it will enter the debugger; this is
+believed to be a feature.</p><p>Despite its crudity, and to some extent because of it,
+Larceny's debugger works at least as well with optimized
+compiled code as with interpreted code.</p><p>If you type a question mark at the debugger prompt, the
+debugger will print a help message.  That message is more
+helpful if you understand the Twobit compiler and
+Larceny's internal representations and invariants, but
+this manual is not the place to explain those things.</p><p>The debugging context is saved so you can exit the debugger
+and re-enter it from the main read/eval/print loop's prompt:</p><pre class="screen">    &gt; (debug)</pre><p>The debugger is pretty much a prototype; you don't need to
+tell us how bad it is.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2546685"></a>3.7. Troubleshooting</h3></div></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2546691"></a>3.7.1. Errors when starting Larceny</h4></div></div></div><p>Although Larceny runs on x86-64 machines, it requires 32-bit
+libraries that are not always installed on Linux and MacOS X
+machines.  If those libraries are absent, the operating system
+will probably give you a mysterious or misleading error message
+when you try to run Larceny.  For example, the operating system's
+loader may tell you "larceny.bin not found" even though it's
+perfectly obvious that <code class="literal">larceny.bin</code> is present within Larceny's
+root directory.  To install the necessary 32-bit libraries on
+Linux machines with x86-compatible processors, someone with
+superuser privileges must incant</p><pre class="screen">    sudo apt-get install lib32z1
+    sudo apt-get install libc6-i386</pre><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>The names of those 32-bit packages have changed over time, and
+may change again.</p></div><p>For Macintosh machines, someone with administrative privileges
+must install the
+<a class="ulink" href="https://developer.apple.com/opensource/" target="_top">Apple Developer Command Line Tools</a>.</p><p>When attempting to run an R7RS/R6RS program, you may see
+a warning about "<code class="literal">loading source in favor of stale
+fasl file</code>",
+following by a long series of error messages about
+syntactic keywords used as a variable, ending with
+the kind of error you'd expect to see when a large
+R7RS/R6RS program is fed to a Scheme compiler that was
+expecting to see R5RS-compatible code.  That means
+the R7RS/R6RS runtime and standard libraries were not
+installed correctly, or their source files have been
+touched or modified since they were last compiled.
+To fix the problem,
+<a class="link" href="ar01s02.html#CompilingStdLibSection" title="2.5. Compiling the R7RS/R6RS standard libraries">recompile the R7RS standard libraries</a>.</p><p>The precompiled binary forms of Larceny should run on
+most machines that use an appropriate processor and operating
+system, but the executable program "<code class="literal">larceny.bin</code>" may be
+incompatible with very old or with very new versions of
+the processor or operating system.  If that appears to be
+the case, you should see whether a newer version of Larceny
+fixes the problem.  If not, please report the problem
+to us at <code class="literal">larceny@ccs.neu.edu</code>.
+Please report success stories as well.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2546810"></a>3.7.2. Errors when compiling the R7RS runtime</h4></div></div></div><p>If something goes wrong while
+<a class="link" href="ar01s02.html#CompilingStdLibSection" title="2.5. Compiling the R7RS/R6RS standard libraries">compiling the R7RS runtime</a>,
+make sure you are running the copy of Larceny you think
+you are running and have read and write permission
+for <code class="literal">lib/R7RS</code>, <code class="literal">lib/R6RS</code>, <code class="literal">lib/SRFI</code>,
+and all their subdirectories and files.
+If you get an error message about something being
+"<code class="literal">expanded against a different build of this library</code>",
+then one or more of the compiled files in
+<code class="literal">lib/R7RS</code> or <code class="literal">lib/R6RS</code> or <code class="literal">lib/SRFI</code>
+or its subdirectories has gone
+<a class="link" href="ar01s07.html" title="7. Compiling files and libraries">stale</a>.
+Removing all <code class="literal">.slfasl</code> files from <code class="literal">lib/R6RS</code> and <code class="literal">lib/SRFI</code> and
+their subdirectories will eliminate the stale file(s).</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>Don't remove the <code class="literal">.sch</code>, <code class="literal">.scm</code>, <code class="literal">.sls</code>, or <code class="literal">.sld</code> files.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="AutoLoadErrorsSection"></a>3.7.3. Autoloading errors</h4></div></div></div><p>If Larceny attempts to autoload an imported R7RS/R6RS
+library but cannot find the library, then the library
+may be defined in a file that doesn't follow
+<a class="link" href="ar01s06.html" title="6. File naming conventions">Larceny's standard naming conventions</a>.
+Another possibility is that the <code class="literal">-path</code> option was
+omitted or incorrect.</p><p>If an R7RS/R6RS library is recompiled, then all compiled
+libraries and top-level programs that depend upon it must
+also be recompiled.  In particular, recompiling the standard
+R7RS runtime will invalidate all compiled libraries and
+top-level programs.  Larceny's <code class="literal">compile-stale</code> script
+and the
+<a class="link" href="ar01s10.html#compile-stale-libraries"><code class="literal">compile-stale-libraries</code></a>
+procedure of <code class="literal">(larceny compiler)</code> make it convenient
+to recompile all of the libraries and top-level
+programs within any given directory in an order
+consistent with their dependencies.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="CrashesSection"></a>3.7.4. Crashes</h4></div></div></div><p>Please report all crashes with as much information is possible;
+a backtrace from a debugger or a core dump is ideal (but please
+do not mail the core dump without contacting us first).
+Larceny's run-time system is compiled with full debugging
+information by default and a debugger like GDB should be able
+to provide at least some clues.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="PerformanceSection"></a>3.8. Performance</h3></div></div></div><p>By default, Larceny's Twobit compiler performs several optimizations
+that are fully compatible with the R7RS but may not be fully compatible
+with the older R6RS, R5RS, and IEEE-1178 standards.</p><p>When compiling R5RS code, Larceny's Twobit compiler normally
+makes several assumptions that allow it to generate faster code;
+for example, the compiler assumes Scheme's standard
+procedures will not be redefined.</p><p>To obtain strict conformance to R5RS semantics at
+the expense of slower code, use R5RS mode and
+evaluate the expression</p><pre class="screen">    (compiler-switches 'standard)</pre><p>To make the compiler generate faster code, you can promise not to
+redefine standard procedures <span class="emphasis"><em>and</em></span> not to redefine any top-level
+procedure while it is running. To make this promise, evaluate</p><pre class="screen">        (compiler-switches 'fast-safe)</pre><p>To view the current settings of Twobit's numerous compiler switches,
+evaluate</p><pre class="screen">        (compiler-switches)</pre><p>All of Twobit's compiler switches are procedures whose setting
+can be changed by passing the new value of the switch as an
+argument.</p><p>For more information, evaluate</p><pre class="screen">        (help)</pre><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>That <code class="literal">help</code> procedure is predefined only in R5RS mode, and
+some of the help information that will be printed may be
+irrelevant to the heap image you are using.</p></div><p>To alter the compiler switches from R7RS mode, or
+to disable certain compiler optimizations that are
+incompatible with the R6RS, see the section that
+describes the
+<a class="link" href="ar01s10.html#LarcenyCompilerSection" title="10.2. Compiler"><code class="literal">(larceny compiler)</code> library</a>.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s02.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

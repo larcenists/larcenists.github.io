@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>6. File naming conventions</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="Larceny User Manual" /><link rel="up" href="index.html" title="Larceny User Manual" /><link rel="prev" href="ar01s05.html" title="5. Lexical syntax" /><link rel="next" href="ar01s07.html" title="7. Compiling files and libraries" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ar01s05.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s07.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="NamingChapter"></a>6. File naming conventions</h2></div></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="SuffixSection"></a>6.1. Suffixes</h3></div></div></div><p>In Larceny, file names generally follow Unix conventions,
+even on Windows.  The following suffixes have special
+meanings to some components of Larceny.</p><div class="variablelist"><dl><dt><span class="term">
+<code class="literal">.sld</code>
+</span></dt><dd>
+is the preferred suffix for files that contain libraries
+defined by the R7RS <code class="literal">define-library</code> syntax.
+</dd><dt><span class="term">
+<code class="literal">.sls</code>
+</span></dt><dd>
+is the preferred suffix for files that contain libraries
+defined by the R6RS <code class="literal">library</code> syntax.
+</dd><dt><span class="term">
+<code class="literal">.sps</code>
+</span></dt><dd>
+is the preferred suffix for files that contain R7RS/R6RS
+top-level programs (which consist of an <code class="literal">import</code> declaration
+followed by definitions and expressions).
+</dd><dt><span class="term">
+<code class="literal">.scm</code>
+</span></dt><dd>
+is the preferred suffix for files that contain R7RS/R5RS
+definitions and expressions but don't contain any <code class="literal">import</code>
+declarations and don't define any R7RS/R6RS libraries.
+</dd><dt><span class="term">
+<code class="literal">.sch</code>
+</span></dt><dd>
+is an alternative to <code class="literal">.scm</code> used by Larceny developers.
+</dd><dt><span class="term">
+<code class="literal">.slfasl</code>
+</span></dt><dd>
+is the suffix for files that contain the compiled form of
+a <code class="literal">.sld</code>, <code class="literal">.sls</code>, or <code class="literal">.sps</code> file.
+</dd><dt><span class="term">
+<code class="literal">.fasl</code>
+</span></dt><dd>
+is the suffix for files that contain the compiled form of
+R5RS source code (usually <code class="literal">.scm</code> or <code class="literal">.sch</code>).
+</dd><dt><span class="term">
+<code class="literal">.mal</code>
+</span></dt><dd>
+is the preferred suffix for files that contain MacScheme
+assembly language in symbolic form.
+</dd><dt><span class="term">
+<code class="literal">.lap</code>
+</span></dt><dd>
+is the suffix for files that contain MacScheme assembly language.
+</dd><dt><span class="term">
+<code class="literal">.lop</code>
+</span></dt><dd>
+is the suffix for files that contain machine code
+segments in the form expected by Larceny's heap linker.
+</dd><dt><span class="term">
+<code class="literal">.heap</code>
+</span></dt><dd>
+is the suffix for files that contain an executable heap
+image (must be combined with the
+<a class="link" href="ar01s02.html#InstallationSection" title="2.4. Installing the programs"><code class="literal">larceny.bin</code></a> runtime).
+</dd></dl></div><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>In Larceny, R7RS <code class="literal">define-library</code> and R6RS <code class="literal">library</code> syntaxes
+are mostly interchangeable.  The <code class="literal">define-library</code> syntax is more
+versatile because of its <code class="literal">include</code> and <code class="literal">cond-expand</code> features,
+and because it allows the name of the library being defined to
+contain exact integers as well as identifiers.
+For new code, we recommend the R7RS <code class="literal">define-library</code> syntax.</p></div><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>Although the R7RS <code class="literal">define-library</code> syntax allows <code class="literal">export</code> and
+<code class="literal">import</code> declarations to be placed anywhere at the top level of
+the syntax, it is standard practice to use only one <code class="literal">export</code>
+declaration per library, placed immediately following the name
+of the library, and to use only one <code class="literal">import</code> declaration per
+library, placed immediately following the <code class="literal">export</code> declaration.</p></div><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>Some of Larceny's compilation tools rely upon the convention
+described within the note above, and may not work if that
+convention is not followed.</p></div><div class="tip" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Tip</h3><p>An R7RS library definition may be split into two or more files,
+with the primary <code class="literal">.sld</code> file containing one or more <code class="literal">include</code>
+declarations that include <code class="literal">.scm</code> files.  If <code class="literal">foo.sld</code> is the
+primary file, then the included file is ordinarily named
+<code class="literal">foo.body.scm</code> and placed within the same directory as <code class="literal">foo.sld</code>.
+If more than one <code class="literal">.scm</code> file is included, we recommend
+<code class="literal">foo.body1.scm</code>, <code class="literal">foo.body2.scm</code>, and so on.  A Larceny-specific
+version of <code class="literal">foo.body2.scm</code> that's conditionally included using
+the <code class="literal">cond-expand</code> feature might be named <code class="literal">foo.body2.larceny.scm</code>.</p></div><div class="tip" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Tip</h3><p>Portable source code can be tailored to Larceny and other
+implementations of the R7RS by combining implementation-specific
+mechanisms such as Larceny's <code class="literal">-path</code> option with the <code class="literal">include</code>
+and <code class="literal">cond-expand</code> features of R7RS libraries.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="DirectorySection"></a>6.2. Directories</h3></div></div></div><p>Larceny's root directory should contain the following
+files:</p><pre class="screen">    larceny
+    scheme-script
+    larceny.bin
+    larceny.heap
+    startup.sch</pre><p>The following subdirectories are also essential for correct
+operation of some features of some modes in some varieties of
+Larceny:</p><pre class="screen">    include
+    lib
+    lib/Base
+    lib/Debugger
+    lib/Ffi
+    lib/MzScheme
+    lib/R6RS
+    lib/SRFI
+    lib/Standard
+    lib/TeachPacks</pre><p>The <code class="literal">include</code> subdirectory is used when compiling files with
+Petit Larceny.</p><p>The <code class="literal">startup.sch</code> file tells Larceny's <code class="literal">require</code> procedure to
+search some of the <code class="literal">lib</code> subdirectories for libraries that are
+loaded dynamically.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="LibraryResolutionSection"></a>6.3. Resolving references to libraries</h3></div></div></div><p>The R7RS and R6RS standards do not specify any mapping from
+library names to files or other locations at which the code
+for a library might be found.</p><p>R6RS non-normative appendix E emphasizes the arbitrariness of
+such mappings:</p><div class="blockquote"><table border="0" width="100%" cellspacing="0" cellpadding="0" class="blockquote" summary="Block quote"><tr><td width="10%" valign="top"> </td><td width="80%" valign="top"><p>Implementations may take radically different approaches to
+storing source code for libraries, among them: files in the
+file system where each file contains an arbitrary number of
+library forms, files in the file system where each file
+contains exactly one library form, records in a database,
+and data structures in memory.</p><p>Similarly, programs and scripts may be stored in a variety of
+formats. Platform constraints may restrict the choices available
+to an implementation, which is why the report neither mandates
+nor recommends a specific method for storage.</p><p>Implementations may provide a means for importing libraries….</p><p>Similarly, implementations may provide a means for executing a
+program represented as a UTF-8 text file containing its source
+code….</p></td><td width="10%" valign="top"> </td></tr><tr><td width="10%" valign="top"> </td><td colspan="2" align="right" valign="top">--<span class="attribution">
+</span></td></tr></table></div><p>To put it more starkly:</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>Although implementations of the R6RS <span class="emphasis"><em>may</em></span> "provide a means for
+importing libraries" or "executing a program", they don't have
+to.</p></div><p>R7RS section 5.1 urges implementations to be reasonable:</p><div class="blockquote"><table border="0" width="100%" cellspacing="0" cellpadding="0" class="blockquote" summary="Block quote"><tr><td width="10%" valign="top"> </td><td width="80%" valign="top"><p>Implementations which store libraries in files should document
+the mapping from the name of a library to its location in the
+file system.</p></td><td width="10%" valign="top"> </td></tr><tr><td width="10%" valign="top"> </td><td colspan="2" align="right" valign="top">--<span class="attribution">
+</span></td></tr></table></div><p>Fortunately, <span class="emphasis"><em>de facto</em></span> standards have been emerging.
+Larceny supports those <span class="emphasis"><em>de facto</em></span> standards by providing these
+Larceny-specific mechanisms:</p><div class="orderedlist"><ol type="1"><li>
+R7RS/R6RS standard libraries may be imported.
+Their code is located automagically.
+</li><li>
+Nonstandard libraries, such as <code class="literal">(larceny compiler)</code>,
+may be placed in one of the directories searched
+by Larceny's
+<a class="link" href="">autoload</a> feature, provided
+those libraries are located in files that follow Larceny's
+standard naming conventions as described in
+<a class="link" href="ar01s06.html#LibraryTranslationSection" title="6.4. Mapping library names to files (R7RS/R6RS)">the next section</a>.
+</li><li>
+R7RS/R6RS top-level programs may use
+<a class="link" href="">Larceny's <code class="literal">-path</code> option</a>
+to specify directories that contain other libraries
+the program may import, provided those libraries are
+located in files that follow Larceny's standard naming
+conventions as described in
+<a class="link" href="ar01s06.html#LibraryTranslationSection" title="6.4. Mapping library names to files (R7RS/R6RS)">the next section</a>.
+</li><li>
+R7RS/R6RS top-level programs may use
+<a class="link" href="ar01s04.html#R7rsLibraryVariableSection" title="4.5. Library path">Larceny's <code class="literal">LARCENY_LIBPATH</code> environment variable</a>
+to specify directories that contain other libraries
+the program may import, provided those libraries are
+located in files that follow Larceny's standard naming
+conventions as described in
+<a class="link" href="ar01s06.html#LibraryTranslationSection" title="6.4. Mapping library names to files (R7RS/R6RS)">the next section</a>.
+</li><li>
+R7RS/R6RS top-level programs and Scheme scripts may
+<a class="link" href="ar01s04.html#DefiningLibrariesSection" title="4.6. Defining libraries">define their own libraries</a>
+in the same file that contains the top-level program or
+Scheme script.
+</li></ol></div><p>R7RS programs may use any of those five mechanisms,
+and may also use a sixth mechanism:
+An R7RS program can be written as a little configuration
+program that loads the program's libraries from files
+before any libraries are imported.  This sixth mechanism
+appears to be portable, but is not available to
+R6RS programs executing in Larceny's R6RS mode because
+it mixes execution with macro expansion, which is
+explicitly forbidden by one of the R6RS standard's
+"absolute requirements".</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="LibraryTranslationSection"></a>6.4. Mapping library names to files (R7RS/R6RS)</h3></div></div></div><p>Suppose Larceny's <code class="literal">-path</code> option is used to specify
+a certain <span class="emphasis"><em>directory</em></span>, and the program imports a
+nonstandard library whose name is of the form
+<code class="literal">(<span class="emphasis"><em>name1</em></span> <span class="emphasis"><em>name2</em></span> … <span class="emphasis"><em>lastname</em></span>)</code>.
+Larceny will search for that library in the following
+files:</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>/<span class="emphasis"><em>name2</em></span>/…/<span class="emphasis"><em>lastname</em></span>.larceny.slfasl</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>/<span class="emphasis"><em>name2</em></span>/…/<span class="emphasis"><em>lastname</em></span>.larceny.sld</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>/<span class="emphasis"><em>name2</em></span>/…/<span class="emphasis"><em>lastname</em></span>.larceny.sls</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>/<span class="emphasis"><em>name2</em></span>/…/<span class="emphasis"><em>lastname</em></span>.slfasl</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>/<span class="emphasis"><em>name2</em></span>/…/<span class="emphasis"><em>lastname</em></span>.sld</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>/<span class="emphasis"><em>name2</em></span>/…/<span class="emphasis"><em>lastname</em></span>.sls</code>
+</li><li>
+…
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>/<span class="emphasis"><em>name2</em></span>.larceny.slfasl</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>/<span class="emphasis"><em>name2</em></span>.larceny.sld</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>/<span class="emphasis"><em>name2</em></span>.larceny.sls</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>/<span class="emphasis"><em>name2</em></span>.slfasl</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>/<span class="emphasis"><em>name2</em></span>.sld</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>/<span class="emphasis"><em>name2</em></span>.sls</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>.larceny.slfasl</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>.larceny.sld</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>.larceny.sls</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>.slfasl</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>.sld</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>directory</em></span>/<span class="emphasis"><em>name1</em></span>.sls</code>
+</li></ul></div><p>The search starts with the first of those file names,
+continues with the following file names in order,
+and ends when a file with one of those names is found.
+The imported library <span class="emphasis"><em>must</em></span> be one of the libraries
+defined within the first file found by this search,
+since the search is not continued after that first file
+is found (except as noted in the next paragraph).</p><p>If the search ends by finding a file whose name ends
+with <code class="literal">.slfasl</code>, then Larceny checks to see whether
+there is a file in the same directory with the same
+root name but ending with <code class="literal">.sld</code> or <code class="literal">.sls</code> instead of <code class="literal">.slfasl</code>.
+If the <code class="literal">.sld</code> or <code class="literal">.sls</code> file has been modified since the <code class="literal">.slfasl</code>
+file was last modified, then a warning is printed and
+the <code class="literal">.sld</code> or <code class="literal">.sls</code> file is loaded instead of the <code class="literal">.slfasl</code> file.
+Otherwise the <code class="literal">.slfasl</code> file is loaded.</p><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>The R6RS allows arbitrary mappings from library names to library
+code.  Larceny takes advantage of this by ignoring version
+numbers when mapping library names to files, and by (virtually)
+rewriting any version number that may be specified in the
+definition of a library so it matches any version specification
+that appears within the <code class="literal">import</code> form.  Furthermore Larceny
+allows different versions of the same library to be imported,
+but Larceny's algorithm for resolving library references
+ensures that the different versions of a library will be
+identical except for their version numbers, which have no
+meaningful semantics.  Although Larceny's treatment of versions
+conforms to the R6RS specification, it should be clear that
+version numbers serve no purpose in Larceny.  Since the R6RS
+version feature has no usefully portable semantics and has
+been ignored by most implementations of the R6RS, it is
+deprecated.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="RequireLibraryTranslationSection"></a>6.5. Mapping library names to files (R5RS)</h3></div></div></div><p>In R5RS mode, Larceny's <code class="literal">-path</code> option
+and <code class="literal">LARCENY_LIBPATH</code> environment variable
+may be used to
+specify directories to be searched by the <code class="literal">require</code>
+procedure, which takes a single symbol <span class="emphasis"><em>libname</em></span> as
+its argument.
+The <code class="literal">require</code> procedure will search for the following
+files in every directory that is part of the current
+require path, starting with the directories specified
+by LARCENY_LIBPATH and the <code class="literal">-path</code> option:</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal"><span class="emphasis"><em>libname</em></span>.fasl</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>libname</em></span>.sch</code>
+</li><li>
+<code class="literal"><span class="emphasis"><em>libname</em></span>.scm</code>
+</li></ul></div><p>These files are expected to contain R5RS code, not
+library definitions.  Otherwise the search proceeds
+much the same as when searching for an R7RS/R6RS
+library.</p><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>The <code class="literal">require</code> path is specified by <code class="literal">startup.sch</code> in Larceny's
+root directory, but may be changed dynamically using the
+<code class="literal">current-require-path</code> parameter.  Changing the <code class="literal">require</code> path
+is not recommended, however, because Larceny relies on the
+<code class="literal">require</code> path for dynamic loading of libraries used by several
+important features of Larceny, notably R7RS and R6RS modes.</p></div><p><a id="require"></a>
+<span class="emphasis"><em> Procedure require</em></span>
+<p>
+<a id="id2550293" class="indexterm"></a>
+<code class="literal">(require <span class="emphasis"><em>libname</em></span>) </code>
+</p></p><p><span class="emphasis"><em>libname</em></span> must be a symbol that names an R5RS-compatible
+library within the current require path.</p><p>If the library has not already been loaded, then it is
+located and loaded.  If the library is found and loaded
+successfully, then <code class="literal">require</code> returns true; otherwise an
+error is signalled.</p><p>If the library has already been loaded, then <code class="literal">require</code>
+returns false without loading the library a second time.</p><p><a id="current-require-path"></a>
+<span class="emphasis"><em> Procedure current-require-path</em></span>
+<p>
+<a id="id2550356" class="indexterm"></a>
+<code class="literal">(current-require-path <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>stringlist</em></span></code>
+</p>
+<p><code class="literal">(current-require-path <span class="emphasis"><em>stringlist</em></span>) </code></p></p><p>The optional argument is a list of directory names
+(without slashes at the end) that should be searched
+by <a class="link" href="ar01s06.html#require"><code class="literal">require</code></a> and (in R7RS/R6RS modes)
+by Larceny's <a class="link" href="">autoload</a>
+feature.
+Returns the list of directory names that will be
+searched.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s05.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s07.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

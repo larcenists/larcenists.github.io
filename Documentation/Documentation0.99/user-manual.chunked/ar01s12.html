@@ -1,0 +1,1905 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>12. Larceny's R5RS libraries</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="Larceny User Manual" /><link rel="up" href="index.html" title="Larceny User Manual" /><link rel="prev" href="ar01s11.html" title="11. ERR5RS standard libraries" /><link rel="next" href="ar01s13.html" title="13. Debugging" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ar01s11.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s13.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="LarcenyR5rsLibrariesChapter"></a>12. Larceny's R5RS libraries</h2></div></div></div><p>The procedures described in this chapter are nonstandard.
+Some are deprecated after being rendered obsolete by R7RS
+or R6RS standard libraries.
+Others still provide useful capabilities that the standard
+libraries don't.</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2554420"></a>12.1. Strings</h3></div></div></div><p>Larceny provides Unicode strings with
+<a class="ulink" href="http://www.r6rs.org/" target="_top">R6RS</a>
+semantics.</p><p>The <code class="literal">string-downcase</code> and <code class="literal">string-upcase</code> procedures
+perform Unicode-compatible case folding, which can result
+in a string whose length is different from that of the original.</p><p>Larceny may still provide <code class="literal">string-downcase!</code> and <code class="literal">string-upcase!</code>
+procedures, but they are deprecated.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2554466"></a>12.2. Bytevectors</h3></div></div></div><p>A <span class="emphasis"><em>bytevector</em></span> is a data structure that stores bytes — exact
+8-bit unsigned integers. Bytevectors are useful in constructing
+system interfaces and other low-level programming. In Larceny,
+many bytevector-like structures — bignums, for example —
+are implemented in terms of a
+lower-level <span class="emphasis"><em>bytevector-like</em></span> data type. The operations on
+generic bytevector-like structures are particularly fast but
+useful largely in code that manipulates Larceny's data
+representations.</p><p>The <a class="link" href=""><code class="literal">(rnrs bytevectors)</code> library</a> now
+provides a large set of procedures that, in Larceny, are
+defined using the procedures described below.</p><p><a id="make-bytevector"></a>
+<span class="emphasis"><em> Integrable procedure make-bytevector</em></span>
+<p>
+<a id="id2554518" class="indexterm"></a>
+<code class="literal">(make-bytevector <span class="emphasis"><em>length</em></span>)  =&gt; <span class="emphasis"><em>bytevector</em></span></code>
+</p>
+<p><code class="literal">(make-bytevector <span class="emphasis"><em>length fill</em></span>)  =&gt; <span class="emphasis"><em>bytevector</em></span></code></p></p><p>Returns a bytevector of the desired length.
+If no second argument is given, then the bytevector has not
+been initialized and most likely contains garbage.</p><p><span class="emphasis"><em>Operations on bytevector structures</em></span></p><p><p><code class="literal">(bytevector? <span class="emphasis"><em>obj</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code></p></p><p><p><code class="literal">(bytevector-length <span class="emphasis"><em>bytevector</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p></p><p><p><code class="literal">(bytevector-ref <span class="emphasis"><em>bytevector offset</em></span>)  =&gt; <span class="emphasis"><em>byte</em></span></code></p></p><p><p><code class="literal">(bytevector-set! <span class="emphasis"><em>bytevector offset byte</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p></p><p><p><code class="literal">(bytevector-equal? <span class="emphasis"><em>bytevector1 bytevector2</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code></p></p><p><p><code class="literal">(bytevector-fill! <span class="emphasis"><em>bytevector byte</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p></p><p><p><code class="literal">(bytevector-copy <span class="emphasis"><em>bytevector</em></span>)  =&gt; <span class="emphasis"><em>bytevector</em></span></code></p></p><p>These procedures do what you expect.
+All are integrable, except <code class="literal">bytevector-equal?</code> and <code class="literal">bytevector-copy</code>.
+The <code class="literal">bytevector-equal?</code> name is deprecated, since the
+R6RS calls it <code class="literal">bytevector=?</code>.</p><p><span class="emphasis"><em>Operations on bytevector-like structures</em></span></p><p><p><code class="literal">(bytevector-like? <span class="emphasis"><em>obj</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code></p></p><p><p><code class="literal">(bytevector-like-length <span class="emphasis"><em>bytevector</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p></p><p><p><code class="literal">(bytevector-like-ref <span class="emphasis"><em>bytevector offset</em></span>)  =&gt; <span class="emphasis"><em>byte</em></span></code></p></p><p><p><code class="literal">(bytevector-like-set! <span class="emphasis"><em>bytevector offset byte</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p></p><p><p><code class="literal">(bytevector-like-equal? <span class="emphasis"><em>bytevector1 bytevector2</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code></p></p><p><p><code class="literal">(bytevector-like-copy <span class="emphasis"><em>bytevector</em></span>)  =&gt; <span class="emphasis"><em>bytevector</em></span></code></p></p><p>A bytevector-like structure is a low-level representation
+for indexed arrays of uninterpreted bytes.  Bytevector-like
+structures are used to represent types such as bignums and
+flonums.</p><p>There is no way to construct a "generic" bytevector-like
+structure; use the constructors for specific bytevector-like
+types.</p><p>The bytevector-like operations operate on all bytevector-like
+structures.  All are integrable, except <code class="literal">bytevector-like-equal?</code>
+and <code class="literal">bytevector-like-copy</code>.  All are deprecated because they
+violate abstraction barriers and make your code
+representation-dependent; they are useful mainly to
+Larceny developers, who might otherwise be tempted to
+write some low-level operations in C or assembly language.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2554798"></a>12.3. Vectors</h3></div></div></div><p><a id="vector-copy"></a>
+<span class="emphasis"><em> Procedure vector-copy</em></span>
+<p>
+<a id="id2554815" class="indexterm"></a>
+<code class="literal">(vector-copy <span class="emphasis"><em>vector</em></span>)  =&gt; <span class="emphasis"><em>vector</em></span></code>
+</p></p><p>Returns a shallow copy of its argument.</p><p><span class="emphasis"><em>Operations on vector-like structures</em></span></p><p><p><code class="literal">(vector-like? <span class="emphasis"><em>object</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code></p>
+<p><code class="literal">(vector-like-length <span class="emphasis"><em>vector-like</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code></p>
+<p><code class="literal">(vector-like-ref <span class="emphasis"><em>vector-like k</em></span>)  =&gt; <span class="emphasis"><em>object</em></span></code></p>
+<p><code class="literal">(vector-like-set! <span class="emphasis"><em>vector-like k object</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p></p><p>A vector-like structure is a low-level representation
+for indexed arrays of Scheme objects.  Vector-like
+structures are used to represent types such as vectors,
+records, symbols, and ports.</p><p>There is no way to construct a "generic" vector-like structure;
+use the constructors for specific data types.</p><p>The vector-like operations operate on all vector-like structures.
+All are integrable.
+All are deprecated because they
+violate abstraction barriers and make your code
+representation-dependent; they are useful mainly to
+Larceny developers, who might otherwise be tempted to
+write some low-level operations in C or assembly language.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2554916"></a>12.4. Procedures</h3></div></div></div><p><span class="emphasis"><em>Operations on procedures</em></span></p><p><p><code class="literal">(make-procedure <span class="emphasis"><em>length</em></span>)  =&gt; <span class="emphasis"><em>procedure</em></span></code></p>
+<p><code class="literal">(procedure-length <span class="emphasis"><em>procedure</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code></p>
+<p><code class="literal">(procedure-ref <span class="emphasis"><em>procedure offset</em></span>)  =&gt; <span class="emphasis"><em>object</em></span></code></p>
+<p><code class="literal">(procedure-set! <span class="emphasis"><em>procedure offset object</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p></p><p>These procedures operate on the representations of procedures and
+allow user programs to construct, inspect, and alter procedures.</p><p><a id="procedure-copy"></a>
+<span class="emphasis"><em> Procedure procedure-copy</em></span>
+<p>
+<a id="id2554994" class="indexterm"></a>
+<code class="literal">(procedure-copy <span class="emphasis"><em>procedure</em></span>)  =&gt; <span class="emphasis"><em>procedure</em></span></code>
+</p></p><p>Returns a shallow copy of the procedure.</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>The procedures above are deprecated because they
+violate abstraction barriers and make your code
+representation-dependent; they are useful mainly to
+Larceny developers, who might otherwise be tempted to
+write some low-level operations in C or assembly language.</p></div><p>The rest of this section describes some procedures that
+reach through abstraction barriers in a more controlled way
+to extract heuristic information from procedures for debugging
+purposes.</p><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>The following
+text is copied from a straw proposal authored by Will Clinger and sent
+to rrr-authors on 09 May 1996. The text has been edited lightly. See
+the end for notes about the Larceny implementation.</p></div><p>The procedures that extract heuristic information from procedures are
+permitted to return any result whatsoever. If the type of a result is
+not among those listed below, then the result represents an
+implementation-dependent extension to this interface, which may safely
+be interpreted as though no information were available from the
+procedure. Otherwise the result is to be interpreted as described
+below.</p><p><a id="procedure-arity"></a>
+<span class="emphasis"><em> Procedure procedure-arity</em></span>
+<p>
+<a id="id2555080" class="indexterm"></a>
+<code class="literal">(procedure-arity <span class="emphasis"><em>proc</em></span>) </code>
+</p></p><p>Returns information about the arity of <span class="emphasis"><em>proc</em></span>. If the result is <code class="literal">#f</code>,
+then no information is available. If the result is an exact
+non-negative integer <span class="emphasis"><em>k</em></span>, then <span class="emphasis"><em>proc</em></span> requires exactly <span class="emphasis"><em>k</em></span>
+arguments. If the result is an inexact non-negative integer <span class="emphasis"><em>n</em></span>, then
+<span class="emphasis"><em>proc</em></span> requires <span class="emphasis"><em>n</em></span> or more arguments. If the result is a pair, then
+it is a list of non-negative integers, each of which indicates a
+number of arguments that will be accepted by <span class="emphasis"><em>proc</em></span>; the list is not
+necessarily exhaustive.</p><p><a id="procedure-documentation-string"></a>
+<span class="emphasis"><em> Procedure procedure-documentation-string</em></span>
+<p>
+<a id="id2555156" class="indexterm"></a>
+<code class="literal">(procedure-documentation-string <span class="emphasis"><em>proc</em></span>) </code>
+</p></p><p>Returns general information about <span class="emphasis"><em>proc</em></span>. If the result is <code class="literal">#f</code>, then no
+information is available. If the result is a string, then it is to be
+interpreted as a "documentation string" (see Common Lisp).</p><p><a id="procedure-name"></a>
+<span class="emphasis"><em> Procedure procedure-name</em></span>
+<p>
+<a id="id2555201" class="indexterm"></a>
+<code class="literal">(procedure-name <span class="emphasis"><em>proc</em></span>) </code>
+</p></p><p>Returns information about the name of <span class="emphasis"><em>proc</em></span>. If the result is <code class="literal">#f</code>,
+then no information is available. If the result is a symbol or string,
+then it represents a name. If the result is a pair, then it is a list
+of symbols and/or strings representing a path of names; the first
+element represents an outer name and the last element represents an
+inner name.</p><p><a id="procedure-source-file"></a>
+<span class="emphasis"><em> Procedure procedure-source-file</em></span>
+<p>
+<a id="id2555251" class="indexterm"></a>
+<code class="literal">(procedure-source-file <span class="emphasis"><em>proc</em></span>) </code>
+</p></p><p>Returns information about the name of a file that contains the source
+code for <span class="emphasis"><em>proc</em></span>. If the result is <code class="literal">#f</code>, then no information is
+available. If the result is a string, then the string is the name of a
+file.</p><p><a id="procedure-source-position"></a>
+<span class="emphasis"><em> Procedure procedure-source-position</em></span>
+<p>
+<a id="id2555299" class="indexterm"></a>
+<code class="literal">(procedure-source-position <span class="emphasis"><em>proc</em></span>) </code>
+</p></p><p>Returns information about the position of the source code for <span class="emphasis"><em>proc</em></span>
+whithin the source file specified by procedure-source-file. If the
+result is <code class="literal">#f</code>, then no information is available. If the result is an
+exact integer <span class="emphasis"><em>k</em></span>, then <span class="emphasis"><em>k</em></span> characters precede the opening parenthesis
+of the source code for <span class="emphasis"><em>proc</em></span> within that source file.</p><p><a id="procedure-expression"></a>
+<span class="emphasis"><em> Procedure procedure-expression</em></span>
+<p>
+<a id="id2555359" class="indexterm"></a>
+<code class="literal">(procedure-expression <span class="emphasis"><em>proc</em></span>) </code>
+</p></p><p>Returns information about the source code for <span class="emphasis"><em>proc</em></span>. If the result is
+<code class="literal">#f</code>, then no information is available. If the result is a pair, then it
+is a lambda expression in the traditional representation of a list.</p><p><a id="procedure-environment"></a>
+<span class="emphasis"><em> Procedure procedure-environment</em></span>
+<p>
+<a id="id2555407" class="indexterm"></a>
+<code class="literal">(procedure-environment <span class="emphasis"><em>proc</em></span>) </code>
+</p></p><p>Returns information about the environment of <span class="emphasis"><em>proc</em></span>. If the result is
+<code class="literal">#f</code>, then no information is available. In any case the result may be
+passed to any of the <a class="link" href="">environment inquiry functions</a>.</p><p><span class="strong"><strong>Notes on the Larceny implementation</strong></span></p><p>Twobit does not yet produce data for all of these functions, so some
+of them always return <code class="literal">#f</code>.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2555466"></a>12.5. Pairs and Lists</h3></div></div></div><p>The <code class="literal">(rnrs lists)</code> library now
+provides a set of procedures that may supersede some
+of the procedures described below.
+If one of Larceny's procedures duplicates the semantics of
+an R6RS procedure whose name is different, then Larceny's
+name is deprecated.</p><p><a id="append!"></a>
+<span class="emphasis"><em> Procedure append!</em></span>
+<p>
+<a id="id2555498" class="indexterm"></a>
+<code class="literal">(append! <span class="emphasis"><em>list1 list2 … obj</em></span>)  =&gt; <span class="emphasis"><em>object</em></span></code>
+</p></p><p><code class="literal">append!</code> destructively appends its arguments, which must be lists, and
+returns the resulting list. The last argument can be any object. The
+argument lists are appended by changing the cdr of the last pair of
+each argument except the last to point to the next argument.</p><p><a id="every?"></a>
+<span class="emphasis"><em> Procedure every?</em></span>
+<p>
+<a id="id2555542" class="indexterm"></a>
+<code class="literal">(every? <span class="emphasis"><em>procedure list1 list2 …</em></span>)  =&gt; <span class="emphasis"><em>object</em></span></code>
+</p></p><p><code class="literal">every?</code> applies <span class="emphasis"><em>procedure</em></span> to each element tuple of <span class="emphasis"><em>list_s in
+first-to-last order, and returns <code class="literal">#f</code> as soon as _procedure</em></span> returns
+<code class="literal">#f</code>. If <span class="emphasis"><em>procedure</em></span> does not return <code class="literal">#f</code> for any element tuple of
+<span class="emphasis"><em>list_s, then the value returned by _procedure</em></span> for the last element
+tuple of _list_s is returned.</p><p><a id="last-pair"></a>
+<span class="emphasis"><em> Procedure last-pair</em></span>
+<p>
+<a id="id2555616" class="indexterm"></a>
+<code class="literal">(last-pair <span class="emphasis"><em>list-structure</em></span>)  =&gt; <span class="emphasis"><em>pair</em></span></code>
+</p></p><p><code class="literal">last-pair</code> returns the last pair of the <span class="emphasis"><em>list structure</em></span>, which must be
+a sequence of pairs linked through the cdr fields.</p><p><a id="list-copy"></a>
+<span class="emphasis"><em> Procedure list-copy</em></span>
+<p>
+<a id="id2555661" class="indexterm"></a>
+<code class="literal">(list-copy <span class="emphasis"><em>list-copy</em></span>)  =&gt; <span class="emphasis"><em>list</em></span></code>
+</p></p><p><code class="literal">list-copy</code> makes a shallow copy of the <span class="emphasis"><em>list</em></span> and returns that copy.</p><p><a id="remove"></a>
+<span class="emphasis"><em> Procedure remove</em></span>
+<p>
+<a id="id2555705" class="indexterm"></a>
+<code class="literal">(remove <span class="emphasis"><em>key list</em></span>)  =&gt; <span class="emphasis"><em>list</em></span></code>
+</p>
+<a id="remq"></a>
+<span class="emphasis"><em> Procedure remq</em></span>
+<p>
+<a id="id2555739" class="indexterm"></a>
+<code class="literal">(remq <span class="emphasis"><em>key list</em></span>)  =&gt; <span class="emphasis"><em>list</em></span></code>
+</p>
+<a id="remv"></a>
+<span class="emphasis"><em> Procedure remv</em></span>
+<p>
+<a id="id2555774" class="indexterm"></a>
+<code class="literal">(remv <span class="emphasis"><em>key list</em></span>)  =&gt; <span class="emphasis"><em>list</em></span></code>
+</p>
+<a id="remp"></a>
+<span class="emphasis"><em> Procedure remp</em></span>
+<p>
+<a id="id2555809" class="indexterm"></a>
+<code class="literal">(remp <span class="emphasis"><em>pred? list</em></span>)  =&gt; <span class="emphasis"><em>list</em></span></code>
+</p></p><p>Each of these procedures returns a new list which contains all the
+elements of <span class="emphasis"><em>list</em></span> in the original order, except that those elements of
+the original list that were equal to <span class="emphasis"><em>key</em></span> (or that satisfy <span class="emphasis"><em>pred?</em></span>) are
+not in the new list. Remove uses <code class="literal">equal?</code> as the equivalence predicate;
+<code class="literal">remq</code> uses <code class="literal">eq?</code>, and <code class="literal">remv</code> uses <code class="literal">eqv?</code>.</p><p><a id="remove!"></a>
+<span class="emphasis"><em> Procedure remove!</em></span>
+<p>
+<a id="id2555897" class="indexterm"></a>
+<code class="literal">(remove! <span class="emphasis"><em>key list</em></span>)  =&gt; <span class="emphasis"><em>list</em></span></code>
+</p>
+<a id="remq!"></a>
+<span class="emphasis"><em> Procedure remq!</em></span>
+<p>
+<a id="id2555931" class="indexterm"></a>
+<code class="literal">(remq! <span class="emphasis"><em>key list</em></span>)  =&gt; <span class="emphasis"><em>list</em></span></code>
+</p>
+<a id="remv!"></a>
+<span class="emphasis"><em> Procedure remv!</em></span>
+<p>
+<a id="id2555966" class="indexterm"></a>
+<code class="literal">(remv! <span class="emphasis"><em>key list</em></span>)  =&gt; <span class="emphasis"><em>list</em></span></code>
+</p>
+<a id="remp!"></a>
+<span class="emphasis"><em> Procedure remp!</em></span>
+<p>
+<a id="id2556001" class="indexterm"></a>
+<code class="literal">(remp! <span class="emphasis"><em>pred? list</em></span>)  =&gt; <span class="emphasis"><em>list</em></span></code>
+</p></p><p>These procedures are like <code class="literal">remove</code>, <code class="literal">remq</code>, <code class="literal">remv</code>, and <code class="literal">remp</code>,
+except they modify <span class="emphasis"><em>list</em></span> instead of returning a fresh list.</p><p><a id="reverse!"></a>
+<span class="emphasis"><em> Procedure reverse!</em></span>
+<p>
+<a id="id2556069" class="indexterm"></a>
+<code class="literal">(reverse! <span class="emphasis"><em>list</em></span>)  =&gt; <span class="emphasis"><em>list</em></span></code>
+</p></p><p><code class="literal">reverse!</code> destructively reverses its argument and returns the reversed
+list.</p><p><a id="some?"></a>
+<span class="emphasis"><em> Procedure some?</em></span>
+<p>
+<a id="id2556116" class="indexterm"></a>
+<code class="literal">(some? <span class="emphasis"><em>procedure list1 list2 …</em></span>)  =&gt; <span class="emphasis"><em>object</em></span></code>
+</p></p><p><code class="literal">some?</code> applies <span class="emphasis"><em>procedure</em></span> to each element tuple of <span class="emphasis"><em>list_s in
+first-to-last order, and returns the first non-false value returned by
+_procedure.</em></span> If <span class="emphasis"><em>procedure</em></span> does not return a true value for any
+element tuple of _list_s, then some? returns <code class="literal">#f</code>.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2556170"></a>12.6. Sorting</h3></div></div></div><p>The <code class="literal">(rnrs sorting)</code> library now
+provides a small set of procedures that supersede most
+of the procedures described below.
+All of the procedures described below are therefore
+deprecated.</p><p><span class="emphasis"><em>Procedures sort and sort!</em></span></p><p><p><code class="literal">(sort <span class="emphasis"><em>list less?</em></span>)  =&gt; <span class="emphasis"><em>list</em></span></code></p>
+<p><code class="literal">(sort <span class="emphasis"><em>vector less?</em></span>)  =&gt; <span class="emphasis"><em>vector</em></span></code></p>
+<p><code class="literal">(sort! <span class="emphasis"><em>list less?</em></span>)  =&gt; <span class="emphasis"><em>list</em></span></code></p>
+<p><code class="literal">(sort! <span class="emphasis"><em>vector less?</em></span>)  =&gt; <span class="emphasis"><em>vector</em></span></code></p></p><p>These procedures sort their argument (a list or a vector) according to
+the predicate <span class="emphasis"><em>less?</em></span>, which must implement a total order on the
+elements in the data structures that are sorted.</p><p><code class="literal">sort</code> returns a fresh data structure containing the sorted data;
+<code class="literal">sort!</code> sorts the data structure in-place.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2556280"></a>12.7. Records</h3></div></div></div><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>Larceny's records have been extended to implement all SRFI 99
+and
+<a class="ulink" href="http://www.r6rs.org/" target="_top">R6RS</a>
+procedures from</p><pre class="literallayout">(srfi :99 records procedural)
+(srfi :99 records inspection)
+(rnrs records procedural)
+(rnrs records inspection)</pre><p>We recommend that Larceny programmers use the SRFI 99 APIs instead
+of the R6RS APIs.  This should entail no loss of portability, since
+the standard reference implementation of SRFI 99 records should run
+efficiently in any implementation of the R7RS/R6RS that permits new
+libraries to defined at all.</p><p>Larceny now has two kinds of records: old-style and R7RS/R6RS/SRFI99/ERR5RS.
+Old-style records cannot be created in R6RS-conforming mode, so
+our extension of R6RS procedures to accept old-style records does
+not affect R6RS conformance.</p></div><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>The following specification describes Larceny's old-style record API,
+which is now deprecated.  It
+is based on a proposal posted by Pavel Curtis to
+rrrs-authors on 10 Sep 1989, and later re-posted by Norman Adams to
+comp.lang.scheme on 5 Feb 1992. The authorship and copyright status of
+the original text are unknown to me.</p><p>This document differs from the original proposal in that its record
+types are extensible, and that it specifies the type of record-type
+descriptors.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2556358"></a>12.7.1. Specification</h4></div></div></div><p><a id="make-record-type"></a>
+<span class="emphasis"><em> Procedure make-record-type</em></span>
+<p>
+<a id="id2556379" class="indexterm"></a>
+<code class="literal">(make-record-type <span class="emphasis"><em>type-name field-names</em></span>) </code>
+</p></p><p>Returns a "record-type descriptor", a value representing a new data
+type, disjoint from all others. The <span class="emphasis"><em>type-name</em></span> argument must be a
+string, but is only used for debugging purposes (such as the printed
+representation of a record of the new type). The <span class="emphasis"><em>field-names</em></span>
+argument is a list of symbols naming the "fields" of a record of the
+new type. It is an error if the list contains any duplicates.</p><p>If the <span class="emphasis"><em>parent-rtd</em></span> argument is provided, then the new type will be a
+subtype of the type represented by <span class="emphasis"><em>parent-rtd</em></span>, and the field names
+of the new type will include all the field names of the parent
+type. It is an error if the complete list of field names contains any
+duplicates.</p><p>Record-type descriptors are themselves records. In particular,
+record-type descriptors have a field printer that is either <code class="literal">#f</code> or a
+procedure. If the value of the field is a procedure, then the
+procedure will be called to print records of the type represented by
+the record-type descriptor. The procedure must accept two arguments:
+the record object to be printed and an output port.</p><p><a id="record-constructor"></a>
+<span class="emphasis"><em> Procedure record-constructor</em></span>
+<p>
+<a id="id2556472" class="indexterm"></a>
+<code class="literal">(record-constructor <span class="emphasis"><em>rtd</em></span>) </code>
+</p></p><p>Returns a procedure for constructing new members of the type
+represented by <span class="emphasis"><em>rtd.</em></span> The returned procedure accepts exactly as many
+arguments as there are symbols in the given list, <span class="emphasis"><em>field-names</em></span>; these
+are used, in order, as the initial values of those fields in a new
+record, which is returned by the constructor procedure. The values of
+any fields not named in that list are unspecified. The field-names
+argument defaults to the list of field-names in the call to
+make-record-type that created the type represented by <span class="emphasis"><em>rtd</em></span>; if the
+<span class="emphasis"><em>field-names</em></span> argument is provided, it is an error if it contains any
+duplicates or any symbols not in the default list.</p><p><a id="record-predicate"></a>
+<span class="emphasis"><em> Procedure record-predicate</em></span>
+<p>
+<a id="id2556540" class="indexterm"></a>
+<code class="literal">(record-predicate <span class="emphasis"><em>rtd</em></span>) </code>
+</p></p><p>Returns a procedure for testing membership in the type represented by
+<span class="emphasis"><em>rtd.</em></span> The returned procedure accepts exactly one argument and returns
+a true value if the argument is a member of the indicated record type
+or one of its subtypes; it returns a false value otherwise.</p><p><a id="record-accessor"></a>
+<span class="emphasis"><em> Procedure record-accessor</em></span>
+<p>
+<a id="id2556588" class="indexterm"></a>
+<code class="literal">(record-accessor <span class="emphasis"><em>rtd field-name</em></span>) </code>
+</p></p><p>Returns a procedure for reading the value of a particular field of a
+member of the type represented by <span class="emphasis"><em>rtd.</em></span> The returned procedure
+accepts exactly one argument which must be a record of the appropriate
+type; it returns the current value of the field named by the symbol
+<span class="emphasis"><em>field-name</em></span> in that record. The symbol field-name must be a member of
+the list of field-names in the call to make-record-type that created
+the type represented by <span class="emphasis"><em>rtd</em></span>, or a member of the field-names of the
+parent type of the type represented by <span class="emphasis"><em>rtd.</em></span></p><p><a id="record-updater"></a>
+<span class="emphasis"><em> Procedure record-updater</em></span>
+<p>
+<a id="id2556652" class="indexterm"></a>
+<code class="literal">(record-updater <span class="emphasis"><em>rtd field-name</em></span>) </code>
+</p></p><p>Returns a procedure for writing the value of a particular field of a
+member of the type represented by <span class="emphasis"><em>rtd.</em></span> The returned procedure
+accepts exactly two arguments: first, a record of the appropriate
+type, and second, an arbitrary Scheme value; it modifies the field
+named by the symbol <span class="emphasis"><em>field-name</em></span> in that record to contain the given
+value. The returned value of the updater procedure is unspecified. The
+symbol <span class="emphasis"><em>field-name</em></span> must be a member of the list of field-names in the
+call to make-record-type that created the type represented by <span class="emphasis"><em>rtd</em></span>,
+or a member of the field-names of the parent type of the type
+represented by <span class="emphasis"><em>rtd.</em></span></p><p><p><code class="literal">(record? <span class="emphasis"><em>obj</em></span>) </code></p></p><p>Returns a true value if <span class="emphasis"><em>obj</em></span> is a record of any type and a false value
+otherwise. Note that <code class="literal">record?</code> may be true of any Scheme value; of
+course, if it returns true for some particular value, then
+<code class="literal">record-type-descriptor</code> is applicable to that value and returns an
+appropriate descriptor.</p><p><a id="record-type-descriptor"></a>
+<span class="emphasis"><em> Procedure record-type-descriptor</em></span>
+<p>
+<a id="id2556761" class="indexterm"></a>
+<code class="literal">(record-type-descriptor <span class="emphasis"><em>record</em></span>) </code>
+</p></p><p>Returns a record-type descriptor representing the type of the given
+record. That is, for example, if the returned descriptor were passed
+to record-predicate, the resulting predicate would return a true value
+when passed the given record. Note that it is not necessarily the case
+that the returned descriptor is the one that was passed to
+record-constructor in the call that created the constructor procedure
+that created the given record.</p><p><a id="record-type-name"></a>
+<span class="emphasis"><em> Procedure record-type-name</em></span>
+<p>
+<a id="id2556811" class="indexterm"></a>
+<code class="literal">(record-type-name <span class="emphasis"><em>rtd</em></span>) </code>
+</p></p><p>Returns the type-name associated with the type represented by <span class="emphasis"><em>rtd.</em></span>
+The returned value is eqv? to the type-name argument given in the call
+to make-record-type that created the type represented by rtd.</p><p><a id="record-type-field-names"></a>
+<span class="emphasis"><em> Procedure record-type-field-names</em></span>
+<p>
+<a id="id2556857" class="indexterm"></a>
+<code class="literal">(record-type-field-names <span class="emphasis"><em>rtd</em></span>) </code>
+</p></p><p>Returns a list of the symbols naming the fields in members of the type
+represented by <span class="emphasis"><em>rtd.</em></span></p><p><a id="record-type-parent"></a>
+<span class="emphasis"><em> Procedure record-type-parent</em></span>
+<p>
+<a id="id2556900" class="indexterm"></a>
+<code class="literal">(record-type-parent <span class="emphasis"><em>rtd</em></span>) </code>
+</p></p><p>Returns a record-type descriptor for the parent type of the type
+represented by <span class="emphasis"><em>rtd</em></span>, if that type has a parent type, or a false value
+otherwise. The type represented by <span class="emphasis"><em>rtd</em></span> has a parent type if the call
+to make-record-type that created <span class="emphasis"><em>rtd</em></span> provided the <span class="emphasis"><em>parent-rtd</em></span>
+argument.</p><p><a id="record-type-extends?"></a>
+<span class="emphasis"><em> Procedure record-type-extends?</em></span>
+<p>
+<a id="id2556960" class="indexterm"></a>
+<code class="literal">(record-type-extends? <span class="emphasis"><em>rtd1 rtd2</em></span>) </code>
+</p></p><p>Returns a true value if the type represented by <span class="emphasis"><em>rtd1</em></span> is a subtype of
+the type represented by <span class="emphasis"><em>rtd2</em></span> and a false value otherwise. A type <span class="emphasis"><em>s</em></span>
+is a subtype of a type <span class="emphasis"><em>t</em></span> if <span class="emphasis"><em>s=t</em></span> or if the parent type of <span class="emphasis"><em>s</em></span>, if
+it exists, is a subtype of <span class="emphasis"><em>t.</em></span></p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2557012"></a>12.7.2. Implementation</h4></div></div></div><p>The R6RS spouts some tendentious nonsense about procedural
+records being slower than syntactic records, but this is not
+true of Larceny's records, and is unlikely to be true of other
+implementations either.
+Larceny's procedural records are fairly efficient already,
+and will become even more efficient in future versions as
+interlibrary optimizations are added.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2557033"></a>12.8. Input, Output, and Files</h3></div></div></div><p>The <code class="literal">(scheme base)</code>, <code class="literal">(scheme file)</code>, <code class="literal">(rnrs io ports)</code>,
+and <code class="literal">(rnrs files)</code> libraries now
+provide a set of procedures that may supersede some
+of the procedures described below.
+If one of Larceny's procedures duplicates the semantics of
+an R7RS or R6RS procedure whose name is different, then Larceny's
+name is deprecated.</p><p><a id="close-open-files"></a>
+<span class="emphasis"><em> Procedure close-open-files</em></span>
+<p>
+<a id="id2557089" class="indexterm"></a>
+<code class="literal">(close-open-files <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>Closes all open files.</p><p><a id="console-input-port"></a>
+<span class="emphasis"><em> Procedure console-input-port</em></span>
+<p>
+<a id="id2557129" class="indexterm"></a>
+<code class="literal">(console-input-port <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>input-port</em></span></code>
+</p></p><p>Returns a character input port such that no read from the port has
+signalled an error or returned the end-of-file object.</p><p><span class="emphasis"><em>Rationale:</em></span> console-input-port and console-output-port are artifacts
+of Unix interactive I/O conventions, where an interactive end-of-file
+does not mean "quit" but rather "done here". Under these conventions
+the console port should be reset following an end-of-file. Resetting
+conflicts with the semantics of ports in Scheme, so console-input-port
+and console-output-port return a new port if the current port is
+already at end-of-file.</p><p>Since it is convenient to handle errors in the same manner as
+end-of-file, these procedures also return a new port if an error has
+been signalled during an I/O operation on the port.</p><p>Console-input-port and console-output-port simply call the port
+generators installed in the parameters console-input-port-factory and
+console-output-port-factory, which allow user programs to install
+their own console port generators.</p><p><a id="console-output-port"></a>
+<span class="emphasis"><em> Procedure console-output-port</em></span>
+<p>
+<a id="id2557205" class="indexterm"></a>
+<code class="literal">(console-output-port <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>output-port</em></span></code>
+</p></p><p>Returns a character output port such that no write to the port has
+signalled an error.</p><p>See console-input-port for a full explanation.</p><p><a id="console-input-port-factory"></a>
+<a id="id2557247" class="indexterm"></a>
+<span class="emphasis"><em>Parameter console-input-port-factory</em></span></p><p>The value of this parameter is a procedure that returns a character
+input port such that no read from the port has signalled an error or
+returned the end-of-file object.</p><p>See console-input-port for a full explanation.</p><p><a id="console-output-port-factory"></a>
+<a id="id2557283" class="indexterm"></a>
+<span class="emphasis"><em>Parameter console-output-port-factory</em></span></p><p>The value of this parameter is a procedure that returns a character
+output port such that no write the port has signalled an error.</p><p>See console-input-port for a full explanation.</p><p><a id="current-input-port"></a>
+<a id="id2557318" class="indexterm"></a>
+<span class="emphasis"><em>Parameter current-input-port</em></span></p><p>The value of this parameter is a character input port.</p><p><a id="current-output-port"></a>
+<a id="id2557346" class="indexterm"></a>
+<span class="emphasis"><em>Parameter current-output-port</em></span></p><p>The value of this parameter is a character output port.</p><p><a id="delete-file"></a>
+<span class="emphasis"><em> Procedure delete-file</em></span>
+<p>
+<a id="id2557378" class="indexterm"></a>
+<code class="literal">(delete-file <span class="emphasis"><em>filename</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>Deletes the named file. No error is signalled if the file does not
+exist.</p><p><a id="eof-object"></a>
+<span class="emphasis"><em> Procedure eof-object</em></span>
+<p>
+<a id="id2557420" class="indexterm"></a>
+<code class="literal">(eof-object <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>end-of-file object</em></span></code>
+</p></p><p><span class="emphasis"><em>Eof-object</em></span> returns an end-of-file object.</p><p><a id="file-exists?"></a>
+<span class="emphasis"><em> Procedure file-exists?</em></span>
+<p>
+<a id="id2557461" class="indexterm"></a>
+<code class="literal">(file-exists? <span class="emphasis"><em>filename</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p></p><p>File-exists? returns #t if the named file exists at the time the
+procedure is called.</p><p><a id="file-modification-time"></a>
+<span class="emphasis"><em> Procedure file-modification-time</em></span>
+<p>
+<a id="id2557505" class="indexterm"></a>
+<code class="literal">(file-modification-time <span class="emphasis"><em>filename</em></span>)  =&gt; <span class="emphasis"><em>vector or #f</em></span></code>
+</p></p><p>File-modification-time returns the time of last modification of the
+file as a vector, or #f if the file does not exist. The vector has six
+elements: year, month, day, hour, minute, second, all of which are
+exact nonnegative integers. The time returned is relative to the local
+timezone.</p><p><code class="literal">     (file-modification-time "larceny") =&gt; #(1997 2 6 12 51 13)</code></p><p><code class="literal">     (file-modification-time "geekdom") =&gt; #f</code></p><p><a id="flush-output-port"></a>
+<span class="emphasis"><em> Procedure flush-output-port</em></span>
+<p>
+<a id="id2557572" class="indexterm"></a>
+<code class="literal">(flush-output-port <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p>
+<p><code class="literal">(flush-output-port <span class="emphasis"><em>port</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p></p><p>Write any buffered data in the port to the underlying output medium.</p><p><a id="get-output-string"></a>
+<span class="emphasis"><em> Procedure get-output-string</em></span>
+<p>
+<a id="id2557626" class="indexterm"></a>
+<code class="literal">(get-output-string <span class="emphasis"><em>string-output-port</em></span>)  =&gt; <span class="emphasis"><em>string</em></span></code>
+</p></p><p>Retrieve the output string from the given string output port.</p><p><a id="open-input-string"></a>
+<span class="emphasis"><em> Procedure open-input-string</em></span>
+<p>
+<a id="id2557668" class="indexterm"></a>
+<code class="literal">(open-input-string <span class="emphasis"><em>string</em></span>)  =&gt; <span class="emphasis"><em>input-port</em></span></code>
+</p></p><p>Creates an input port that reads from <span class="emphasis"><em>string</em></span>. The string may be
+shared with the caller. A string input port does not need to be
+closed, although closing it will prevent further reads from it.</p><p><a id="open-output-string"></a>
+<span class="emphasis"><em> Procedure open-output-string</em></span>
+<p>
+<a id="id2557716" class="indexterm"></a>
+<code class="literal">(open-output-string <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>output-port</em></span></code>
+</p></p><p>Creates an output port where any output is written to a string. The
+accumulated string can be retrieved with
+<a class="xref" href="ar01s12.html#get-output-string">get-output-string</a> at any time.</p><p><a id="port?"></a>
+<span class="emphasis"><em> Procedure port?</em></span>
+<p>
+<a id="id2557765" class="indexterm"></a>
+<code class="literal">(port? <span class="emphasis"><em>object</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p></p><p>Tests whether its argument is a port.</p><p><a id="port-name"></a>
+<span class="emphasis"><em> Procedure port-name</em></span>
+<p>
+<a id="id2557806" class="indexterm"></a>
+<code class="literal">(port-name <span class="emphasis"><em>port</em></span>)  =&gt; <span class="emphasis"><em>string</em></span></code>
+</p></p><p>Returns the name associated with the port; for file ports, this is the file name.</p><p><a id="port-position"></a>
+<span class="emphasis"><em> Procedure port-position</em></span>
+<p>
+<a id="id2557847" class="indexterm"></a>
+<code class="literal">(port-position <span class="emphasis"><em>port</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns the number of characters that have been read from or written to the port.</p><p><a id="rename-file"></a>
+<span class="emphasis"><em> Procedure rename-file</em></span>
+<p>
+<a id="id2557888" class="indexterm"></a>
+<code class="literal">(rename-file <span class="emphasis"><em>from to</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>Renames the file <span class="emphasis"><em>from</em></span> and gives it the name <span class="emphasis"><em>to</em></span>. No error is
+signalled if <span class="emphasis"><em>from</em></span> does not exist or <span class="emphasis"><em>to</em></span> exists.</p><p><a id="reset-output-string"></a>
+<span class="emphasis"><em> Procedure reset-output-string</em></span>
+<p>
+<a id="id2557944" class="indexterm"></a>
+<code class="literal">(reset-output-string <span class="emphasis"><em>port</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>Given a <span class="emphasis"><em>port</em></span> created with <span class="emphasis"><em>open-output-string</em></span>, deletes from the
+port all the characters that have been output so far.</p><p><a id="with-input-from-port"></a>
+<span class="emphasis"><em> Procedure with-input-from-port</em></span>
+<p>
+<a id="id2557995" class="indexterm"></a>
+<code class="literal">(with-input-from-port <span class="emphasis"><em>input-port thunk</em></span>)  =&gt; <span class="emphasis"><em>object</em></span></code>
+</p></p><p>Calls <span class="emphasis"><em>thunk</em></span> with current input bound to <span class="emphasis"><em>input-port</em></span> in the dynamic
+extent of <span class="emphasis"><em>thunk</em></span>. Returns whatever value was returned from <span class="emphasis"><em>thunk</em></span>.</p><p><a id="with-output-to-port"></a>
+<span class="emphasis"><em> Procedure with-output-to-port</em></span>
+<p>
+<a id="id2558051" class="indexterm"></a>
+<code class="literal">(with-output-to-port <span class="emphasis"><em>output-port thunk</em></span>)  =&gt; <span class="emphasis"><em>object</em></span></code>
+</p></p><p>Calls <span class="emphasis"><em>thunk</em></span> with current output bound to <span class="emphasis"><em>output-port</em></span> in the
+dynamic extent of <span class="emphasis"><em>thunk</em></span>. Returns whatever value was returned from
+<span class="emphasis"><em>thunk</em></span>.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2558095"></a>12.9. Operating System Interface</h3></div></div></div><p><a id="command-line-arguments"></a>
+<span class="emphasis"><em> Procedure command-line-arguments</em></span>
+<p>
+<a id="id2558117" class="indexterm"></a>
+<code class="literal">(command-line-arguments <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>vector</em></span></code>
+</p></p><p>Returns a vector of strings: the arguments supplied to the program by
+the user or the operating system.</p><p><a id="dump-heap"></a>
+<span class="emphasis"><em> Procedure dump-heap</em></span>
+<p>
+<a id="id2558159" class="indexterm"></a>
+<code class="literal">(dump-heap <span class="emphasis"><em>filename procedure</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>Dump a heap image to the named file that will start up with the
+supplied procedure. Before <span class="emphasis"><em>procedure</em></span> is called, command line
+arguments will be parsed and any init procedures registered with
+<code class="literal">add-init-procedure!</code>  will be called.</p><p><span class="emphasis"><em>Note: Currently, heap dumping is only available with the
+stop-and-copy collector (<code class="literal">-stopcopy</code> command line option), although the
+heap image can be used with all the other collectors.</em></span></p><p><a id="dump-interactive-heap"></a>
+<span class="emphasis"><em> Procedure dump-interactive-heap</em></span>
+<p>
+<a id="id2558232" class="indexterm"></a>
+<code class="literal">(dump-interactive-heap <span class="emphasis"><em>filename</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>Dump a heap image to the named file that will start up with the
+standard read-eval-print loop. Before the read-eval-print loop is
+called, command line arguments will be parsed and any init procedures
+registered with <code class="literal">add-init-procedure!</code>
+will be called.</p><p><span class="emphasis"><em>Note: Currently, heap dumping is only available with the
+stop-and-copy collector (<code class="literal">-stopcopy</code> command line option), although the
+heap image can be used with all the other collectors.</em></span></p><p><a id="getenv"></a>
+<span class="emphasis"><em> Procedure getenv</em></span>
+<p>
+<a id="id2558299" class="indexterm"></a>
+<code class="literal">(getenv <span class="emphasis"><em>key</em></span>)  =&gt; <span class="emphasis"><em>string or #f</em></span></code>
+</p></p><p>Returns the operating system environment mapping for the string <span class="emphasis"><em>key</em></span>,
+or <code class="literal">#f</code> if there is no mapping for <span class="emphasis"><em>key</em></span>.</p><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>This is now a synonym for the <code class="literal">get-environment-variable</code>
+exported by the <code class="literal">(scheme process-context)</code> library.</p></div><p><a id="setenv"></a>
+<span class="emphasis"><em> Procedure setenv</em></span>
+<p>
+<a id="id2558372" class="indexterm"></a>
+<code class="literal">(setenv <span class="emphasis"><em>key val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>Sets the operating system environment mapping for the string <span class="emphasis"><em>key</em></span>
+to <span class="emphasis"><em>val</em></span>.</p><p><a id="system"></a>
+<span class="emphasis"><em> Procedure system</em></span>
+<p>
+<a id="id2558420" class="indexterm"></a>
+<code class="literal">(system <span class="emphasis"><em>command</em></span>)  =&gt; <span class="emphasis"><em>status</em></span></code>
+</p></p><p>Send the <span class="emphasis"><em>command</em></span> to the operating system's command processor and
+return the command's exit status, if any. On Unix, <span class="emphasis"><em>command</em></span> is a
+string and <span class="emphasis"><em>status</em></span> is an exact integer.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="FixnumPrimitives"></a>12.10. Fixnum primitives</h3></div></div></div><p>Fixnums are small exact integers that are likely to be
+represented without heap
+allocation. Larceny never represents a number that can be
+represented as a fixnum any other way, so programs that can use
+fixnums will do so automatically. However, operations that work only
+on fixnums can sometimes be substantially faster than generic
+operations, and the following primitives are provided for use in those
+programs that need especially good performance.</p><p>The <code class="literal">(rnrs arithmetic fixnums)</code> library now
+provides a large set of procedures, some of them similar to
+the procedures described below.
+If one of Larceny's procedures duplicates the semantics of
+an R6RS procedure whose name is different, then Larceny's
+name is deprecated within R7RS/R6RS code.</p><p>All arguments to the following procedures must be fixnums.</p><p><a id="fixnum?"></a>
+<span class="emphasis"><em> Procedure fixnum?</em></span>
+<p>
+<a id="id2558528" class="indexterm"></a>
+<code class="literal">(fixnum? <span class="emphasis"><em>obj</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p></p><p>Returns <code class="literal">#t</code> if its argument is a fixnum, and <code class="literal">#f</code> otherwise.</p><p><a id="fx+"></a>
+<span class="emphasis"><em> Procedure fx+</em></span>
+<p>
+<a id="id2558578" class="indexterm"></a>
+<code class="literal">(fx+ <span class="emphasis"><em>fix1 fix2</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns the fixnum sum of its arguments. If the result is not
+representable as a fixnum, then an error is signalled (unless error
+checking has been disabled).</p><p><a id="fx-"></a>
+<span class="emphasis"><em> Procedure fx-</em></span>
+<p>
+<a id="id2558621" class="indexterm"></a>
+</p></p><p>Returns the fixnum difference of its arguments. If the result is not
+representable as a fixnum, then an error is signalled.</p><p><a id="fx—"></a>
+<span class="emphasis"><em> Procedure fx—</em></span>
+<p>
+<a id="id2558653" class="indexterm"></a>
+<code class="literal">(fx— <span class="emphasis"><em>fix1</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns the fixnum negative of its argument. If the result is not
+representable as a fixnum, then an error is signalled.</p><p><a id="fx*"></a>
+<span class="emphasis"><em> Procedure fx*</em></span>
+<p>
+<a id="id2558696" class="indexterm"></a>
+<code class="literal">(fx* <span class="emphasis"><em>fix1 fix2</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns the fixnum product of its arguments. If the result is not
+representable as a fixnum, then an error is signalled.</p><p><a id="fx="></a>
+<span class="emphasis"><em> Procedure fx=</em></span>
+<p>
+<a id="id2558739" class="indexterm"></a>
+<code class="literal">(fx= <span class="emphasis"><em>fix1 fix2</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p></p><p>Returns <code class="literal">#t</code> if its arguments are equal, and <code class="literal">#f</code> otherwise.</p><p><a id="fx&lt;"></a>
+<span class="emphasis"><em> Procedure fx&lt;</em></span>
+<p>
+<a id="id2558790" class="indexterm"></a>
+<code class="literal">(fx&lt; <span class="emphasis"><em>fix1 fix2</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p></p><p>Returns <code class="literal">#t</code> if <span class="emphasis"><em>fix1</em></span> is less than <span class="emphasis"><em>fix2</em></span>, and <code class="literal">#f</code> otherwise.</p><p><a id="fx&lt;="></a>
+<span class="emphasis"><em> Procedure fx&lt;=</em></span>
+<p>
+<a id="id2558850" class="indexterm"></a>
+<code class="literal">(fx&lt;= <span class="emphasis"><em>fix1 fix2</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p></p><p>Returns <code class="literal">#t</code> if <span class="emphasis"><em>fix1</em></span> is less than or equal to <span class="emphasis"><em>fix2</em></span>, and <code class="literal">#f</code>
+otherwise.</p><p><a id="fx&gt;"></a>
+<span class="emphasis"><em> Procedure fx&gt;</em></span>
+<p>
+<a id="id2558908" class="indexterm"></a>
+<code class="literal">(fx&gt; <span class="emphasis"><em>fix1 fix2</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p></p><p>Returns <code class="literal">#t</code> if <span class="emphasis"><em>fix1</em></span> is greater than <span class="emphasis"><em>fix2</em></span>, and <code class="literal">#f</code> otherwise.</p><p><a id="fx&gt;="></a>
+<span class="emphasis"><em> Procedure fx&gt;=</em></span>
+<p>
+<a id="id2558967" class="indexterm"></a>
+<code class="literal">(fx&gt;= <span class="emphasis"><em>fix1 fix2</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p></p><p>Returns <code class="literal">#t</code> if <span class="emphasis"><em>fix1</em></span> is greater than or equal to <span class="emphasis"><em>fix2</em></span>, and <code class="literal">#f</code>
+otherwise.</p><p><a id="fxnegative?"></a>
+<span class="emphasis"><em> Procedure fxnegative?</em></span>
+<p>
+<a id="id2559026" class="indexterm"></a>
+<code class="literal">(fxnegative? <span class="emphasis"><em>fix</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p></p><p>Returns <code class="literal">#t</code> if its argument is less than zero, and <code class="literal">#f</code> otherwise.</p><p><a id="fxpositive?"></a>
+<span class="emphasis"><em> Procedure fxpositive?</em></span>
+<p>
+<a id="id2559079" class="indexterm"></a>
+<code class="literal">(fxpositive? <span class="emphasis"><em>fix</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p></p><p>Returns <code class="literal">#t</code> if its argument is greater than zero, and <code class="literal">#f</code> otherwise.</p><p><a id="fxzero?"></a>
+<span class="emphasis"><em> Procedure fxzero?</em></span>
+<p>
+<a id="id2559130" class="indexterm"></a>
+<code class="literal">(fxzero? <span class="emphasis"><em>fix</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p></p><p>Returns <code class="literal">#t</code> if its argument is zero, and <code class="literal">#f</code> otherwise.</p><p><a id="fxlogand"></a>
+<span class="emphasis"><em> Procedure fxlogand</em></span>
+<p>
+<a id="id2559182" class="indexterm"></a>
+<code class="literal">(fxlogand <span class="emphasis"><em>fix1 fix2</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns the bitwise <span class="emphasis"><em>and</em></span> of its arguments.</p><p><a id="fxlogior"></a>
+<span class="emphasis"><em> Procedure fxlogior</em></span>
+<p>
+<a id="id2559225" class="indexterm"></a>
+<code class="literal">(fxlogior <span class="emphasis"><em>fix1 fix2</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns the bitwise <span class="emphasis"><em>inclusive or</em></span> of its arguments.</p><p><a id="fxlognot"></a>
+<span class="emphasis"><em> Procedure fxlognot</em></span>
+<p>
+<a id="id2559268" class="indexterm"></a>
+<code class="literal">(fxlognot <span class="emphasis"><em>fix</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns the bitwise <span class="emphasis"><em>not</em></span> of its argument.</p><p><a id="fxlogxor"></a>
+<span class="emphasis"><em> Procedure fxlogxor</em></span>
+<p>
+<a id="id2559312" class="indexterm"></a>
+<code class="literal">(fxlogxor <span class="emphasis"><em>fix1 fix2</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns the bitwise <span class="emphasis"><em>exclusive or</em></span> of its arguments.</p><p><a id="fxlsh"></a>
+<span class="emphasis"><em> Procedure fxlsh</em></span>
+<p>
+<a id="id2559356" class="indexterm"></a>
+<code class="literal">(fxlsh <span class="emphasis"><em>fix1 fix2</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns <span class="emphasis"><em>fix1</em></span> shifted left <span class="emphasis"><em>fix2</em></span> places, shifting in zero bits at
+the low end. If the shift count exceeds the number of bits in the
+machine's word size, then the results are machine-dependent.</p><p><a id="most-positive-fixnum"></a>
+<span class="emphasis"><em> Procedure most-positive-fixnum</em></span>
+<p>
+<a id="id2559408" class="indexterm"></a>
+<code class="literal">(most-positive-fixnum <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns the largest representable positive fixnum.</p><p><a id="most-negative-fixnum"></a>
+<span class="emphasis"><em> Procedure most-negative-fixnum</em></span>
+<p>
+<a id="id2559448" class="indexterm"></a>
+<code class="literal">(most-negative-fixnum <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns the smallest representable negative fixnum.</p><p><a id="fxrsha"></a>
+<span class="emphasis"><em> Procedure fxrsha</em></span>
+<p>
+<a id="id2559488" class="indexterm"></a>
+<code class="literal">(fxrsha <span class="emphasis"><em>fix1 fix2</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns <span class="emphasis"><em>fix1</em></span> shifted right <span class="emphasis"><em>fix2</em></span> places, shifting in a copy of the
+sign bit at the left end. If the shift count exceeds the number of
+bits in the machine's word size, then the results are
+machine-dependent.</p><p><a id="fxrshl"></a>
+<span class="emphasis"><em> Procedure fxrshl</em></span>
+<p>
+<a id="id2559538" class="indexterm"></a>
+<code class="literal">(fxrshl <span class="emphasis"><em>fix1 fix2</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns <span class="emphasis"><em>fix1</em></span> shifted right <span class="emphasis"><em>fix2</em></span> places, shifting in zero bits at
+the high end. If the shift count exceeds the number of bits in the
+machine's word size, then the results are machine-dependent.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2559575"></a>12.11. Numbers</h3></div></div></div><p>Larceny has six representations for numbers: <span class="emphasis"><em>fixnums</em></span> are small,
+exact integers; <span class="emphasis"><em>bignums</em></span> are unlimited-precision exact integers;
+<span class="emphasis"><em>ratnums</em></span> are exact rationals; <span class="emphasis"><em>flonums</em></span> are inexact rationals;
+<span class="emphasis"><em>rectnums</em></span> are exact complexes; and <span class="emphasis"><em>compnums</em></span> are inexact complexes.</p><p><span class="emphasis"><em>Number-representation predicates</em></span></p><p><p><code class="literal">(fixnum? <span class="emphasis"><em>obj</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code></p>
+<p><code class="literal">(bignum? <span class="emphasis"><em>obj</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code></p>
+<p><code class="literal">(ratnum? <span class="emphasis"><em>obj</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code></p>
+<p><code class="literal">(flonum? <span class="emphasis"><em>obj</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code></p>
+<p><code class="literal">(rectnum? <span class="emphasis"><em>obj</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code></p>
+<p><code class="literal">(compnum? <span class="emphasis"><em>obj</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code></p></p><p>These predicates test whether an object is a number of a particular
+representation and return <code class="literal">#t</code> if so, <code class="literal">#f</code> if not.</p><p><a id="random"></a>
+<span class="emphasis"><em> Procedure random</em></span>
+<p>
+<a id="id2559727" class="indexterm"></a>
+<code class="literal">(random <span class="emphasis"><em>limit</em></span>)  =&gt; <span class="emphasis"><em>exact integer</em></span></code>
+</p></p><p>Returns a pseudorandom nonnegative exact integer in the range 0
+through <span class="emphasis"><em>limit</em></span>-1.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2559758"></a>12.12. Hashtables and hash functions</h3></div></div></div><p>Hashtables represent finite mappings from keys to values.
+If the hash function is a good one, then the value associated
+with a key may be looked up in constant time (on the average).</p><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>R6RS hashtables are a big improvement
+over Larceny's traditional hash tables, and should be used
+instead of the API described below.</p></div><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>To resolve a clash of names and semantics with the
+R6RS <code class="literal">make-hashtable</code> procedure, Larceny's traditional
+<code class="literal">make-hashtable</code> procedure has been renamed to
+<code class="literal">make-oldstyle-hashtable</code>.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2559811"></a>12.12.1. Hash tables</h4></div></div></div><p><a id="make-oldstyle-hashtable"></a>
+<span class="emphasis"><em> Procedure make-oldstyle-hashtable</em></span>
+<p>
+<a id="id2559832" class="indexterm"></a>
+<code class="literal">(make-oldstyle-hashtable <span class="emphasis"><em>hash-function bucket-searcher size</em></span>)  =&gt; <span class="emphasis"><em>hashtable</em></span></code>
+</p></p><p>Returns a newly allocated mutable hash table using <span class="emphasis"><em>hash-function</em></span> as
+the hash function and <span class="emphasis"><em>bucket-searcher</em></span>, e.g. <code class="literal">assq</code>, <code class="literal">assv</code>, <code class="literal">assoc</code>, to
+search a bucket with <span class="emphasis"><em>size</em></span> buckets at first, expanding the number of
+buckets as needed. The <span class="emphasis"><em>hash-function</em></span> must accept a key and return a
+non-negative exact integer.</p><p><p><code class="literal">(make-oldstyle-hashtable <span class="emphasis"><em>hash-function bucket-searcher</em></span>)  =&gt; <span class="emphasis"><em>hashtable</em></span></code></p></p><p>Equivalent to <code class="literal">(make-oldstyle-hashtable <span class="emphasis"><em>hash-function bucket-searcher n</em></span>)</code> for
+some value of <span class="emphasis"><em>n</em></span> chosen by the implementation.</p><p><p><code class="literal">(make-oldstyle-hashtable <span class="emphasis"><em>hash-function</em></span>)  =&gt; <span class="emphasis"><em>hashtable</em></span></code></p></p><p>Equivalent to <code class="literal">(make-oldstyle-hashtable <span class="emphasis"><em>hash-function</em></span> assv)</code>.</p><p><p><code class="literal">(make-oldstyle-hashtable <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>hashtable</em></span></code></p></p><p>Equivalent to <code class="literal">(make-oldstyle-hashtable object-hash assv)</code>.</p><p><a id="hashtable-contains?"></a>
+<span class="emphasis"><em> Procedure hashtable-contains?</em></span>
+<p>
+<a id="id2559998" class="indexterm"></a>
+<code class="literal">(hashtable-contains? <span class="emphasis"><em>hashtable key</em></span>)  =&gt; <span class="emphasis"><em>bool</em></span></code>
+</p></p><p>Returns true iff the <span class="emphasis"><em>hashtable</em></span> contains an entry for <span class="emphasis"><em>key</em></span>.</p><p><a id="hashtable-fetch"></a>
+<span class="emphasis"><em> Procedure hashtable-fetch</em></span>
+<p>
+<a id="id2560046" class="indexterm"></a>
+<code class="literal">(hashtable-fetch <span class="emphasis"><em>hashtable key flag</em></span>)  =&gt; <span class="emphasis"><em>object</em></span></code>
+</p></p><p>Returns the value associated with <span class="emphasis"><em>key</em></span> in the <span class="emphasis"><em>hashtable</em></span> if the
+<span class="emphasis"><em>hashtable</em></span> contains <span class="emphasis"><em>key</em></span>; otherwise returns <span class="emphasis"><em>flag</em></span>.</p><p><a id="hashtable-get"></a>
+<span class="emphasis"><em> Procedure hashtable-get</em></span>
+<p>
+<a id="id2560106" class="indexterm"></a>
+<code class="literal">(hashtable-get <span class="emphasis"><em>hashtable key</em></span>)  =&gt; <span class="emphasis"><em>object</em></span></code>
+</p></p><p>Equivalent to <code class="literal">(hashtable-fetch  #f)</code>.</p><p><a id="hashtable-put!"></a>
+<span class="emphasis"><em> Procedure hashtable-put!</em></span>
+<p>
+<a id="id2560153" class="indexterm"></a>
+<code class="literal">(hashtable-put! <span class="emphasis"><em>hashtable key value</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>Changes the <span class="emphasis"><em>hashtable</em></span> to associate <span class="emphasis"><em>key</em></span> with <span class="emphasis"><em>value</em></span>, replacing any
+existing association for <span class="emphasis"><em>key</em></span>.</p><p><a id="hashtable-remove!"></a>
+<span class="emphasis"><em> Procedure hashtable-remove!</em></span>
+<p>
+<a id="id2560209" class="indexterm"></a>
+<code class="literal">(hashtable-remove! <span class="emphasis"><em>hashtable key</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>Removes any association for <span class="emphasis"><em>key</em></span> within the <span class="emphasis"><em>hashtable</em></span>.</p><p><a id="hashtable-clear!"></a>
+<span class="emphasis"><em> Procedure hashtable-clear!</em></span>
+<p>
+<a id="id2560257" class="indexterm"></a>
+<code class="literal">(hashtable-clear! <span class="emphasis"><em>hashtable</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>Removes all associations from the <span class="emphasis"><em>hashtable</em></span>.</p><p><a id="hashtable-size"></a>
+<span class="emphasis"><em> Procedure hashtable-size</em></span>
+<p>
+<a id="id2560301" class="indexterm"></a>
+<code class="literal">(hashtable-size <span class="emphasis"><em>hashtable</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code>
+</p></p><p>Returns the number of keys contained within the <span class="emphasis"><em>hashtable</em></span>.</p><p><a id="hashtable-for-each"></a>
+<span class="emphasis"><em> Procedure hashtable-for-each</em></span>
+<p>
+<a id="id2560346" class="indexterm"></a>
+<code class="literal">(hashtable-for-each <span class="emphasis"><em>procedure hashtable</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>The <span class="emphasis"><em>procedure</em></span> must accept two arguments, a key and the value
+associated with that key. Calls the <span class="emphasis"><em>procedure</em></span> once for each
+key-value association in <span class="emphasis"><em>hashtable</em></span>. The order of these calls is
+indeterminate.</p><p><a id="hashtable-map"></a>
+<span class="emphasis"><em> Procedure hashtable-map</em></span>
+<p>
+<a id="id2560403" class="indexterm"></a>
+<code class="literal">(hashtable-map <span class="emphasis"><em>procedure hashtable</em></span>) </code>
+</p></p><p>The <span class="emphasis"><em>procedure</em></span> must accept two arguments, a key and the value
+associated with that key. Calls the <span class="emphasis"><em>procedure</em></span> once for each
+key-value association in <span class="emphasis"><em>hashtable</em></span>, and returns a list of the
+results. The order of the calls is indeterminate.</p><p><a id="hashtable-copy"></a>
+<span class="emphasis"><em> Procedure hashtable-copy</em></span>
+<p>
+<a id="id2560458" class="indexterm"></a>
+<code class="literal">(hashtable-copy <span class="emphasis"><em>hashtable</em></span>)  =&gt; <span class="emphasis"><em>hashtable</em></span></code>
+</p></p><p>Returns a copy of the <span class="emphasis"><em>hashtable</em></span>.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2560488"></a>12.12.2. Hash functions</h4></div></div></div><p>The <span class="emphasis"><em>hash values</em></span> returned by these functions are nonnegative exact
+integer suitable as hash values for the hashtable functions.</p><p><a id="equal-hash"></a>
+<span class="emphasis"><em> Procedure equal-hash</em></span>
+<p>
+<a id="id2560520" class="indexterm"></a>
+<code class="literal">(equal-hash <span class="emphasis"><em>object</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code>
+</p></p><p>Returns a hash value for <span class="emphasis"><em>object</em></span> based on its contents.</p><p><a id="object-hash"></a>
+<span class="emphasis"><em> Procedure object-hash</em></span>
+<p>
+<a id="id2560565" class="indexterm"></a>
+<code class="literal">(object-hash <span class="emphasis"><em>object</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code>
+</p></p><p>Returns a hash value for <span class="emphasis"><em>object</em></span> based on its identity.</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>This hash function performs extremely poorly on pairs,
+vectors, strings, and bytevectors, which are the objects
+with which it is mostly likely to be used.
+For efficient hashing on object identity, create the
+hashtable with <code class="literal">make-eq-hashtable</code> or <code class="literal">make-eqv-hashtable</code>
+of the <code class="literal">(rnrs hashtables)</code> library.</p></div><p><a id="string-hash"></a>
+<span class="emphasis"><em> Procedure string-hash</em></span>
+<p>
+<a id="id2560638" class="indexterm"></a>
+<code class="literal">(string-hash <span class="emphasis"><em>string</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns a hash value for <span class="emphasis"><em>string</em></span> based on its content.</p><p><a id="symbol-hash"></a>
+<span class="emphasis"><em> Procedure symbol-hash</em></span>
+<p>
+<a id="id2560682" class="indexterm"></a>
+<code class="literal">(symbol-hash <span class="emphasis"><em>symbol</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p>Returns a hash value for <span class="emphasis"><em>symbol</em></span> based on its print name.
+The <code class="literal">symbol-hash</code>
+is very fast, because the hash code is cached in the symbol data
+structure.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2560722"></a>12.13. Parameters</h3></div></div></div><p>Parameters are procedures that serve as containers for values.</p><p>When called with no arguments, a parameter returns its current value.
+The value of a parameter can be changed temporarily using the
+<span class="emphasis"><em>parameterize</em></span> syntax described below.</p><p>The effect of passing arguments to a parameter is implementation-dependent.
+In Larceny, passing one argument to a parameter changes the current value
+of the parameter to the result of applying a <span class="emphasis"><em>converter</em></span> procedure to that
+argument, as described by SRFI 39.</p><p><a id="make-parameter"></a>
+<span class="emphasis"><em> Procedure make-parameter</em></span>
+<p>
+<a id="id2560774" class="indexterm"></a>
+<code class="literal">(make-parameter <span class="emphasis"><em>init</em></span>)  =&gt; <span class="emphasis"><em>procedure</em></span></code>
+</p>
+<p><code class="literal">(make-parameter <span class="emphasis"><em>init converter</em></span>)  =&gt; <span class="emphasis"><em>procedure</em></span></code></p>
+<p><code class="literal">(make-parameter <span class="emphasis"><em>name init predicate</em></span>)  =&gt; <span class="emphasis"><em>procedure</em></span></code></p></p><p>Creates a parameter.</p><p>When <span class="emphasis"><em>make-parameter</em></span> is called with one argument <span class="emphasis"><em>init</em></span>,
+the parameter's initial value is <span class="emphasis"><em>init</em></span>, and the parameter's
+<span class="emphasis"><em>converter</em></span> will be the identity function.</p><p>When <span class="emphasis"><em>make-parameter</em></span> is called with two arguments,
+<span class="emphasis"><em>converter</em></span> must be a procedure that accepts one argument,
+and the parameter's initial value is the result of calling
+<span class="emphasis"><em>converter</em></span> on <span class="emphasis"><em>init</em></span>.</p><p>Larceny extends SRFI 39 and the R7RS specification of <span class="emphasis"><em>make-parameter</em></span>
+by allowing it to be called with three arguments.
+The first argument, <span class="emphasis"><em>name,</em></span> must be a symbol or string giving the
+print name of the parameter.
+The second argument, <span class="emphasis"><em>init,</em></span> will be the initial value of the parameter.
+The third argument is a <span class="emphasis"><em>predicate</em></span> from which Larceny constructs a
+<span class="emphasis"><em>converter</em></span> procedure that acts like the identity function on arguments
+that satisfy the <span class="emphasis"><em>predicate</em></span> but raises an exception on arguments that
+don't.</p><p><p><code class="literal">(make-parameter <span class="emphasis"><em>name init</em></span>)  =&gt; <span class="emphasis"><em>procedure</em></span></code></p></p><p>Larceny's parameter objects predate SRFI 39.
+For backward compatibility, Larceny's <span class="emphasis"><em>make-parameter</em></span> will
+accept two arguments even if the second is not a procedure,
+provided the first argument is a symbol or string.
+In that special case, the two arguments will be treated as the
+<span class="emphasis"><em>name</em></span> and <span class="emphasis"><em>init</em></span> arguments to Larceny's three-argument version,
+with the <span class="emphasis"><em>predicate</em></span> defaulting to the identity function.
+<span class="emphasis"><em>This extension is strongly deprecated.</em></span></p><p><span class="emphasis"><em>Syntax parameterize</em></span></p><p><code class="literal"> (parameterize ((parameter0 value0) …) expr0 expr1 …)</code></p><p><span class="emphasis"><em>Parameterize</em></span> temporarily overrides the values of a set of parameters
+while the expressions in the body of the <span class="emphasis"><em>parameterize</em></span> expression are
+evaluated.
+(It is like <span class="emphasis"><em>fluid-let</em></span> for parameters instead of variables.)</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2560988"></a>12.13.1. Larceny parameters</h4></div></div></div><p>The following is a partial list of Larceny's parameters.
+The first three are described by the R7RS standard.
+Most of the others are intended for use by developers of Larceny;
+some are described in Wiki pages at Larceny's GitHub site,
+while others are described only by source code.</p><p><a class="ulink" href="io.html#proc:current-input-port" target="_top">Parameter <code class="literal">current-input-port</code></a></p><p><a class="ulink" href="io.html#proc:current-output-port" target="_top">Parameter <code class="literal">current-output-port</code></a></p><p><a class="ulink" href="io.html#proc:current-error-port" target="_top">Parameter <code class="literal">current-error-port</code></a></p><p><a class="ulink" href="io.html#proc:console-input-port-factory" target="_top">Parameter <code class="literal">console-input-port-factory</code></a></p><p><a class="ulink" href="io.html#proc:console-output-port-factory" target="_top">Parameter <code class="literal">console-output-port-factory</code></a></p><p><a class="ulink" href="repl.html#proc:herald" target="_top">Parameter <code class="literal">herald</code></a></p><p><a class="ulink" href="environ.html#proc:interaction-environment" target="_top">Parameter <code class="literal">interaction-environment</code></a></p><p><a class="ulink" href="control.html#proc:evaluator" target="_top">Parameter <code class="literal">evaluator</code></a></p><p><a class="ulink" href="control.html#proc:load-evaluator" target="_top">Parameter <code class="literal">load-evaluator</code></a></p><p><a class="ulink" href="repl.html#proc:repl-evaluator" target="_top">Parameter <code class="literal">repl-evaluator</code></a></p><p><a class="ulink" href="repl.html#proc:repl-level" target="_top">Parameter <code class="literal">repl-level</code></a></p><p><a class="ulink" href="repl.html#proc:repl-printer" target="_top">Parameter <code class="literal">repl-printer</code></a></p><p><a class="ulink" href="debugging.html#proc:break-handler" target="_top">Parameter <code class="literal">break-handler</code></a></p><p><a class="ulink" href="control.html#proc:error-handler" target="_top">Parameter <code class="literal">error-handler</code></a></p><p><a class="ulink" href="control.html#proc:quit-handler" target="_top">Parameter <code class="literal">quit-handler</code></a></p><p><a class="ulink" href="control.html#proc:reset-handler" target="_top">Parameter <code class="literal">reset-handler</code></a></p><p><a class="ulink" href="control.html#proc:keyboard-interrupt-handler" target="_top">Parameter <code class="literal">keyboard-interrupt-handler</code></a></p><p><a class="ulink" href="control.html#proc:timer-interrupt-handler" target="_top">Parameter <code class="literal">timer-interrupt-handler</code></a></p><p><a class="ulink" href="control.html#proc:standard-timeslice" target="_top">Parameter <code class="literal">standard-timeslice</code></a></p><p><a class="ulink" href="structures.html#proc:structure-comparator" target="_top">Parameter <code class="literal">structure-comparator</code></a></p><p><a class="ulink" href="structures.html#proc:structure-printer" target="_top">Parameter <code class="literal">structure-printer</code></a></p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2561268"></a>12.14. Property Lists</h3></div></div></div><p>The <span class="emphasis"><em>property list</em></span> of a symbol is an association list that is
+attached to that symbol. The association list maps <span class="emphasis"><em>properties</em></span>, which
+are themselves symbols, to arbitrary values.</p><p><a id="putprop"></a>
+<span class="emphasis"><em> Procedure putprop</em></span>
+<p>
+<a id="id2561304" class="indexterm"></a>
+<code class="literal">(putprop <span class="emphasis"><em>symbol property obj</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>If an association exists for <span class="emphasis"><em>property</em></span> on the property list of
+<span class="emphasis"><em>symbol</em></span>, then its value is replaced by the new value
+<span class="emphasis"><em>obj</em></span>. Otherwise, a new association is added to the property list of
+<span class="emphasis"><em>symbol</em></span> that associates <span class="emphasis"><em>property</em></span> with <span class="emphasis"><em>obj</em></span>.</p><p><a id="getprop"></a>
+<span class="emphasis"><em> Procedure getprop</em></span>
+<p>
+<a id="id2561370" class="indexterm"></a>
+<code class="literal">(getprop <span class="emphasis"><em>symbol property</em></span>)  =&gt; <span class="emphasis"><em>obj</em></span></code>
+</p></p><p>If an association exists for <span class="emphasis"><em>property</em></span> on the property list of
+<span class="emphasis"><em>symbol</em></span>, then its value is returned. Otherwise, <code class="literal">#f</code> is returned.</p><p><a id="remprop"></a>
+<span class="emphasis"><em> Procedure remprop</em></span>
+<p>
+<a id="id2561425" class="indexterm"></a>
+<code class="literal">(remprop <span class="emphasis"><em>symbol property</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>If an association exists for <span class="emphasis"><em>property</em></span> on the property list of
+<span class="emphasis"><em>symbol</em></span>, then that association is removed. Otherwise, this is a
+no-op.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2561462"></a>12.15. Symbols</h3></div></div></div><p><a id="gensym"></a>
+<span class="emphasis"><em> Procedure gensym</em></span>
+<p>
+<a id="id2561482" class="indexterm"></a>
+<code class="literal">(gensym <span class="emphasis"><em>string</em></span>)  =&gt; <span class="emphasis"><em>symbol</em></span></code>
+</p></p><p>Gensym returns a new uninterned symbol, the name of which contains the
+given <span class="emphasis"><em>string.</em></span></p><p><a id="oblist"></a>
+<span class="emphasis"><em> Procedure oblist</em></span>
+<p>
+<a id="id2561527" class="indexterm"></a>
+<code class="literal">(oblist <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>list</em></span></code>
+</p></p><p>Oblist returns the list of interned symbols.</p><p><a id="oblist-set!"></a>
+<span class="emphasis"><em> Procedure oblist-set!</em></span>
+<p>
+<a id="id2561566" class="indexterm"></a>
+<code class="literal">(oblist-set! <span class="emphasis"><em>list</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p>
+<p><code class="literal">(oblist-set! <span class="emphasis"><em>list table-size</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p></p><p><code class="literal">oblist-set!</code> sets the list of interned symbols to those in the given
+<span class="emphasis"><em>list</em></span> by clearing the symbol hash table and storing the symbols in
+<span class="emphasis"><em>list</em></span> in the hash table. If the optional <span class="emphasis"><em>table-size</em></span> is given, it is
+taken to be the desired size of the new symbol table.</p><p>See also: <a class="xref" href="ar01s12.html#symbol-hash">symbol-hash</a>.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2561637"></a>12.16. System Control and Performance Measurement</h3></div></div></div><p><a id="collect"></a>
+<span class="emphasis"><em> Procedure collect</em></span>
+<p>
+<a id="id2561658" class="indexterm"></a>
+<code class="literal">(collect <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p>
+<p><code class="literal">(collect <span class="emphasis"><em>generation</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(collect <span class="emphasis"><em>generation method</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p></p><p>Collect initiates a garbage collection. If the system has multiple
+generations, then the optional arguments are interpreted as
+follows. The <span class="emphasis"><em>generation</em></span> is the generation to collect, where 0 is the
+youngest generation. The <span class="emphasis"><em>method</em></span> determines how the collection is
+performed. If <span class="emphasis"><em>method</em></span> is the symbol collect, then a full collection
+is performed in that generation, whatever that means — in a normal
+multi-generational copying collector, it means that all live objects
+in the generation's current semispace and all live objects from all
+younger generations are copied into the generation's other
+semispace. If <span class="emphasis"><em>method</em></span> is the symbol promote, then live objects are
+promoted from younger generations into the target generation — in our
+example collector, that means that the objects are copied into the
+target generation's current semispace.</p><p>The default value for <span class="emphasis"><em>generation</em></span> is 0, and the default value for
+<span class="emphasis"><em>method</em></span> is collect.</p><p>Note that the collector's internal policy settings may cause it to
+perform a more major type of collection than the one requested; for
+example, an attempt to collect generation 2 could cause the collector
+to promote all live data into generation 3.</p><p><a id="gc-counter"></a>
+<span class="emphasis"><em> Procedure gc-counter</em></span>
+<p>
+<a id="id2561783" class="indexterm"></a>
+<code class="literal">(gc-counter <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p><span class="emphasis"><em>gc-counter</em></span> returns the number of garbage collections performed since
+startup. On a 32-bit system, the counter wraps around every
+1,073,741,824 collections.</p><p><span class="emphasis"><em>gc-counter</em></span> is a primitive and compiles to a single load instruction
+on the x86 and ARM.</p><p><a id="major-gc-counter"></a>
+<span class="emphasis"><em> Procedure major-gc-counter</em></span>
+<p>
+<a id="id2561837" class="indexterm"></a>
+<code class="literal">(major-gc-counter <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p></p><p><span class="emphasis"><em>major-gc-counter</em></span> returns the number of major garbage collections
+performed since startup, where a major collection is defined as a
+collection that may change the address of objects that have already
+survived a previous collection.
+On a 32-bit system, the counter wraps around every
+1,073,741,824 collections.</p><p><span class="emphasis"><em>major-gc-counter</em></span> is a primitive and compiles to a single load
+instruction on the x86 and ARM.</p><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>Larceny uses <span class="emphasis"><em>gc-counter</em></span> and <span class="emphasis"><em>major-gc-counter</em></span> to implement
+efficient hashtables that hash on object identity by using an
+object's current address to compute its hash code.  Hash tables
+that use this kind of hash function (notably <code class="literal">make-eq-hashtable</code>
+and <code class="literal">make-eqv-hashtable</code>) may have to rehash some of their keys
+after a garbage collection that relocates objects.</p></div><p><a id="gcctl"></a>
+<span class="emphasis"><em> Procedure gcctl</em></span>
+<p>
+<a id="id2561933" class="indexterm"></a>
+<code class="literal">(gcctl <span class="emphasis"><em>heap-number operation operand</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p><span class="emphasis"><em>[GCCTL is largely obsolete in the new garbage collector but may be
+resurrected in the future. It can still be used to control the
+non-predictive collector.]</em></span></p><p>gcctl controls garbage collection policy on a heap-wise basis. The
+<span class="emphasis"><em>heap-number</em></span> is the heap to operate on, like for the command line
+switches: heap 1 is the youngest. If the given heap number does not
+correspond to a heap, gcctl fails silently.</p><p>The <span class="emphasis"><em>operation</em></span> is a symbol that selects the operation to perform, and
+the <span class="emphasis"><em>operand</em></span> is the operand to that operation, always a number. For
+the non-predictive garbage collector, the following operator/operand
+pairs are meaningful:</p><div class="itemizedlist"><ul type="disc"><li>
+j-fixed, <span class="emphasis"><em>n</em></span>: after a collection, the collector parameter <span class="emphasis"><em>j</em></span> should be set to the value <span class="emphasis"><em>n</em></span>, if possible. (Non-predictive heaps only.)
+</li><li>
+j-percent, <span class="emphasis"><em>n</em></span>: after a collection, the collector parameter <span class="emphasis"><em>j</em></span> should be set to be <span class="emphasis"><em>n</em></span> percent of the number of free steps. (Non-predictive heaps only.)
+</li><li>
+incr-fixed, <span class="emphasis"><em>n</em></span>: when growing the heap, the growing should be done in increments of <span class="emphasis"><em>n</em></span>. In the non-predictive heap, <span class="emphasis"><em>n</em></span> is the number of steps. In other heaps, <span class="emphasis"><em>n</em></span> denotes kilobytes.
+</li><li>
+incr-percent, <span class="emphasis"><em>n</em></span>: when growing the heap, the growing should be done in increments of <span class="emphasis"><em>n</em></span> percent.
+</li></ul></div><p><span class="strong"><strong>Example:</strong></span> if the non-predictive heap is heap number 2, then the expressions</p><pre class="literallayout">(gcctl 2 'j-fixed 0)
+(gcctl 2 'incr-fixed 1)</pre><p>makes the non-predictive collector simulate a normal stop-and-copy
+collector (because <span class="emphasis"><em>j</em></span> is always set to 0), and grows the heap only
+one step at a time as necessary. This may be useful for certain kinds
+of experiments.</p><p><span class="strong"><strong>Example:</strong></span> ditto, the expressions</p><pre class="literallayout">(gcctl 2 'j-percent 50)
+(gcctl 2 'incr-percent 20)</pre><p>selects the default policy settings.</p><p><span class="strong"><strong>Note</strong></span>: The gcctl facility is experimental. A more developed
+  facility will allow controlling heap contraction policy, as well as
+  setting all the watermarks. Certainly one can envision other uses,
+  too. Finally, it needs to be possible to get current values.</p><p><span class="strong"><strong>Note</strong></span>: Currently the non-predictive heap (np-sc-heap.c) and the
+  standard stop-and-copy "old" heap (old-heap.c) are supported, but
+  not the standard "young" heap (young-heap.c), nor the stop-and-copy
+  collector (sc-heap.c).</p><p><a id="sro"></a>
+<span class="emphasis"><em> Procedure sro</em></span>
+<p>
+<a id="id2562176" class="indexterm"></a>
+<code class="literal">(sro <span class="emphasis"><em>pointer-tag type-tag limit</em></span>)  =&gt; <span class="emphasis"><em>vector</em></span></code>
+</p></p><p>SRO ("standing room only") is a system primitive that traverses the
+entire heap and returns a vector that contains all live objects in the
+heap that satisfy the constraints imposed by its parameters:</p><div class="itemizedlist"><ul type="disc"><li>
+If <span class="emphasis"><em>pointer-tag</em></span> is -1, then object type is unconstrained;
+    otherwise, the object type is constrained to have a pointer tag
+    that matches <span class="emphasis"><em>pointer-tag</em></span>. You can read all about pointer tags
+    <a class="link" href="">here</a>, but the short story is that 1=pair, 3=vector-like,
+    5=bytevector-like, and 7=procedure-like.
+</li><li>
+If <span class="emphasis"><em>type-tag</em></span> is -1, then object type is unconstrained by
+    type-tag; otherwise, only objects with a matching type-tag are
+    selected (after selection by pointer tag). Pairs don't have
+    type-tags, but other objects do. You can read all about type-tags
+    <a class="link" href="">here</a>.
+</li><li>
+<span class="emphasis"><em>Limit</em></span> constrains the selected objects by the number of
+    references. If <span class="emphasis"><em>limit</em></span> is -1, then no constraints are imposed;
+    otherwise, only objects (selected by pointer-tag and type-tag)
+    with no more than <span class="emphasis"><em>limit</em></span> references to them are selected.
+</li></ul></div><p>For example, (sro -1 -1 -1) returns a vector that contains all live
+objects (not including the vector), and (sro 5 2 3) returns a vector
+containing all live flonums (bytevector-like, with typetag 2) that are
+referred to in no more than 3 places.</p><p><a id="stats-dump-on"></a>
+<span class="emphasis"><em> Procedure stats-dump-on</em></span>
+<p>
+<a id="id2562314" class="indexterm"></a>
+<code class="literal">(stats-dump-on <span class="emphasis"><em>filename</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>Stats-dump-on turns on garbage collection statistics dumping. After
+each collection, a complete RTS statistics dump is appended to the
+file named by <span class="emphasis"><em>filename</em></span>.</p><p>The file format and contents are documented in a banner written at the
+top of the output file. In addition, accessor procedures for the
+output structure are defined in the program Util/process-stats.sch.</p><p>Stats-dump-on does not perform an initial dump when the file is first
+opened; only at the first collection is the first set of statistics
+dumped. The user might therefore want to initiate a minor collection
+just after turning on dumping in order to have a baseline set of data.</p><p><a id="stats-dump-off"></a>
+<span class="emphasis"><em> Procedure stats-dump-off</em></span>
+<p>
+<a id="id2562385" class="indexterm"></a>
+<code class="literal">(stats-dump-off <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>Stats-dump-off turns off garbage collection statistics dumping (which
+was turned on with <a class="xref" href="ar01s12.html#stats-dump-on">stats-dump-on</a>). It does not dump a final set
+of statistics before closing the file; therefore, the user may wish to
+initiate a minor collection before calling this procedure.</p><p><a id="system-features"></a>
+<span class="emphasis"><em> Procedure system-features</em></span>
+<p>
+<a id="id2562436" class="indexterm"></a>
+<code class="literal">(system-features <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>alist</em></span></code>
+</p></p><p>System-features returns an association lists of system features. Most
+entries are self-explanatory. The following are a more subtle:</p><div class="itemizedlist"><ul type="disc"><li>
+The value of architecture-name is Larceny's notion of the architecture for which it was compiled, not the architecture the program is currently running on. For example, the value of this feature is "Standard-C" if you're running Petit Larceny.
+</li><li>
+The value of heap-area-info is a vector of vectors, one subvector for each heap area in the running system. The subvector has four entries: the generation number, the area type, the current size, and additional information.
+</li></ul></div><p><a id="display-memstats"></a>
+<span class="emphasis"><em> Procedure display-memstats</em></span>
+<p>
+<a id="id2562512" class="indexterm"></a>
+<code class="literal">(display-memstats <span class="emphasis"><em>vector</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p>
+<p><code class="literal">(display-memstats <span class="emphasis"><em>vector minimal</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(display-memstats <span class="emphasis"><em>vector minimal full</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p></p><p>Display-memstats takes as its argument a vector as returned by
+<a class="xref" href="ar01s12.html#memstats">memstats</a> and displays the contents of the vector in
+human-readable form on the current output port. By default, not all of
+the values in the vector are displayed.</p><p>If the symbol minimal is passed as the second argument, then only a
+small number of statistics generally relevant to running benchmarks
+are displayed.</p><p>If the symbol full is passed as the second argument, then all
+statistics are displayed.</p><p><a id="memstats"></a>
+<span class="emphasis"><em> Procedure memstats</em></span>
+<p>
+<a id="id2562605" class="indexterm"></a>
+<code class="literal">(memstats <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>vector</em></span></code>
+</p></p><p>Memstats returns a freshly allocated vector containing run-time-system
+resource usage statistics. Many of these will make no sense whatsoever
+to you unless you also study the RTS sources. A listing of the
+contents of the vector is available <a class="link" href="">here</a>.</p><p><a id="run-with-stats"></a>
+<span class="emphasis"><em> Procedure run-with-stats</em></span>
+<p>
+<a id="id2562657" class="indexterm"></a>
+<code class="literal">(run-with-stats <span class="emphasis"><em>thunk</em></span>)  =&gt; <span class="emphasis"><em>obj</em></span></code>
+</p></p><p>Run-with-stats evaluates <span class="emphasis"><em>thunk</em></span>, then prints a short summary of
+run-time statistics, as with</p><pre class="literallayout">(display-memstats ... 'minimal),</pre><p>and then returns the result of evaluating <span class="emphasis"><em>thunk</em></span>.</p><p><a id="run-benchmark"></a>
+<span class="emphasis"><em> Procedure run-benchmark</em></span>
+<p>
+<a id="id2562719" class="indexterm"></a>
+<code class="literal">(run-benchmark <span class="emphasis"><em>name k thunk ok?</em></span>)  =&gt; <span class="emphasis"><em>obj</em></span></code>
+</p></p><p>Run-benchmark prints a short banner (including the identifying <span class="emphasis"><em>name</em></span>)
+to identify the benchmark, then runs <span class="emphasis"><em>thunk</em></span> <span class="emphasis"><em>k</em></span> times, and finally
+tests the value returned from the last call to <span class="emphasis"><em>thunk</em></span> by applying the
+predicate <span class="emphasis"><em>ok?</em></span> to it. If the predicate returns true, then
+run-benchmark prints summary statistics, as with</p><pre class="literallayout">([display-memstats][5] ... 'minimal).</pre><p>If the predicate returns false, an error is signalled.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2562785"></a>12.17. SRFI Support</h3></div></div></div><p>SRFIs (Scheme Requests For Implementations) describe and implement
+additional Scheme libraries. The SRFI effort is open to anyone,
+and is described at <a class="ulink" href="http://srfi.schemers.org" target="_top">http://srfi.schemers.org</a>.</p><p>SRFIs are numbered.  Importing SRFIs into an R7RS library or
+program is straightforward:</p><pre class="screen">(import (srfi 19)
+        (srfi 27))</pre><p>The R6RS forbids numbers within library names, so R6RS libraries
+and programs must import SRFI libraries using the SRFI 97 naming
+convention in which a colon precedes the number:</p><pre class="screen">(import (srfi :19)
+        (srfi :27))</pre><p>To test whether particular SRFIs are available, use the R7RS
+<code class="literal">cond-expand</code> feature:</p><pre class="screen">(cond-expand
+ ((and (library (srfi 19))
+       (library (srfi 27)))
+  (import (srfi 19))
+  (import (srfi 27))))</pre><p><code class="literal">cond-expand</code> is not available to R6RS libraries or programs.</p><p>R5RS programs can use <code class="literal">cond-expand</code> as implemented by SRFI 0,
+"Feature-based conditional expansion construct".  (SRFI 0 must
+be loaded into Larceny before it can be used; see below.)
+Larceny provides the following nonstandard key for use in SRFI 0:</p><pre class="screen">    larceny</pre><p>Larceny currently supports many SRFIs, though not as many as it
+should.
+Some SRFIs are built into Larceny's R5RS mode, but most must be
+loaded dynamically using Larceny's <code class="literal">require</code> procedure:</p><pre class="screen">    &gt; (require 'srfi-0)</pre><p>The design documents for SRFI 0 and other SRFIs are available at
+<a class="ulink" href="http://srfi.schemers.org" target="_top">http://srfi.schemers.org</a>.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2562922"></a>12.18. SLIB support</h3></div></div></div><p><a class="ulink" href="http://www-swiss.ai.mit.edu/~jaffer/SLIB.html" target="_top">SLIB</a>
+is a large collection of useful libraries that have been
+written or collected by Aubrey Jaffer.</p><p>Larceny supports SLIB via
+<a class="ulink" href="http://srfi.schemers.org/srfi-96/" target="_top">SRFI 96</a>,
+but SLIB itself is not shipped with Larceny;
+it must be downloaded separately and then installed.
+For the most up-to-date information on installing and using
+SLIB with Larceny, see <code class="literal">doc/HOWTO-SLIB</code>.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2562963"></a>12.19. Foreign-Function Interface to C</h3></div></div></div><p>Larceny provides a general foreign-function interface (FFI) substrate
+on which other FFIs can be built; see
+<a class="ulink" href="LarcenyNotes/note7-ffi.html" target="_top">Larceny Note #7</a>.
+The FFI described in this manual section is a simple example of
+a derived FFI. It is not yet fully evolved, but it is useful.</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>This section has undergone signficant revision, but
+not all of the material has been properly vetted.
+Some of the information in this section may be out of date.</p></div><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>Some of the text below is adapted from the 2008 Scheme Workshop
+paper, “The Layers of Larceny's Foreign Function Interface,”
+by Felix S Klock II.  That paper may provide additional insight
+for those searching for implementation details and motivations.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2563008"></a>12.19.1. Introducing the FFI</h4></div></div></div><p>There are a number of different potential ways to use the FFI.
+One client may want to develop code in C and load it into Larceny.
+Another client may want to load native libraries
+provided by the host operating system, enabling invocation
+of foreign code from Scheme expressions without developing
+any C code or even running a C compiler.
+Larceny's FFI can be used for both of these cases,
+but many of its facilities target a third client
+in between the two extremes: a client with a C compiler and
+the header files and object code for the foreign libraries,
+but who wishes to avoid writing glue code in C to interface
+with the libraries.</p><p>There are four main steps to interacting with foreign code:</p><div class="orderedlist"><ol type="1"><li>
+identifying the space of values manipulated by the
+   foreign code that will also be manipulated in Scheme,
+</li><li>
+describing how to marshal values between foreign and
+   Scheme code,
+</li><li>
+loading library file(s) holding foreign object code, and
+</li><li>
+linking procedures from the loaded library.
+</li></ol></div><p>Step 1 is conceptual, while steps 2 through 4
+yield artifacts in Scheme source code.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2563083"></a>12.19.2. The space of foreign values</h4></div></div></div><p>At the machine code level, foreign values are uninterpreted
+sequences of bits.  Often foreign object code is oriented
+around manipulating word-sized bit-sequences (<span class="emphasis"><em>words</em></span>)
+or arrays and tuples of words.</p><p>Many libraries are written with a particular
+interpretation of such values.  In C code, explicit types are
+often used hints to guide such interpretation; for example,
+a <code class="literal">0</code> of type <code class="literal">bool</code> is usually interpreted as <span class="emphasis"><em>false</em></span>,
+while a <code class="literal">1</code> (or other non-zero value) of type <code class="literal">bool</code> is
+usually interpreted as <span class="emphasis"><em>true</em></span>.
+Another example are C enumerations (or <span class="emphasis"><em>enums</em></span>).
+An enum declaration defines a set of named
+integral constants.  After the C declaration:</p><pre class="screen">enum months { JAN = 1, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC };</pre><p>a <code class="literal">JAN</code> in C code now denotes <code class="literal">1</code>, <code class="literal">FEB</code> is <code class="literal">2</code>, and so on.
+Furthermore, tools like debuggers may render a variable <code class="literal">x</code>
+dynamically assigned the value <code class="literal">2</code> (and of static type <code class="literal">enum months</code>)
+as <code class="literal">FEB</code>.  Thus the enum declaration
+intoduces a new interpretation for a finite set of integers.</p><p>This leads to questions for a client of an FFI;
+we explore some below.</p><div class="itemizedlist"><ul type="disc"><li>
+Should foreign words be passed over to
+the Scheme world as uninterpreted numbers (and thus
+be converted into Scheme integers, usually fixnums),
+or should they be marshaled into interpreted values, such as
+<code class="literal">#f</code> and <code class="literal">#t</code> for the <code class="literal">bool</code> type, or the Scheme symbols
+{<code class="literal">JAN</code>, <code class="literal">FEB</code>, <code class="literal">MAR</code>, <code class="literal">APR</code>, <code class="literal">MAY</code>, <code class="literal">JUN</code>,
+ <code class="literal">JUL</code>, <code class="literal">AUG</code>, <code class="literal">SEP</code>, <code class="literal">OCT</code>, <code class="literal">NOV</code>, <code class="literal">DEC</code>}
+for the <code class="literal">enum months</code> type?
+</li><li>
+Similarly, how should Scheme values be marshaled into
+foreign words?
+</li><li><p>
+A foreign library might leave the mapping
+of names like <code class="literal">FEB</code> to words like <code class="literal">2</code> <span class="emphasis"><em>unspecified</em></span>
+in the library interface.
+That is, while the C compiler will know <code class="literal">FEB</code> maps to <code class="literal">2</code>
+according to a particular version of the library's header file,
+the library designer may intend to change this mapping
+in the future, and clients writing C code should <span class="emphasis"><em>only</em></span> use
+the names to refer to a <code class="literal">enum months</code> value, and <span class="emphasis"><em>not</em></span> integer
+expressions.
+</p><div class="itemizedlist"><ul type="circle"><li>
+How should this constraint be handled in the FFI; should
+ the library client revise their code in reaction to
+ such changes to the mapping?
+</li><li>
+Or should the system derive
+ the mapping from the header files, in the same manner that
+ the C compiler does?
+</li></ul></div></li><li><p>
+Foreign libraries often manipulate
+mutable entities, like arrays of words where
+modifications can be observed (often by design).
+</p><div class="itemizedlist"><ul type="circle"><li>
+How should such values be marshaled?
+</li><li>
+Is it sound to copy such values to the Scheme heap?
+  If so, is a shallow copy sufficient?
+</li></ul></div></li><li><p>
+Will the foreign code hold references to heap-allocated
+objects?  Heap-allocated objects that <span class="emphasis"><em>leak</em></span> out to
+foreign memory must be treated with care;
+garbage collection presents two main problems.
+</p><div class="itemizedlist"><ul type="circle"><li>
+First, such objects must not move during a garbage collection;
+Larceny supports this via special-purpose allocation routines:
+ <code class="literal">cons-nonrelocatable</code>, <code class="literal">make-nonrelocatable-bytevector</code>,
+ and <code class="literal">make-nonrelocatable-vector</code>.
+</li><li>
+Second, the garbage collector must know to hold on to
+(i.e. trace)
+such values as long as they are needed by foreign code;
+otherwise the objects or their referents may be
+collected without the knowledge of the foreign code.
+</li></ul></div></li></ul></div><p>Answering these questions may require deep knowledge
+of the intended usage of the foreign library.</p><p>The Larceny FFI attempts to ease interfacing with
+foreign code in the presence of the above concerns,
+but the nature of the header files included with
+most foreign libraries means that the FFI cannot infer
+the answers unassisted.</p><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>Foreign C code developed to work in concert with Larceny
+could hypothetically be written to cope with holding
+handles for objects managed by the the garbage collector,
+but there is currently no significant support
+for this use-case.</p></div><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>One class of foreign values is not addressed
+by the Larceny FFI: structures passed by value (as
+opposed to by reference, ie pointers to structures).
+There is no way to describe the interface to a
+foreign procedure that accepts or produces a
+C <code class="literal">struct</code> (at least not properly nor portably).</p><p>This tends to not matter for many foreign libraries
+(since many C programmers eschew passing structures
+by value), but it can arise.</p><p>If the foreign library of interest has procedures that
+accept or produce a C <code class="literal">struct</code>, we currently recommend
+either avoiding such procedures, or writing
+adapter code in C that marshals between values handled
+by the FFI and the C <code class="literal">struct</code>.</p></div><p>The conclusion is: when designing an interface to a foreign
+library, you should analyze the values manipulated on the
+foreign side and identify their relationship with values
+on the Scheme side.
+After you have identified the domains of interest,
+you then describe how the values will be marshaled
+back and forth between the two domains.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2563602"></a>12.19.3. Marshalling via ffi-attributes</h4></div></div></div><p>This section describes the marshalling protocol defined in
+<code class="literal">lib/Base/std-ffi.sch</code>.</p><p>Foreign functions automatically marshal their inputs and outputs
+according to type-descriptors attached to each foreign
+function.</p><p>Type-descriptors are S-expressons formed according to the following
+grammar:</p><pre class="literallayout">TypeDesc ::= CoreAttr | ArrowT | MaybeT | OneOfT
+
+CoreAttr ::= PrimAttr | VoidStar | ---
+
+PrimAttr ::= CurrentPrimAttr | DeprecatedPrimAttr
+
+CurrentPrimAttr
+         ::= int | uint | byte | short | ushort | char | uchar
+          |  long | ulong | longlong | ulonglong
+          |  size_t | float | double |  bool | string | void
+
+DeprecatedPrimAttr
+         ::= unsigned | boxed
+
+VoidStar ::= void* | ---
+
+ArrowT   ::= (-&gt; (TypeDesc ...) TypeDesc)
+
+MaybeT   ::= (maybe TypeDesc)
+
+OneOfT   ::= (oneof (Any Fixnum) ... TypeDesc)</pre><p>where <code class="literal">---</code> represents a user-extensible part of the grammar
+(see below),
+<code class="literal">Any</code> represents any Scheme value, and <code class="literal">Fixnum</code> represents
+any word-sized integer.</p><p>A central registry maps <code class="literal">CoreAttr</code>'s to a foreign
+representation and two conversion routines:
+one to convert a Scheme value to a foreign argument, and
+another to convert a foreign result back back to a Scheme value.
+The denoted components are collectively referred to as a <span class="emphasis"><em>type</em></span>
+within the FFI documentation.
+The registry is extensible; the <code class="literal">ffi-add-attribute-core-entry!</code>
+procedure adds new <code class="literal">CoreAttr's</code> to the registry, and
+one can alternatively add short-hands for
+type-descriptors via the <code class="literal">ffi-add-alias-of-attribute-entry!</code>
+procedure.
+Finally, one can add new <code class="literal">VoidStar</code> productions
+(subtypes of the <code class="literal">void*</code> type-descriptor)
+via the <code class="literal">ffi-install-void*-subtype</code> procedure
+(defined in the <code class="literal">lib/Standard/foreign-stdlib.sch</code> library).</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2563749"></a>12.19.3.1. Primitive Attribute Types</h5></div></div></div><p>The following is a list of the accepted types and their conversions
+at the boundary between Scheme and foreign code:</p><div class="variablelist"><dl><dt><span class="term">
+<code class="literal">int</code>
+</span></dt><dd>
+  Exact integer values in the range [-2<sup>31</sup>,2<sup>31</sup>-1].
+  Scheme integers in that range are converted to and from C "<code class="literal">int</code>".
+</dd><dt><span class="term">
+<code class="literal">uint</code>
+</span></dt><dd>
+  Exact integer values in the range [0,2<sup>32</sup>-1].
+  Scheme integers in that ranges are converted to and from C "<code class="literal">unsigned int</code>".
+</dd><dt><span class="term">
+<code class="literal">byte</code>
+</span></dt><dd>
+  Synonymous with <code class="literal">int</code> in the current implementation.
+</dd><dt><span class="term">
+<code class="literal">short</code>
+</span></dt><dd>
+  Synonymous with <code class="literal">int</code> in the current implementation.
+</dd><dt><span class="term">
+<code class="literal">ushort</code>
+</span></dt><dd>
+  Synonymous with <code class="literal">unsigned</code> in the current implementation.
+</dd><dt><span class="term">
+<code class="literal">char</code>
+</span></dt><dd>
+  Scheme ASCII characters are converted to and from C "<code class="literal">char</code>".
+</dd><dt><span class="term">
+<code class="literal">uchar</code>
+</span></dt><dd>
+  Scheme ASCII characters are converted to and from C "<code class="literal">unsigned char</code>".
+</dd><dt><span class="term">
+<code class="literal">long</code>
+</span></dt><dd>
+  Synonymous with <code class="literal">int</code> in the current implementation.
+</dd><dt><span class="term">
+<code class="literal">ulong</code>
+</span></dt><dd>
+  Synonymous with <code class="literal">unsigned</code> in the current implementation.
+</dd><dt><span class="term">
+<code class="literal">longlong</code>
+</span></dt><dd>
+  Exact integer values in the range [-2<sup>63</sup>,2<sup>63</sup>-1].
+  Scheme integers in that range are converted
+  to and from C "<code class="literal">long long</code>".
+</dd><dt><span class="term">
+<code class="literal">ulonglong</code>
+</span></dt><dd>
+  Exact integer values in the range [0,2<sup>64</sup>-1].
+  Scheme integers in that range are converted
+  to and from C "<code class="literal">unsigned long long</code>".
+</dd><dt><span class="term">
+<code class="literal">size_t</code>
+</span></dt><dd>
+  Synonymous with <code class="literal">uint</code> in the current implementation.
+</dd><dt><span class="term">
+<code class="literal">float</code>
+</span></dt><dd>
+  Scheme flonums are converted to and from C "<code class="literal">float</code>".
+  The conversion to <code class="literal">float</code> is performed via
+  a C <code class="literal">(float)</code> cast from a C <code class="literal">double</code>.
+</dd><dt><span class="term">
+<code class="literal">double</code>
+</span></dt><dd>
+  Scheme flonums are converted to and from C "double".
+</dd><dt><span class="term">
+<code class="literal">bool</code>
+</span></dt><dd>
+  Scheme objects are converted to C "<code class="literal">int</code>";
+  <code class="literal">#f</code> is converted to 0, and all other objects to 1.
+  In the reverse direction, 0 is converted to <code class="literal">#f</code> and
+  all other integers to <code class="literal">#t</code>.
+</dd><dt><span class="term">
+<code class="literal">string</code>
+</span></dt><dd>
+  A Scheme string holding ASCII characters
+  is <span class="emphasis"><em>copied</em></span> into a NUL-terminated bytevector,
+  passing a pointer to its first byte to the foreign procedure;
+  <code class="literal">#f</code> is converted to a C "<code class="literal">(char*)0</code>" value.
+  In the reverse direction, a pointer to a NUL-terminated sequence
+  of bytes interpreted as ASCII characters is
+  copied into a freshly allocated Scheme string; a NULL pointer is
+  converted to <code class="literal">#f</code>.
+</dd><dt><span class="term">
+<code class="literal">void</code>
+</span></dt><dd>
+  No return value.
+  (Only used in return position for foreign functions;
+  all Scheme procedures passed to the FFI are invoked in a context
+  expecting one value.)
+</dd><dt><span class="term">
+<code class="literal">unsigned</code>
+</span></dt><dd>
+  Synonymous with <code class="literal">uint</code>; deprecated.
+</dd><dt><span class="term">
+<code class="literal">boxed</code>
+</span></dt><dd>
+  Any heap-allocated data structure (pair,
+  bytevector-like, vector-like, procedure) is converted to
+  a C "<code class="literal">void*</code>" to the first element of the structure. The
+  value <code class="literal">#f</code> is also acceptable. It is converted to a C "<code class="literal">(void*)0</code>"
+  value.
+  (Only used in argument position for foreign functions; foreign
+   functions are not expected to return direct references
+   to heap-allocated values.)
+</dd></dl></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2564359"></a>12.19.3.2. Extending the Core Attribute Registry</h5></div></div></div><p>The public interface to many foreign libraries is written
+in terms of types defined within that foreign library.
+One can introduce new types to the Larceny FFI
+by extending the core attribute entry table.</p><p><a id="ffi-add-attribute-core-entry!"></a>
+<span class="emphasis"><em> Procedure ffi-add-attribute-core-entry!</em></span>
+<p>
+<a id="id2564389" class="indexterm"></a>
+<code class="literal">(ffi-add-attribute-core-entry! <span class="emphasis"><em>entry-name rep-sym marshal unmarshal</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p><a class="xref" href="ar01s12.html#ffi-add-attribute-core-entry!">ffi-add-attribute-core-entry!</a> extends the
+internal registry with the new entry specified by its arguments.</p><div class="itemizedlist"><ul type="disc"><li>
+<span class="emphasis"><em>entry-name</em></span> is a symbol (the symbolic type name being
+introduced to the ffi).
+</li><li>
+<span class="emphasis"><em>rep-name</em></span> is a low-level type descriptor symbol, one of
+<code class="literal">signed32</code>, <code class="literal">unsigned32</code>, <code class="literal">signed64</code>, <code class="literal">unsigned64</code>
+(representing varieties of fixed width integers),
+<code class="literal">ieee32</code> (representing “floats”),
+<code class="literal">ieee64</code> (representing “doubles”), or
+<code class="literal">pointer</code> (representing “<code class="literal">(void*)</code>” in C).
+</li><li>
+<span class="emphasis"><em>marshal</em></span> is a marshaling function that accepts a Scheme object and a symbol
+(the name of the invoking procedure); it is responsible for checking
+the Scheme object's validity and then producing a corresponding
+instance of the low-level representation.
+</li><li>
+<span class="emphasis"><em>unmarshal</em></span> is either <code class="literal">#f</code> or an unmarshalling function that
+accepts an instance of the low-level representation
+and produces a corresponding Scheme object.
+</li></ul></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2564536"></a>12.19.3.3. Attribute Type Constructors</h5></div></div></div><p>Core attributes suffice for linking to simple
+functions.
+Constructured FFI attributes express more complex
+marshaling protocols</p><p><b>Arrow Type Constructors. </b>A structured FFI attribute
+of the form <code class="literal">(-&gt; (<span class="emphasis"><em>s_1</em></span> … <span class="emphasis"><em>s_n</em></span>) <span class="emphasis"><em>s_r</em></span>)</code>
+(called an <span class="emphasis"><em>arrow type</em></span>)
+allows passing functions from Scheme to C
+and back again.  Each of the <span class="emphasis"><em>s_1</em></span>, …, <span class="emphasis"><em>s_n</em></span>, <span class="emphasis"><em>s_r</em></span>
+is an FFI attribute.
+When an arrow type describes an input to a foreign
+function, it marshals a Scheme procedure to a
+C function pointer by generating glue code to hook the two together
+and marshal values as described by the FFI attributes
+within the arrow type.
+Likewise, when an arrow type describes an output from a
+foreign function, it marshals a C function pointer
+to a Scheme procedure, again by generating glue code.
+These two mappings naturally generalize to arbitrary nesting
+of arrow types, so one can create callbacks that consume
+callouts, return callouts that consume callbacks, and so on.</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>The current implementation of arrow types introduces an
+unnecessary space leak, because none of Larceny's current
+garbage collectors attempt to reclaim some of the structure
+allocated (in particular, the so-called trampolines)
+when functions are marshaled via arrow types.</p><p>The FFI could be revised to reduce the leak
+(e.g. it could keep a cache of generated trampolines and
+reuse them, but currently do not do so).</p><p>Many foreign libraries have a structure where one only
+sets up a fixed set of callbacks, and then all further
+computation does not require arrow type marshaling.
+This is one reason why fixing this problem
+has been a low priority item for the Larceny development
+team.</p></div><p><b>Maybe Type Constructor. </b><code class="literal">(maybe <span class="emphasis"><em>t</em></span>)</code> captures the
+pattern of passing <code class="literal">NULL</code> in C and <code class="literal">#f</code> in Scheme
+to represent the absence of information.
+The FFI attribute <span class="emphasis"><em>t</em></span> within the maybe type
+describes the typical information passed;
+the constructed maybe type
+marshals <code class="literal">#f</code> to the foreign null pointer or <code class="literal">0</code> (as appropriate),
+and otherwise applies the marshaling of <span class="emphasis"><em>t</em></span>.
+Likewise, it unmarshals the foreign
+null pointer and <code class="literal">0</code> to <code class="literal">#f</code>, and otherwise applies the
+unmarshaling of <span class="emphasis"><em>t</em></span>.</p><p>(There are a few other built-in type constructors, such as
+ the <code class="literal">oneof</code> type constructor, but they
+ are not as fully-developed as the two above, and are intended
+ for use only for internal development for now.)</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2564727"></a>12.19.3.4. void* Type Hierarchies</h5></div></div></div><p>Using the <code class="literal">void*</code> attribute
+wraps foreign addresses up in a Larceny record,
+so that standard numeric
+operations cannot be directly applied by accident.
+The FFI uses two features of Larceny's record system:
+the record type descriptor is a first class
+value with an inspectable name, and
+record types are extensible via single-inheritance.</p><p><b>Basic Operations on <code class="literal">void*</code>. </b>The FFI provides <code class="literal">void*-rt</code>, a record type
+descriptor with a single field (a wrapped address).
+There is also a family of functions for dereferencing the
+pointer within a <code class="literal">void*-rt</code> and manipulating the
+state it references.</p><p><a id="void*-&gt;address"></a>
+<span class="emphasis"><em> Procedure void*-&gt;address</em></span>
+<p>
+<a id="id2564794" class="indexterm"></a>
+<code class="literal">(void*-&gt;address <span class="emphasis"><em>x</em></span>)  =&gt; <span class="emphasis"><em>number</em></span></code>
+</p>
+Extracts the underlying address held in a <code class="literal">void*</code>.</p><p><a id="void*?"></a>
+<span class="emphasis"><em> Procedure void*?</em></span>
+<p>
+<a id="id2564837" class="indexterm"></a>
+<code class="literal">(void*? <span class="emphasis"><em>x</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p>
+Distinquishes <code class="literal">void*</code>'s from other Scheme values.</p><p><a id="void*-byte-ref"></a>
+<span class="emphasis"><em> Procedure void*-byte-ref</em></span>
+<p>
+<a id="id2564882" class="indexterm"></a>
+<code class="literal">(void*-byte-ref <span class="emphasis"><em>x idx</em></span>)  =&gt; <span class="emphasis"><em>number</em></span></code>
+</p>
+Extracts byte at offset from address within <span class="emphasis"><em>x</em></span>.</p><p><a id="void*-byte-set!"></a>
+<span class="emphasis"><em> Procedure void*-byte-set!</em></span>
+<p>
+<a id="id2564924" class="indexterm"></a>
+<code class="literal">(void*-byte-set! <span class="emphasis"><em>x idx val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p>
+Modifies byte at offset from address within <span class="emphasis"><em>x</em></span>.</p><p><a id="void*-word-ref"></a>
+<span class="emphasis"><em> Procedure void*-word-ref</em></span>
+<p>
+<a id="id2564966" class="indexterm"></a>
+<code class="literal">(void*-word-ref <span class="emphasis"><em>x idx</em></span>)  =&gt; <span class="emphasis"><em>number</em></span></code>
+</p>
+Extracts word-sized integer at offset from address within <span class="emphasis"><em>x</em></span>.</p><p><a id="void*-word-set!"></a>
+<span class="emphasis"><em> Procedure void*-word-set!</em></span>
+<p>
+<a id="id2565008" class="indexterm"></a>
+<code class="literal">(void*-word-set! <span class="emphasis"><em>x idx val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p>
+Modifies word-sized integer at offset from address within <span class="emphasis"><em>x</em></span>.</p><p><a id="void*-void*-ref"></a>
+<span class="emphasis"><em> Procedure void*-void*-ref</em></span>
+<p>
+<a id="id2565050" class="indexterm"></a>
+<code class="literal">(void*-void*-ref <span class="emphasis"><em>x idx</em></span>)  =&gt; <span class="emphasis"><em>void*</em></span></code>
+</p>
+Extracts address (and wraps it in a <code class="literal">void*</code>) at offset from address within <span class="emphasis"><em>x</em></span>.</p><p><a id="void*-void*-set!"></a>
+<span class="emphasis"><em> Procedure void*-void*-set!</em></span>
+<p>
+<a id="id2565098" class="indexterm"></a>
+<code class="literal">(void*-void*-set! <span class="emphasis"><em>x idx val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p>
+Modifies address at offset from address within <span class="emphasis"><em>x</em></span>.</p><p><a id="void*-double-ref"></a>
+<span class="emphasis"><em> Procedure void*-double-ref</em></span>
+<p>
+<a id="id2565140" class="indexterm"></a>
+<code class="literal">(void*-double-ref <span class="emphasis"><em>x idx</em></span>)  =&gt; <span class="emphasis"><em>number</em></span></code>
+</p>
+Extracts 64-bit flonum at offset from address within <span class="emphasis"><em>x</em></span>.</p><p><a id="void*-double-set!"></a>
+<span class="emphasis"><em> Procedure void*-double-set!</em></span>
+<p>
+<a id="id2565182" class="indexterm"></a>
+<code class="literal">(void*-double-set! <span class="emphasis"><em>x idx val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p>
+Modifies 64-bit flonum at offset from address within <span class="emphasis"><em>x</em></span>.</p><p><b>Type Hierarchies. </b>Procedures for establishing type hierarchies are provided by the
+<code class="literal">lib/Standard/foreign-stdlib.sch</code> library; see
+<a class="xref" href="ar01s12.html#ffi-install-void*-subtype">ffi-install-void*-subtype</a> and <a class="xref" href="ar01s12.html#establish-void*-subhierarchy!">establish-void*-subhierarchy!</a>.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2565242"></a>12.19.4. Creating loadable modules</h4></div></div></div><p>You must first compile your C code and create one or more loadable object modules. These object modules may then be loaded into Larceny, and Scheme foreign functions may link to specific functions in the loaded module. Defining foreign functions in Scheme is covered in a later section.</p><p>The method for creating a loadable object module varies from platform to platform. In the following, assume you have to C source files file1.c and file2.c that define functions that you want to make available as foreign functions in Larceny.</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2565264"></a>12.19.4.1. SunOS 4</h5></div></div></div><p>Compile your source files and create a shared library. Using GCC, the command line might look like this:</p><pre class="literallayout">gcc -fPIC -shared file1.c file2.c -o my-library.so</pre><p>The command creates my-library.so in the current directory. This library can now be loaded into Larceny using <a class="xref" href="ar01s12.html#foreign-file">foreign-file</a>. Any other shared libraries used by your library files should also be loaded into Larceny using <a class="xref" href="ar01s12.html#foreign-file">foreign-file</a> before any procedures are linked using <a class="xref" href="ar01s12.html#foreign-procedure">foreign-procedure</a>.</p><p>By default, /lib/libc.so is made available to the dynamic linker and to the foreign function interface, so there is no need for you to load that library explicitly.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2565318"></a>12.19.4.2. SunOS 5</h5></div></div></div><p>Compile your source files and create a shared library, linking with all the necessary libraries. Using GCC, the command line might look like this:</p><pre class="literallayout">gcc -fPIC -shared file1.c file2.c -lc -lm -lsocket -o my-library.so</pre><p>Now you can use foreign-file to load my-library.so into Larceny.</p><p>By default, /lib/libc.so is made available to the foreign function interface, so there is no need for you to load that library explicitly.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2565351"></a>12.19.5. The Interface</h4></div></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2565357"></a>12.19.5.1. Procedures</h5></div></div></div><p><a id="foreign-file"></a>
+<span class="emphasis"><em> Procedure foreign-file</em></span>
+<p>
+<a id="id2565378" class="indexterm"></a>
+<code class="literal">(foreign-file <span class="emphasis"><em>filename</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p><a class="xref" href="ar01s12.html#foreign-file">foreign-file</a> loads the named object file into Larceny and makes it available for dynamic linking.</p><p>Larceny uses the operating system provided dynamic linker to do dynamic linking. The operation of the dynamic linker varies from platform to platform:</p><div class="itemizedlist"><ul type="disc"><li>
+On some versions of SunOS 4, if the linker is given a file that does not exist, it will terminate the process. (Most likely this is a bug.) This means you should never call foreign-file with the name of a file that does not exist.
+</li><li>
+On SunOS 5, if a foreign file is given to foreign-file without a directory specification, then the dynamic linker will search its load path (the <code class="literal">LD_LIBRARY_PATH</code> environment variable) for the file. Hence, a foreign file in the current directory should be "./file.so", not "file.so".
+</li></ul></div><p><a id="foreign-procedure"></a>
+<span class="emphasis"><em> Procedure foreign-procedure</em></span>
+<p>
+<a id="id2565466" class="indexterm"></a>
+<code class="literal">(foreign-procedure <span class="emphasis"><em>name (arg-type …) return-type</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p>FIXME: The interface to this function has been extended to support
+hooking into Windows procedures that use the Pascal calling convention
+instead of the C one.  The way to select which convention to use
+should be documented.</p><p>Returns a Scheme procedure <span class="emphasis"><em>p</em></span> that calls the foreign procedure whose
+name is <span class="emphasis"><em>name</em></span>. When <span class="emphasis"><em>p</em></span> is called, it will convert its parameters to
+representations indicated by the <span class="emphasis"><em>arg-type</em></span>s and invoke the foreign
+procedure, passing the converted values as parameters. When the
+foreign procedure returns, its return value is converted to a Scheme
+value according to <span class="emphasis"><em>return-type</em></span>.</p><p>Types are described below.</p><p>The address of the foreign procedure is obtained by searching for <span class="emphasis"><em>name</em></span> in the symbol tables of the foreign files that have been loaded with <span class="emphasis"><em>foreign-file</em></span>.</p><p><a id="foreign-null-pointer"></a>
+<span class="emphasis"><em> Procedure foreign-null-pointer</em></span>
+<p>
+<a id="id2565558" class="indexterm"></a>
+<code class="literal">(foreign-null-pointer <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code>
+</p></p><p>Returns a foreign null pointer.</p><p><a id="foreign-null-pointer?"></a>
+<span class="emphasis"><em> Procedure foreign-null-pointer?</em></span>
+<p>
+<a id="id2565599" class="indexterm"></a>
+<code class="literal">(foreign-null-pointer? <span class="emphasis"><em>integer</em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p></p><p>Tests whether its argument is a foreign null pointer.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2565627"></a>12.19.6. Foreign Data Access</h4></div></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2565633"></a>12.19.6.1. Raw memory access</h5></div></div></div><p>The two primitives <span class="emphasis"><em>peek-bytes</em></span> and <span class="emphasis"><em>poke-bytes</em></span> are provided for reading and writing memory at specific addresses. These procedures are typically used for copying data from foreign data structures into Scheme bytevectors for subsequent decoding.</p><p>(The use of <span class="emphasis"><em>peek-bytes</em></span> and <span class="emphasis"><em>poke-bytes</em></span> can often be avoided by keeping foreign data in a Scheme bytevector and passing the bytevector to a call-out using the <span class="strong"><strong>boxed</strong></span> parameter type. However, this technique is inappropriate if the foreign code retains a pointer to the Scheme datum, which may be moved by the garbage collector.)</p><p><a id="peek-bytes"></a>
+<span class="emphasis"><em> Procedure peek-bytes</em></span>
+<p>
+<a id="id2565689" class="indexterm"></a>
+<code class="literal">(peek-bytes <span class="emphasis"><em>addr bytevector count</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p><span class="emphasis"><em>Addr</em></span> must be an exact nonnegative integer. <span class="emphasis"><em>Count</em></span> must be a fixnum. The bytes in the range from <span class="emphasis"><em>addr</em></span> through <span class="emphasis"><em>addr+count-1</em></span> are copied into <span class="emphasis"><em>bytevector</em></span>, which must be long enough to hold that many bytes.</p><p>If any address in the range is not an address accessible to the process, unpredictable things may happen. Typically, you'll get a segmentation fault. Larceny does not yet catch segmentation faults.</p><p><a id="poke-bytes"></a>
+<span class="emphasis"><em> Procedure poke-bytes</em></span>
+<p>
+<a id="id2565756" class="indexterm"></a>
+<code class="literal">(poke-bytes <span class="emphasis"><em>addr bytevector count</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p><span class="emphasis"><em>Addr</em></span> must be an exact nonnegative integer. <span class="emphasis"><em>Count</em></span> must be a fixnum. The <span class="emphasis"><em>count</em></span> first bytes from <span class="emphasis"><em>bytevector</em></span> are copied into memory in the range from <span class="emphasis"><em>addr</em></span> through <span class="emphasis"><em>addr+count-1</em></span>.</p><p>If any address in the range is not an address accessible to the process, unpredictable things may happen. Typically, you'll get a segmentation fault. Larceny does not yet catch segmentation faults.</p><p>Also, it's possible to corrupt memory with <span class="emphasis"><em>poke-bytes</em></span>. Don't do that.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2565820"></a>12.19.6.2. Foreign data sizes</h5></div></div></div><p>The following variables constants define the sizes of basic C data types:</p><div class="itemizedlist"><ul type="disc"><li>
+<span class="strong"><strong>sizeof:short</strong></span> The size of a "short int".
+</li><li>
+<span class="strong"><strong>sizeof:int</strong></span> The size of an "int".
+</li><li>
+<span class="strong"><strong>sizeof:long</strong></span> The size of a "long int".
+</li><li>
+<span class="strong"><strong>sizeof:pointer</strong></span> The size of any pointer type.
+</li></ul></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2565888"></a>12.19.6.3. Decoding foreign data</h5></div></div></div><p>Foreign data is visible to a Scheme program either as an object pointed to by a memory address (which is itself represented as an integer), or as a bytevector that contains the bytes of the foreign datum.</p><p>A number of utility procedures that make reading and writing data of common C primitive types have been written for both these kinds of foreign objects.</p><p><span class="emphasis"><em>Bytevector accessor procedures</em></span></p><p><p><code class="literal">(%get16 <span class="emphasis"><em>bv i</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%get16u <span class="emphasis"><em>bv i</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%get32 <span class="emphasis"><em>bv i</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%get32u <span class="emphasis"><em>bv i</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%get-int <span class="emphasis"><em>bv i</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%get-unsigned <span class="emphasis"><em>bv i</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%get-short <span class="emphasis"><em>bv i</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%get-ushort <span class="emphasis"><em>bv i</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%get-long <span class="emphasis"><em>bv i</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%get-ulong <span class="emphasis"><em>bv i</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%get-pointer <span class="emphasis"><em>bv i</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p></p><p>These procedures decode bytevectors that contain the bytes of foreign objects. In each case, <span class="emphasis"><em>bv</em></span> is a bytevector and <span class="emphasis"><em>i</em></span> is the offset of the first byte of a field in that bytevector. The field is fetched and returned as an integer (signed or unsigned as appropriate).</p><p><span class="emphasis"><em>Bytevector updater procedures</em></span></p><p><p><code class="literal">(%set16 <span class="emphasis"><em>bv i val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%set16u <span class="emphasis"><em>bv i val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%set32 <span class="emphasis"><em>bv i val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%set32u <span class="emphasis"><em>bv i val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%set-int <span class="emphasis"><em>bv i val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%set-unsigned <span class="emphasis"><em>bv i val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%set-short <span class="emphasis"><em>bv i val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%set-ushort <span class="emphasis"><em>bv i val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%set-long <span class="emphasis"><em>bv i val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%set-ulong <span class="emphasis"><em>bv i val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%set-pointer <span class="emphasis"><em>bv i val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p></p><p>These procedures update bytevectors that contain the bytes of foreign objects. In each case, <span class="emphasis"><em>bv</em></span> is a bytevector, <span class="emphasis"><em>i</em></span> is an offset of the first byte of a field in that bytevector, and <span class="emphasis"><em>val</em></span> is a value to be stored in that field. The values must be exact integers in a range implied by the data type.</p><p><span class="emphasis"><em>Foreign-pointer accessor procedures</em></span></p><p><p><code class="literal">(%peek8 <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%peek8u <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%peek16 <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%peek16u <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%peek32 <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%peek32u <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p></p><p><p><code class="literal">(%peek-int <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%peek-long <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%peek-unsigned <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%peek-ulong <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%peek-short <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%peek-ushort <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%peek-pointer <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p>
+<p><code class="literal">(%peek-string <span class="emphasis"><em>addr</em></span>)  =&gt; <span class="emphasis"><em>integer</em></span></code></p></p><p>These procedures read raw memory. In each case, <span class="emphasis"><em>addr</em></span> is an address, and the value stored at that address (the size of which is indicated by the name of the procedure) is fetched and returned as an integer.</p><p><span class="emphasis"><em>%Peek-string</em></span> expects to find a NUL-terminated string of 8-bit bytes at the given address. It is returned as a Scheme string.</p><p><span class="emphasis"><em>Foreign-pointer updater procedures</em></span></p><p><p><code class="literal">(%poke8 <span class="emphasis"><em>addr val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%poke8u <span class="emphasis"><em>addr val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%poke16 <span class="emphasis"><em>addr val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%poke16u <span class="emphasis"><em>addr val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%poke32 <span class="emphasis"><em>addr val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%poke32u <span class="emphasis"><em>addr val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p></p><p><p><code class="literal">(%poke-int <span class="emphasis"><em>addr val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%poke-long <span class="emphasis"><em>addr val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%poke-unsigned <span class="emphasis"><em>addr val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%poke-ulong <span class="emphasis"><em>addr val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%poke-short <span class="emphasis"><em>addr val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%poke-ushort <span class="emphasis"><em>addr val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p>
+<p><code class="literal">(%poke-pointer <span class="emphasis"><em>addr val</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code></p></p><p>These procedures update raw memory. In each case, <span class="emphasis"><em>addr</em></span> is an address, and <span class="emphasis"><em>val</em></span> is a value to be stored at that address.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2566639"></a>12.19.7. Heap dumping and the FFI</h4></div></div></div><p>If foreign functions are linked into Larceny using the FFI, and a
+Larceny heap image is subsequently dumped (with
+<a class="xref" href="ar01s12.html#dump-interactive-heap">dump-interactive-heap</a> or
+<a class="xref" href="ar01s12.html#dump-heap">dump-heap</a>), then the foreign functions are not saved as
+part of the heap image. When the heap image is subsequently loaded
+into Larceny at startup, the FFI will attempt to re-link all the
+foreign functions in the heap image.</p><p>During the relinking phase, foreign files will again be loaded into Larceny, and Larceny's FFI will use the file names <span class="emphasis"><em>as they were originally given to the FFI</em></span> when it tries to load the files. In particular, if relative pathnames were used, Larceny will not have converted them to absolute pathnames.</p><p>An error during relinking will result in Larceny aborting with an error message and returning to the operating system. This is considered a feature.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2566688"></a>12.19.8. Examples</h4></div></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2566694"></a>12.19.8.1. Change directory</h5></div></div></div><p>This procedure uses the chdir() system call to set the process's current working directory. The string parameter type is used to pass a Scheme string to the C procedure.</p><pre class="literallayout">(define cd
+  (let ((chdir (foreign-procedure "chdir" '(string) 'int)))
+    (lambda (newdir)
+      (if (not (zero? (chdir newdir)))
+      (error "cd: " newdir " is not a valid directory name."))
+      (unspecified))))</pre></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2566722"></a>12.19.8.2. Print Working Directory</h5></div></div></div><p>This procedure uses the getcwd() (get current working directory) system call to retrieve the name of the process's current working directory. A bytevector is created and passed in as a buffer in which to store the return value — a 0-terminated ASCII string. Then the FFI utility function ffi/asciiz-&gt;string is called to convert the bytevector to a string.</p><pre class="literallayout">(define pwd
+  (let ((getcwd (foreign-procedure "getcwd" '(boxed int) 'int)))
+    (lambda ()
+      (let ((s (make-bytevector 1024)))
+    (getcwd s 1024)
+    (ffi/asciiz-&gt;string s)))))</pre></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2566753"></a>12.19.8.3. Quicksort</h5></div></div></div><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>this example is bogus.  It is not safe to pass a collectable
+object into a C procedure when the callback invocation might cause a
+garbage collection, thus moving the object and invalidating the
+address stored in the C machine context.</p></div><p>This demonstrates how to use a callback such as the comparator argument to qsort.
+It is specified in the type signature using -&gt; as a type constructor.
+(Note that one should probably use the built-in sort routines rather than call out
+ like this; this example is for demonstrating callbacks, not how to sort.)</p><pre class="literallayout">(define qsort!
+  (foreign-procedure "qsort" '(boxed ushort ushort (-&gt; (void* void*) int)) 'void))</pre><pre class="literallayout">(let ((bv (list-&gt;vector '(40 10 30 20 1 2 3 4))))
+  (qsort! bv 8 4
+          (lambda (x y)
+            (let ((x (/ (void*-word-ref x 0) 4))
+                  (y (/ (void*-word-ref y 0) 4)))
+              (- x y))))
+  bv)</pre><pre class="literallayout">(let ((bv (list-&gt;bytevector '(40 10 30 20 1 2 3 4))))
+  (qsort! bv 8 1
+          (lambda (x y)
+            (let ((x (void*-byte-ref x 0))
+                  (y (void*-byte-ref y 0)))
+              (- x y))))
+  bv)</pre></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2566822"></a>12.19.8.4. Other examples</h5></div></div></div><p>The Experimental directory contains several examples of use of the FFI. See in particular the files unix.sch (Unix system calls) and socket.sch (procedures for communicating over sockets).</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id2566836"></a>12.19.9. Higher level layers</h4></div></div></div><p>The general foreign-function interface functionality described above
+is powerful but awkward to use in practice.  A user might be tempted
+to hard code values of offsets or constants that are compiler
+dependent.  Also, the FFI will marshall some low-level values such
+as strings or integers, but other values such as enumerations
+which could be naturally mapped to sets of symbols are not marshalled
+since the host environment does not provide the necessary type
+information to the FFI.</p><p>This section documents a collection of libraries to mitigate these and
+other problems.</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2566864"></a>12.19.9.1. foreign-ctools</h5></div></div></div><p>Foreign data access is performed by peeking at manually calculated
+addresses, but in practice one often needs to inspect fields of C
+structures, whose offsets are dependant on the application binary
+interface (ABI) of the host environment.  Similarly, C programs often
+use refer to values via constant macro definitions; since the values
+of such names are not provided by the object code and Scheme programs
+do not have a C preprocessor run on them prior to execution, it is
+difficult to refer to the same value without encoding "magic numbers"
+into the Scheme source code.</p><p>The foreign-ctools library is meant to mitigate problems like the two
+described above.  It provides special forms for introducing global
+definitions of values typically available at compile-time for a C
+program.  The library assumes the presence of a C compiler (such as
+<span class="emphasis"><em>cc</em></span> on Unix systems or <span class="emphasis"><em>cl.exe</em></span> on Windows systems).  The special
+forms work by dynamically generating, compiling, and running C code at
+expansion time to determine the desired values of structure offsets or
+macro constants.</p><p>Here is a grammar for the <code class="literal">define-c-info</code> form provided by
+the <code class="literal">foreign-ctools</code> library.</p><pre class="literallayout">&lt;exp&gt;     ::= (define-c-info &lt;c-decl&gt; ... &lt;c-defn&gt; ...)
+
+&lt;c-decl&gt;  ::= (compiler &lt;cc-spec&gt;)
+           |  (path &lt;include-path&gt;)
+           |  (include &lt;header&gt;)
+           |  (include&lt;&gt; &lt;header&gt;)
+
+&lt;cc-spec&gt; ::= cc | cl
+
+&lt;c-defn&gt;  ::= (const &lt;id&gt; &lt;c-type&gt; &lt;c-expr&gt;)
+           |  (sizeof &lt;id&gt; &lt;c-type-expr&gt;)
+           |  (struct &lt;c-name&gt; &lt;field-clause&gt; ...)
+           |  (fields &lt;c-name&gt; &lt;field-clause&gt; ...)
+           |  (ifdefconst &lt;id&gt; &lt;c-type&gt; &lt;c-name&gt;)
+
+&lt;c-type&gt;  ::= int | uint | long | ulong
+
+&lt;include-path&gt;
+          ::= &lt;string-literal&gt;
+
+&lt;header&gt;  ::= &lt;string-literal&gt;
+
+&lt;field-clause&gt;
+          ::= (&lt;offset-id&gt; &lt;c-field&gt;)
+           |  (&lt;offset-id&gt; &lt;c-field&gt; &lt;size-id&gt;)
+
+&lt;c-expr&gt;  ::= &lt;string-literal&gt;
+
+&lt;c-type-expr&gt;
+          ::= &lt;string-literal&gt;
+
+&lt;c-name&gt;  ::= &lt;string-literal&gt;
+
+&lt;c-field&gt; ::= &lt;string-literal&gt;</pre><p><span class="emphasis"><em>Syntax define-c-info</em></span></p><p><code class="literal"> (define-c-info &lt;c-decl&gt; … &lt;c-defn&gt; …)</code></p><p>The <code class="literal">&lt;c-decl&gt;</code> clauses of <code class="literal">define-c-info</code>
+control how header files are processed.
+The <code class="literal">compiler</code> clause selects between <code class="literal">cc</code>
+(the default UNIX system compiler) and <code class="literal">cl</code>
+(the compiler included with Microsoft's Windows SDK).
+The <code class="literal">path</code> clause adds a directory to search when
+looking for header files.
+The <code class="literal">include</code> and <code class="literal">include&lt;&gt;</code> clauses indicate
+header files to include when executing the
+<code class="literal">&lt;c-defn&gt;</code> clauses;
+the two variants correspond to the quoted and bracketed
+forms of the C preprocessor's <code class="literal">#include</code> directive.</p><p>The <code class="literal">&lt;c-defn&gt;</code> clauses bind identifiers.
+A <code class="literal">(const <span class="emphasis"><em>x</em></span> <span class="emphasis"><em>t</em></span> "<span class="emphasis"><em>ae</em></span>")</code> clause binds <span class="emphasis"><em>x</em></span> to
+the integer value of <span class="emphasis"><em>ae</em></span> according to the C language;
+<span class="emphasis"><em>ae</em></span> can be any C arithmetic expression that evaluates
+to a value of type <span class="emphasis"><em>t</em></span>.
+(The expected usage is for <span class="emphasis"><em>ae</em></span> to be an
+expression that the C preprocessor expands to an arithmetic expression.)</p><p>The remaining clauses provide similar functionality:</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">(sizeof <span class="emphasis"><em>x</em></span> "<span class="emphasis"><em>te</em></span>")</code>
+ binds <span class="emphasis"><em>x</em></span> to the size occupied by values
+ of type <span class="emphasis"><em>te</em></span>, where <span class="emphasis"><em>te</em></span> is any C type expression.
+</li><li>
+<code class="literal">(struct "<span class="emphasis"><em>cn</em></span>" … (<span class="emphasis"><em>x</em></span> "<span class="emphasis"><em>cf</em></span>" <span class="emphasis"><em>y</em></span>) …)</code>
+ binds <span class="emphasis"><em>x</em></span> to the offset from the start of a
+ structure of type <code class="literal">struct <span class="emphasis"><em>cn</em></span></code> to its
+ <span class="emphasis"><em>cf</em></span> field, and binds <span class="emphasis"><em>y</em></span>, if present, to the field's size.
+ A <code class="literal">fields</code> clause is similar, but it applies
+ to structures of type <code class="literal"><span class="emphasis"><em>cn</em></span></code> rather than <code class="literal">struct <span class="emphasis"><em>cn</em></span></code>.
+</li><li>
+<code class="literal">(ifdefconst <span class="emphasis"><em>x</em></span> <span class="emphasis"><em>t</em></span> "<span class="emphasis"><em>cn</em></span>")</code>
+ binds <span class="emphasis"><em>x</em></span> to the value of <code class="literal"><span class="emphasis"><em>cn</em></span></code> if <code class="literal"><span class="emphasis"><em>cn</em></span></code> is defined;
+ <span class="emphasis"><em>x</em></span> is otherwise bound to Larceny's unspecified value.
+</li></ul></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2567249"></a>12.19.9.2. foreign-sugar</h5></div></div></div><p>The <a class="xref" href="ar01s12.html#foreign-procedure">foreign-procedure</a> function is sufficient to link in
+dynamically loaded C procedures, but it can be annoying to
+use when there are many procedures to define that all follow
+a regular pattern where one could infer a mapping between
+Scheme identifiers and C function names.</p><p>For example, some libraries follow a naming convention where a words
+within a name are separated by underscores; such functions could be
+immediately mapped to Scheme names where the underscores have been
+replaced by dashes.</p><p>The foreign-sugar library provides a special form, <code class="literal">define-foreign</code>,
+which gives the user a syntax for defining foreign functions using
+a syntax where one provides only the Scheme name, the argument types,
+and the return type.  The <code class="literal">define-foreign</code> form then attempts to
+infer what C function the name was meant to refer to.</p><p><span class="emphasis"><em>Syntax define-foreign</em></span></p><p><code class="literal"> (define-foreign (name arg-type …) result-type)</code></p><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>There is other functionality provided allowing the user to
+introduce new rules for inferring C function names, but they are
+undocumented because they will probably have to change when we switch
+to an R6RS macro expander.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2567329"></a>12.19.9.3. foreign-stdlib</h5></div></div></div><p><a id="stdlib/malloc"></a>
+<span class="emphasis"><em> Procedure stdlib/malloc</em></span>
+<p>
+<a id="id2567350" class="indexterm"></a>
+<code class="literal">(stdlib/malloc <span class="emphasis"><em>rtd</em></span> <span class="emphasis"><em>[ctor]</em></span>)  =&gt; <span class="emphasis"><em>procedure</em></span></code>
+</p></p><p>Given a record extension of <span class="emphasis"><em>void*-rt</em></span>, returns an allocator that uses
+the C <code class="literal">malloc</code> procedure to allocate instances of such an object.
+Note that the client is responsible for eventually freeing such
+objects with <a class="xref" href="ar01s12.html#stdlib/free">stdlib/free</a>.</p><p><a id="stdlib/free"></a>
+<span class="emphasis"><em> Procedure stdlib/free</em></span>
+<p>
+<a id="id2567415" class="indexterm"></a>
+<code class="literal">(stdlib/free <span class="emphasis"><em>void*-obj</em></span>) </code>
+</p></p><p>Frees objects produced by allocators returned from <a class="xref" href="ar01s12.html#stdlib/malloc">stdlib/malloc</a>.</p><p><a id="ffi-install-void*-subtype"></a>
+<span class="emphasis"><em> Procedure ffi-install-void*-subtype</em></span>
+<p>
+<a id="id2567461" class="indexterm"></a>
+</p>
+<p><code class="literal">(ffi-install-void*-subtype <span class="emphasis"><em>rtd</em></span>)  =&gt; <span class="emphasis"><em>rtd</em></span></code></p>
+<p><code class="literal">(ffi-install-void*-subtype <span class="emphasis"><em>string</em></span> <span class="emphasis"><em>[parent-rtd]</em></span>)  =&gt; <span class="emphasis"><em>rtd</em></span></code></p>
+<p><code class="literal">(ffi-install-void*-subtype <span class="emphasis"><em>symbol</em></span> <span class="emphasis"><em>[parent-rtd]</em></span>)  =&gt; <span class="emphasis"><em>rtd</em></span></code></p></p><p><a class="xref" href="ar01s12.html#ffi-install-void*-subtype">ffi-install-void*-subtype</a>
+extends the core attribute registry with a new primitive
+entry for <span class="emphasis"><em>subtype</em></span>.
+The <span class="emphasis"><em>parent-rtd</em></span> argument should be a subtype of <code class="literal">void*-rt</code>
+and defaults to <code class="literal">void*-rt</code>.
+In the case of the <span class="emphasis"><em>symbol</em></span> or <span class="emphasis"><em>string</em></span> inputs, the
+procedure constructs a new record type subtyping the <span class="emphasis"><em>parent</em></span> argument.
+In the case of the <span class="emphasis"><em>rtd</em></span> input, the <span class="emphasis"><em>rtd</em></span> record type
+must extend <code class="literal">void*-rt</code>.
+<a class="xref" href="ar01s12.html#ffi-install-void*-subtype">ffi-install-void*-subtype</a> returns the subtype record type.</p><p>The returned record type represents a tagged wrapped C pointer,
+allowing one to encode type hierarchies.</p><p><a id="establish-void*-subhierarchy!"></a>
+<span class="emphasis"><em> Procedure establish-void*-subhierarchy!</em></span>
+<p>
+<a id="id2567605" class="indexterm"></a>
+<code class="literal">(establish-void*-subhierarchy! <span class="emphasis"><em>symbol-tree</em></span>)  =&gt; <span class="emphasis"><em>unspecified</em></span></code>
+</p></p><p><a class="xref" href="ar01s12.html#establish-void*-subhierarchy!">establish-void*-subhierarchy!</a> is a convenience function
+for constructing large object hierarchies.
+It descends the <span class="emphasis"><em>symbol-tree</em></span>,
+creates a record type descriptor for each symbol
+(where the root of the tree has the parent <code class="literal">void*-rt</code>),
+and invokes <a class="xref" href="ar01s12.html#ffi-install-void*-subtype">ffi-install-void*-subtype</a> on all
+of the introduced types.</p><p><span class="emphasis"><em>Type char*</em></span> extends <span class="emphasis"><em>void*</em></span>
+<a id="string-&gt;char*"></a>
+<span class="emphasis"><em> Procedure string-&gt;char*</em></span>
+<p>
+<a id="id2567681" class="indexterm"></a>
+<code class="literal">(string-&gt;char* <span class="emphasis"><em>string</em></span>)  =&gt; <span class="emphasis"><em>char*</em></span></code>
+</p>
+<a id="char*-strlen"></a>
+<span class="emphasis"><em> Procedure char*-strlen</em></span>
+<p>
+<a id="id2567716" class="indexterm"></a>
+<code class="literal">(char*-strlen <span class="emphasis"><em>char*</em></span>)  =&gt; <span class="emphasis"><em>fixnum</em></span></code>
+</p>
+<a id="char*-&gt;string"></a>
+<span class="emphasis"><em> Procedure char*-&gt;string</em></span>
+<p>
+<a id="id2567752" class="indexterm"></a>
+<code class="literal">(char*-&gt;string <span class="emphasis"><em>char*</em></span>)  =&gt; <span class="emphasis"><em>string</em></span></code>
+</p>
+<p><code class="literal">(char*-&gt;string <span class="emphasis"><em>char* len</em></span>)  =&gt; <span class="emphasis"><em>string</em></span></code></p>
+<a id="CallWithCharStar"></a>
+<span class="emphasis"><em> Procedure call-with-char*</em></span>
+<p>
+<a id="id2567800" class="indexterm"></a>
+<code class="literal">(call-with-char* <span class="emphasis"><em>string string-function</em></span>)  =&gt; <span class="emphasis"><em>value</em></span></code>
+</p>
+<span class="emphasis"><em>Type char**</em></span> extends <span class="emphasis"><em>void*</em></span>
+<a id="CallWithCharStarStar"></a>
+<span class="emphasis"><em> Procedure call-with-char**</em></span>
+<p>
+<a id="id2567844" class="indexterm"></a>
+<code class="literal">(call-with-char** <span class="emphasis"><em>string-vector function</em></span>)  =&gt; <span class="emphasis"><em>value</em></span></code>
+</p>
+<span class="emphasis"><em>Type int*</em></span> extends <span class="emphasis"><em>void*</em></span>
+<a id="CallWithIntStar"></a>
+<span class="emphasis"><em> Procedure call-with-int*</em></span>
+<p>
+<a id="id2567887" class="indexterm"></a>
+<code class="literal">(call-with-int* <span class="emphasis"><em>fixnum-vector function</em></span>)  =&gt; <span class="emphasis"><em>value</em></span></code>
+</p>
+<span class="emphasis"><em>Type short*</em></span> extends <span class="emphasis"><em>void*</em></span>
+<a id="CallWithShortStar"></a>
+<span class="emphasis"><em> Procedure call-with-short*</em></span>
+<p>
+<a id="id2567929" class="indexterm"></a>
+<code class="literal">(call-with-short* <span class="emphasis"><em>fixnum-vector function</em></span>)  =&gt; <span class="emphasis"><em>value</em></span></code>
+</p>
+<span class="emphasis"><em>Type double*</em></span> extends <span class="emphasis"><em>void*</em></span>
+<a id="CallWithDoubleStar"></a>
+<span class="emphasis"><em> Procedure call-with-double*</em></span>
+<p>
+<a id="id2567971" class="indexterm"></a>
+<code class="literal">(call-with-double* <span class="emphasis"><em>num-vector function</em></span>)  =&gt; <span class="emphasis"><em>value</em></span></code>
+</p></p><p>FIXME: (There are other functions, but I want to test and document the
+ones above first…)</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2568000"></a>12.19.9.4. foreign-cstructs</h5></div></div></div><p>The <code class="literal">foreign-cstructs</code> library provides a
+more direct interface to C structures.
+It provides the <code class="literal">define-c-struct</code> special form.
+This form is layered on top of <code class="literal">define-c-info</code>;
+the latter provides the structure field offsets
+and sizes used to generate constructors
+(which produce appropriately sized bytevectors,
+not record instances).
+The <code class="literal">define-c-struct</code> form combines these
+with marshaling and unmarshaling procedures to
+provide high-level access to a structure.</p><p>The grammar for the <code class="literal">define-c-struct</code> form is presented below.</p><pre class="literallayout">&lt;exp&gt;    ::= (define-c-struct (&lt;struct-type&gt; &lt;ctor-id&gt; &lt;c-decl&gt; ...)
+                &lt;field-clause&gt; ...)
+
+&lt;field-clause&gt;
+         ::= (&lt;c-field&gt; &lt;getter&gt;) | (&lt;c-field&gt; &lt;getter&gt; &lt;setter&gt;)
+
+&lt;getter&gt; ::= (&lt;id&gt;) | (&lt;id&gt; &lt;unmarshal&gt;)
+
+&lt;setter&gt; ::= (&lt;id&gt;) | (&lt;id&gt; &lt;marshal&gt;)
+
+&lt;marshal&gt; ::= &lt;ffi-attr-symbol&gt; | &lt;marshal-proc-exp&gt;
+
+&lt;unmarshal&gt; ::= &lt;ffi-attr-symbol&gt; | &lt;unmarshal-proc-exp&gt;
+
+&lt;struct-type&gt; ::= &lt;string-literal&gt;</pre></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h5 class="title"><a id="id2568076"></a>12.19.9.5. foreign-cenums</h5></div></div></div><p>This library provides the special forms
+ <code class="literal">define-c-enum</code> and <code class="literal">define-c-enum-set</code>,
+which associate the identifiers of
+a C <code class="literal">enum</code> type declaration
+with the integer values they denote.</p><p>The <code class="literal">define-c-enum</code> form describes enums
+encoding a discriminated sum;
+<code class="literal">define-c-enum-set</code> describes bitmasks,
+mapping them to R<sup>6</sup>RS enum-sets in Scheme.</p><p>The <code class="literal">(define-c-enum <span class="emphasis"><em>en</em></span> (&lt;c-decl&gt; …)  (<span class="emphasis"><em>x</em></span> "<span class="emphasis"><em>cn</em></span>") …)</code>
+form adds the <code class="literal"><span class="emphasis"><em>en</em></span></code> FFI attribute.
+The attribute marshals each symbol <code class="literal"><span class="emphasis"><em>x</em></span></code> to
+the integer value that <code class="literal"><span class="emphasis"><em>cn</em></span></code> denotes in C;
+unmarshaling does the inverse translation.</p><p>The <code class="literal">(define-c-enum-set <span class="emphasis"><em>ens</em></span> (&lt;c-decl&gt; …) (<span class="emphasis"><em>x</em></span> "<span class="emphasis"><em>cn</em></span>") …)</code>
+form binds <span class="emphasis"><em>ens</em></span> to an R<sup>6</sup>RS enum-set constructor
+with universe resulting from
+<code class="literal">(make-enumeration '(<span class="emphasis"><em>x</em></span> …))</code>; it also adds the <code class="literal"><span class="emphasis"><em>ens</em></span></code>
+FFI attribute.  The attribute marshals an
+enum-set <span class="emphasis"><em>s</em></span> constructed by <span class="emphasis"><em>ens</em></span>
+to the corresponding bitmask in C (that is,
+the integer one would get by logically or'ing
+all <span class="emphasis"><em>cn</em></span> such that the corresponding <span class="emphasis"><em>x</em></span> is in <span class="emphasis"><em>s</em></span>).
+Unmarshaling attempts to do the inverse translation.</p><p>The grammar for the two forms is presented below.</p><pre class="literallayout">&lt;exp&gt; ::= (define-c-enum &lt;enum-id&gt; (&lt;c-decl&gt; ...)
+            (&lt;id&gt; &lt;c-name&gt;) ...)
+
+&lt;exp&gt; ::= (define-c-enum-set &lt;enum-id&gt; (&lt;c-decl&gt; ...)
+            (&lt;id&gt; &lt;c-name&gt;) ...)
+
+&lt;enum-id&gt; ::= &lt;id&gt;</pre></div></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s11.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s13.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

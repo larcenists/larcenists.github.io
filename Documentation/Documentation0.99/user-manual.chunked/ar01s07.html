@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>7. Compiling files and libraries</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="Larceny User Manual" /><link rel="up" href="index.html" title="Larceny User Manual" /><link rel="prev" href="ar01s06.html" title="6. File naming conventions" /><link rel="next" href="ar01s08.html" title="8. R7RS standard libraries" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ar01s06.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s08.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="CompilingChapter"></a>7. Compiling files and libraries</h2></div></div></div><p>This chapter explains how you can use Larceny to compile
+Scheme source code to native machine code.</p><p>The native varieties of Larceny have a just-in-time
+compiler that compiles to native code automatically
+whenever you evaluate an expression, load a source
+file, or import a source library.  Even so, files
+will load faster if they are compiled ahead of time.</p><p>Petit Larceny does not have a just-in-time compiler,
+so compiling ahead of time is the only way to enjoy
+the speed of native machine code in Petit Larceny.</p><p>The main disadvantage of compiling files and libraries
+is that compiled code goes <span class="emphasis"><em>stale</em></span> when its original
+source code is changed or when a library on which
+the compiled code depends is changed or recompiled.
+Stale compiled code can be dangerously inconsistent
+with libraries on which it depends, so Larceny checks
+for staleness and refuses to execute a stale library
+or program.</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="CompilingR7rsSection"></a>7.1. Compiling R7RS/R6RS libraries</h3></div></div></div><p>On Unix machines, the most convenient way to compile
+a group of R7RS/R6RS libraries and top-level programs
+is to use the <code class="literal">compile-stale</code> script in Larceny's root
+directory.
+If Larceny's root directory is in your execution path,
+then there are just two steps:</p><div class="orderedlist"><ol type="1"><li>
+Use <code class="literal">cd</code> to change to the directory that contains
+the R7RS/R6RS files you want to compile.  (Files
+that lie within subdirectories of that directory will
+be compiled also.)
+</li><li>
+Run the <code class="literal">compile-stale</code> script.
+</li></ol></div><p>For example:</p><pre class="screen">    % cd lib/R7RS
+    % compile-stale</pre><p>On non-Unix machines, you can accomplish the same thing
+using Larceny's R7RS mode and the <code class="literal">(larceny compiler)</code>
+library:</p><pre class="screen">    % pushd lib\R7RS
+    % ..\..\larceny -r7rs
+    Larceny v0.98 "General Ripper"
+
+    &gt; (import (larceny compiler))
+
+    &gt; (compile-stale-libraries)</pre><p>To compile individual files, use the <code class="literal">compile-file</code> or
+<code class="literal">compile-library</code> procedures that are exported by
+<a class="link" href="ar01s10.html#LarcenyCompilerSection" title="10.2. Compiler"><code class="literal">(larceny compiler)</code></a>.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="CompilingR5rsSection"></a>7.2. Compiling R5RS source files</h3></div></div></div><p><a id="compile-file"></a>
+<span class="emphasis"><em> Procedure compile-file</em></span>
+<p>
+<a id="id2550592" class="indexterm"></a>
+<code class="literal">(compile-file <span class="emphasis"><em>sourcefile</em></span>) </code>
+</p></p><p>Compiles <span class="emphasis"><em>sourcefile</em></span>, which must be a string naming
+a file that contains R5RS source code.
+If <span class="emphasis"><em>faslfile</em></span> is supplied as a second argument,
+then it must be a string naming the file that will
+contain the compiled code; otherwise the name of
+the compiled file is obtained from <span class="emphasis"><em>sourcefile</em></span>
+by replacing the "<code class="literal">.sch</code>" or "<code class="literal">.scm</code>" suffix with
+"<code class="literal">.fasl</code>".</p><p>For R7RS/R6RS libraries and top-level programs,
+<a class="link" href="">see above</a>.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="LoadingR5intoR7Section"></a>7.3. Loading compiled R5RS files into an R7RS session</h3></div></div></div><p>When a file is compiled, the compiler must make assumptions
+about the meanings of its free identifiers.</p><p>When R5RS code is compiled, Larceny's compiler assumes all
+free identifiers refer to the flat global naming environment
+prescribed by the R5RS standard.</p><p>When an R7RS/R6RS library or top-level program is compiled,
+Larceny's compiler assumes all free identifiers refer to
+identifiers imported from other libraries.  That assumption
+is checked at both compile time and at run time.  At compile
+time, the compiler refuses to compile a library if one or
+more of its free identifiers is not imported.  The compiler
+also records the current versions of all imported libraries,
+so Larceny's import mechanism can check at run time to make
+sure all of the imported libraries are still consistent with
+the libraries imported at compile time.</p><p>The facts stated above imply compiled R5RS code can only be
+loaded into the flat global environment provided by Larceny's
+underlying R5RS layer, and compiled R7RS/R6RS code can only
+be imported by or loaded into an R7RS/R6RS program or
+interactive session.</p><p>R5RS source code can be loaded into an interactive R7RS
+session, but it will be loaded as though it were R7RS code
+rather than R5RS code.  That means loading R5RS source code
+into an interactive R7RS session behaves differently from
+loading compiled R5RS code into an interactive R7RS session.</p><p>When compiled R5RS code is loaded into an interactive R7RS
+session, it is loaded into Larceny's underlying R5RS layer.
+The procedures it defines can then be imported into
+the R7RS session using Larceny's
+<a class="link" href="ar01s04.html#R7rsPrimitivesSection" title="4.7. Importing procedures from Larceny's underlying R5RS system">primitives</a>
+extension to <code class="literal">import</code> syntax.</p><p>When R5RS source code is loaded into an interactive R7RS
+session, however, it will behave as though the source code
+had been typed interactively.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s06.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s08.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>5. Lexical syntax</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="Larceny User Manual" /><link rel="up" href="index.html" title="Larceny User Manual" /><link rel="prev" href="ar01s04.html" title="4. R7RS/R6RS Libraries" /><link rel="next" href="ar01s06.html" title="6. File naming conventions" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ar01s04.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s06.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="LexicalChapter"></a>5. Lexical syntax</h2></div></div></div><p>Larceny's default lexical syntax extends the lexical syntax
+required by the R5RS, R6RS, and R7RS <a class="link" href="ar01s14.html" title="14. Standards">standards</a>.</p><p>The R6RS forbids most lexical extensions, however, so Larceny
+provides several mechanisms for turning its lexical extensions
+on and off.</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="FlagsSection"></a>5.1. Flags</h3></div></div></div><p>By default, Larceny recognizes several Larceny-specific flags
+of the form permitted by the R6RS.  The flag you are most
+likely to encounter represents one of Larceny's unspecified
+values:</p><pre class="screen">    #!unspecified</pre><p>Certain other flags have special meanings to Larceny's
+<code class="literal">read</code> and <code class="literal">get-datum</code> procedures.  They are described below.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="CaseFoldingSection"></a>5.2. Case-sensitivity</h3></div></div></div><p>By default, Larceny is case-sensitive.
+This global default can be overridden by specifying
+<code class="literal">—foldcase</code> or <code class="literal">—nofoldcase</code> on Larceny's command line,
+or by changing the value of Larceny's <code class="literal">case-sensitive?</code> parameter.</p><p>The case-sensitivity of a particular textual input port
+is affected by reading one of the following flags from
+the port using the <code class="literal">read</code> or <code class="literal">get-datum</code> procedures:</p><pre class="screen">    #!fold-case
+    #!no-fold-case</pre><p>The <code class="literal">#!fold-case</code> flag enables case-folding on data read from
+the port by the <code class="literal">read</code> and <code class="literal">get-datum</code> procedures, while the
+<code class="literal">#!no-fold-case</code> flag disables case-folding.  The behavior
+established by one of these flags extends to the next such flag
+read from the port by <code class="literal">read</code> or <code class="literal">get-datum</code>.</p><p>Both <code class="literal">#!fold-case</code> and <code class="literal">#!no-fold-case</code> are treated as comments
+by Larceny's <code class="literal">read</code> and <code class="literal">get-datum</code> procedures.  (This is a change
+from Larceny v0.97.)</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="LexicalExtensionsSection"></a>5.3. Lexical extensions</h3></div></div></div><p>When a port is first opened, the Larceny-specific lexical
+extensions that are accepted on the port are determined
+by Larceny's <a class="link" href="ar01s05.html#LexicalParametersSection" title="5.4. Lexical parameters">lexical parameters</a>.</p><p>The following flags change the case-sensitivity and lexical
+extensions on the specific port from which they are read:</p><pre class="screen">    #!r7rs         ; implies #!no-fold-case, enables R7RS syntax
+    #!r6rs         ; implies #!no-fold-case, negates other flags
+    #!r5rs         ; implies #!fold-case, enables R7RS syntax
+    #!err5rs       ; enables R7RS/R6RS syntax with extensions
+    #!larceny      ; implies #!no-fold-case and #!err5rs</pre><p>All of those flags are treated as comments by Larceny's <code class="literal">read</code>
+and <code class="literal">get-datum</code> procedures.  (This is a change from Larceny
+v0.97.)</p><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>The <code class="literal">#!r6rs</code> flag is the only flag that <span class="emphasis"><em>disables</em></span> lexical
+extensions.  To disable R6RS lexical extensions when new ports
+are created, use the
+<a class="link" href="ar01s05.html#LexicalParametersSection" title="5.4. Lexical parameters"><code class="literal">read-r6rs-weirdness?</code> parameter</a>
+described below.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="LexicalParametersSection"></a>5.4. Lexical parameters</h3></div></div></div><p>When given no argument, these parameters return the current
+default for some aspects of the lexical syntax that will be
+accepted on newly created input ports or written to newly
+created output ports.
+When given an argument, these procedures change the default
+as specified by the argument.</p><p>The initial values of these parameters are determined by the
+<code class="literal">-r7r6</code>, <code class="literal">-r7rs</code>, <code class="literal">-r6rs</code>, or <code class="literal">-r5rs</code> options on Larceny's
+command line.  The <code class="literal">-r6rs</code> option disables non-R6RS lexical
+syntax; the <code class="literal">-r7r6</code>, <code class="literal">-r7rs</code>, and <code class="literal">-r5rs</code> options allow both
+R7RS and R6RS syntax.</p><p><a id="case-sensitive?"></a>
+<span class="emphasis"><em> Procedure case-sensitive?</em></span>
+<p>
+<a id="id2548376" class="indexterm"></a>
+<code class="literal">(case-sensitive? <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p>
+<p><code class="literal">(case-sensitive? <span class="emphasis"><em>boolean</em></span>) </code></p></p><p>If true, newly created textual input ports behave as though they
+began with <code class="literal">!fold-case</code>.  If false, newly created textual input
+ports behave as though they began with <code class="literal">!no-fold-case</code>.</p><p><a id="read-r6rs-flags?"></a>
+<span class="emphasis"><em> Procedure read-r6rs-flags?</em></span>
+<p>
+<a id="id2548435" class="indexterm"></a>
+<code class="literal">(read-r6rs-flags? <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p>
+<p><code class="literal">(read-r6rs-flags? <span class="emphasis"><em>boolean</em></span>) </code></p></p><p>If true, allows flags other than <code class="literal">!r6rs</code> to be read from
+newly created ports.
+If false, flags other than <code class="literal">!r6rs</code> raise exceptions when
+read.</p><p><a id="read-r7rs-weirdness?"></a>
+<span class="emphasis"><em> Procedure read-r7rs-weirdness?</em></span>
+<p>
+<a id="id2548492" class="indexterm"></a>
+<code class="literal">(read-r7rs-weirdness? <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p>
+<p><code class="literal">(read-r7rs-weirdness? <span class="emphasis"><em>boolean</em></span>) </code></p></p><p>If true, newly created textual input ports behave as though they
+began with <code class="literal">#!r7rs</code>, and R7RS lexical syntax will be used when
+writing external representations to newly created textual output
+ports.
+If false, R7RS-specific extensions to R5RS/R6RS lexical syntax
+may raise exceptions.</p><p><a id="read-r6rs-weirdness?"></a>
+<span class="emphasis"><em> Procedure read-r6rs-weirdness?</em></span>
+<p>
+<a id="id2548547" class="indexterm"></a>
+<code class="literal">(read-r6rs-weirdness? <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p>
+<p><code class="literal">(read-r6rs-weirdness? <span class="emphasis"><em>boolean</em></span>) </code></p></p><p>If true, allows all R6RS lexical syntax on newly created ports
+without disabling other lexical syntax on those ports (so
+newly created textual input ports <span class="emphasis"><em>do not</em></span> behave as though
+they began with <code class="literal">#!r6rs</code>).
+If false, R6RS-specific extensions to R5RS/R7RS lexical syntax
+may raise exceptions.</p><p>If <code class="literal">read-r6rs-weirdness?</code> is true and <code class="literal">read-r7rs-weirdness?</code>
+is false, then the R6RS bytevector syntax will be used when
+writing to newly opened textual output ports.  If neither
+or both are true, then R7RS bytevector syntax will be used.</p><p><a id="read-larceny-weirdness?"></a>
+<span class="emphasis"><em> Procedure read-larceny-weirdness?</em></span>
+<p>
+<a id="id2548625" class="indexterm"></a>
+<code class="literal">(read-larceny-weirdness? <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p>
+<p><code class="literal">(read-larceny-weirdness? <span class="emphasis"><em>boolean</em></span>) </code></p></p><p>Determines whether newly created textual ports allow
+Larceny's usual extensions to R5RS lexical syntax.
+In addition, this parameter determines whether newly created
+ports allow <code class="literal">#</code> as an insignificant digit, which is
+required by the R5RS but disallowed by the R6RS and not
+required by the R7RS.</p><p><a id="read-traditional-weirdness?"></a>
+<span class="emphasis"><em> Procedure read-traditional-weirdness?</em></span>
+<p>
+<a id="id2548681" class="indexterm"></a>
+<code class="literal">(read-traditional-weirdness? <span class="emphasis"><em></em></span>)  =&gt; <span class="emphasis"><em>boolean</em></span></code>
+</p>
+<p><code class="literal">(read-traditional-weirdness? <span class="emphasis"><em>boolean</em></span>) </code></p></p><p>Determines whether newly created textual ports allow
+certain lexical extensions that are deprecated in Larceny.</p><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>The semantics of <code class="literal">read-larceny-weirdness?</code> and
+<code class="literal">read-traditional-weirdness?</code> will change over time as
+deprecated misfeatures are added or dropped in response to
+popular demand or apathy.
+For the current semantics of these parameters, please consult
+the Larceny developers' web page that describes
+<a class="ulink" href="https://github.com/larcenists/larceny/wiki/LexicalConversion" target="_top">Larceny's
+lexical syntax</a>.</p></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s04.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

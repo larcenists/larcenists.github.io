@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>8. R7RS standard libraries</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="Larceny User Manual" /><link rel="up" href="index.html" title="Larceny User Manual" /><link rel="prev" href="ar01s07.html" title="7. Compiling files and libraries" /><link rel="next" href="ar01s09.html" title="9. R6RS standard libraries" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ar01s07.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s09.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="R7rsChapter"></a>8. R7RS standard libraries</h2></div></div></div><p>The R7RS standard libraries are described by
+<a class="link" href="ar01s14.html" title="14. Standards">the R7RS (small) standard</a> approved in 2013.
+The
+<a class="link" href="ar01s04.html#R7rsPreDefinedSection" title="4.4. Predefined libraries">Predefined libraries</a> section
+of this manual lists the names of those libraries.</p><p>Larceny provides all of the R7RS standard libraries,
+supports the full numeric tower, and can represent all
+Unicode characters.</p><p>Binary releases of Larceny also support Unicode strings.
+(When built from source code, Larceny can be configured to
+use Latin-1 strings instead of Unicode.)</p><p>When Larceny is invoked with the <code class="literal">-r7r6</code> option on its
+command line, all of the standard R7RS and R6RS libraries
+are imported at startup.  When invoked with the <code class="literal">-r7rs</code>
+option, only <code class="literal">(scheme base)</code> is imported at startup.</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2550804"></a>8.1. Known deviations from the R7RS standard</h3></div></div></div><p>Larceny v0.99 does not implement these features of
+the R7RS standard:</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">include</code> and <code class="literal">include-ci</code> at expression level
+</li></ul></div><p><code class="literal">include</code> and <code class="literal">include-ci</code> are fully supported
+at the top-level declaration and definition levels of R7RS
+libraries.</p><p>Larceny v0.99 does not allow libraries to define the names
+<code class="literal">primitives</code> or <code class="literal">program</code>.
+(Larceny reserves <a class="link" href="ar01s04.html#R7rsPrimitivesSection" title="4.7. Importing procedures from Larceny's underlying R5RS system">primitives</a> as a
+keyword for importing identifiers from the R5RS global
+environment, and reserves <code class="literal">program</code> for no good reason.)
+Larceny does allow top-level programs to define those names.</p><p>To simplify interoperability with R6RS libraries and
+programs, the <code class="literal">integer?</code>, <code class="literal">rational?</code>, and <code class="literal">real?</code>
+procedures exported by <code class="literal">(scheme base)</code> have R6RS semantics.
+It is not clear whether that is fully compatible with the
+R7RS (small) standard, because the R7RS specification of
+those procedures appears to contradict itself.</p><p>If any other R7RS feature is missing or incompatible with
+the R7RS (small) standard, it's a bug.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s07.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s09.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

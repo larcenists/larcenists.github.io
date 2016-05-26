@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>4. R7RS/R6RS Libraries</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="Larceny User Manual" /><link rel="up" href="index.html" title="Larceny User Manual" /><link rel="prev" href="ar01s03.html" title="3. Running Larceny" /><link rel="next" href="ar01s05.html" title="5. Lexical syntax" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ar01s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s05.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="LibrariesChapter"></a>4. R7RS/R6RS Libraries</h2></div></div></div><p>The R6RS standard added a <code class="literal">library</code> mechanism for batch programs.
+The R7RS standard added a similar <code class="literal">define-library</code> syntax with
+several new features, and allowed libraries to be used within
+interactive read/eval/print loops as well as batch programs.</p><p>The libraries discussed within this chapter cannot be used in
+Larceny's R5RS mode.</p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id2547162"></a>4.1. Interactive computing</h3></div></div></div><p>Larceny's <code class="literal">-r7rs</code> command-line option automatically imports the
+<code class="literal">(scheme base)</code> library.  The <code class="literal">-r7r6</code> command-line option imports
+all of the R7RS and R6RS standard libraries, including those
+deprecated by Larceny.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="R7rsAutomaticLoadingSection"></a>4.2. Automatic loading</h3></div></div></div><p>As an extension to the R7RS and R6RS, Larceny attempts to load
+libraries automatically when they are first imported.
+Autoloading makes interactive development and
+<a class="link" href="ar01s07.html" title="7. Compiling files and libraries">separate compilation</a>
+much more convenient.</p><p>All of Larceny's
+<a class="link" href="ar01s04.html#R7rsPreDefinedSection" title="4.4. Predefined libraries">predefined libraries</a>
+can be autoloaded.</p><p>To enable autoloading of other R7RS/R6RS libraries,
+including libraries you've written yourself, you can:</p><div class="itemizedlist"><ul type="disc"><li>
+use the <a class="link" href=""><code class="literal">-path</code> command-line option</a>
+</li><li>
+use the <a class="link" href="ar01s04.html#R7rsLibraryVariableSection" title="4.5. Library path"><code class="literal">LARCENY_LIBPATH</code></a> environment variable
+</li><li>
+use <a class="link" href="ar01s06.html#current-require-path"><code class="literal">current-require-path</code></a>
+</li><li>
+edit <code class="literal">startup.sch</code> in Larceny's root directory
+</li><li>
+add the libraries to Larceny's <code class="literal">lib</code> directory
+</li></ul></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="R7rsDynamicLoadingSection"></a>4.3. Explicit loading</h3></div></div></div><p>Larceny automatically loads R7RS/R6RS libraries when
+they are first imported.  This is usually the most
+convenient way to load a library, but autoloading
+can't be used to load a top-level program into an
+interactive session.  Explicit
+loading is needed for top-level programs, for libraries
+that don't reside in Larceny's
+<a class="link" href="ar01s06.html#current-require-path"><code class="literal">current-require-path</code></a>,
+and for libraries that are defined in files whose names
+do not follow Larceny's
+<a class="link" href="ar01s06.html" title="6. File naming conventions">standard naming conventions</a>.</p><p>In theory, explicit loading is the only portable way for R7RS
+programs to load a library.
+<a class="link" href="ar01s06.html#LibraryResolutionSection" title="6.3. Resolving references to libraries">There is no portable way for R6RS programs to load or import libraries</a>,
+so R6RS programs must rely upon implementation-specific
+mechanisms such as Larceny's autoloading.</p><p>For explicit loading of nonstandard libraries, top-level
+programs, or unadorned R5RS-style code from a file, you
+must first import a suitable load procedure:</p><pre class="screen">    &gt; (import (scheme load))</pre><p>Loading a library does not automatically import it.
+To use the variables and syntax that are exported by a
+library, you must import that library explicitly:</p><pre class="screen">    &gt; (load "lib/R6RS/larceny/benchmarking.sls")
+    &gt; (import (larceny benchmarking))
+    &gt; (time (vector-for-each + (make-vector 1000000 0)))
+    Words allocated: 3053286
+    Elapsed time...: 25 ms (User: 25 ms; System: 0 ms)
+    Elapsed GC time: 3 ms (CPU: 2 in 2 collections (1 minor).)</pre><p>In Larceny, you may omit the call to <code class="literal">load</code> because the
+<code class="literal">(larceny benchmarking)</code> library will be autoloaded when
+it is imported.  In other implementations of the R7RS, you
+may have to load all of the nonstandard libraries that will
+be imported by a top-level program or library before you
+load that top-level program or library.</p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="R7rsPreDefinedSection"></a>4.4. Predefined libraries</h3></div></div></div><p>Larceny predefines several nonstandard libraries in addition
+to the standard R7RS and R6RS libraries, and autoloads them
+for your convenience.  The predefined, autoloadable libraries
+include:</p><p>Composite library:</p><pre class="literallayout">(larceny r7r6)                         ; all R7RS/R6RS standard libraries</pre><p>R7RS standard libraries:</p><pre class="literallayout">(scheme base)
+(scheme case-lambda)
+(scheme char)
+(scheme complex)
+(scheme cxr)
+(scheme eval)
+(scheme file)
+(scheme inexact)
+(scheme lazy)
+(scheme load)
+(scheme process-context)
+(scheme r5rs)
+(scheme read)
+(scheme repl)
+(scheme time)
+(scheme write)</pre><p>R6RS standard libraries:</p><pre class="literallayout">(rnrs base (6))                        ; R6RS chapter 9
+(rnrs unicode (6))                     ; R6RS library chapter 1
+(rnrs bytevectors (6))                 ; R6RS library chapter 2
+(rnrs lists (6))                       ; R6RS library chapter 3
+(rnrs sorting (6))                     ; R6RS library chapter 4
+(rnrs control (6))                     ; R6RS library chapter 5
+(rnrs exceptions (6))                  ; R6RS library section 7.1
+(rnrs conditions (6))                  ; R6RS library sections 7.2 and 7.3
+(rnrs io ports (6))                    ; R6RS library sections 8.1 and 8.2
+(rnrs io simple (6))                   ; R6RS library sections 8.1 and 8.3
+(rnrs files (6))                       ; R6RS library chapter 9
+(rnrs programs (6))                    ; R6RS library chapter 10
+(rnrs arithmetic fixnums (6))          ; R6RS library section 11.2
+(rnrs arithmetic flonums (6))          ; R6RS library section 11.3
+(rnrs arithmetic bitwise (6))          ; R6RS library section 11.4
+(rnrs syntax-case (6))                 ; R6RS library chapter 12
+(rnrs hashtables (6))                  ; R6RS library chapter 13
+(rnrs enums)                           ; R6RS library chapter 14
+(rnrs (6))                             ; R6RS library chapter 15
+(rnrs eval (6))                        ; R6RS library chapter 16
+(rnrs mutable-pairs (6))               ; R6RS library chapter 17
+(rnrs mutable-strings (6))             ; R6RS library chapter 18
+(rnrs r5rs (6))                        ; R6RS library chapter 19</pre><p>R6RS standard libraries that are autoloadable but deprecated in Larceny
+because they have been superseded by the R7RS and SRFI 99 record
+facilities:</p><pre class="literallayout">(rnrs records procedural (6))          ; R6RS library section 6.3
+(rnrs records inspection (6))          ; R6RS library section 6.4
+(rnrs records syntactic (6))           ; R6RS library section 6.2</pre><p>SRFI libraries:</p><pre class="literallayout">(srfi 1 lists)                         ; list library
+(srfi 2 and-let*)                      ; extended `and` and `let*`
+(srfi 5 let)                           ; extended version of `let`
+(srfi 6 basic-string-ports)            ; basic string ports
+(srfi 8 receive)                       ; binding to multiple values
+(srfi 9 records)                       ; defining record types
+(srfi 11 let-values)                   ; syntax for multiple values
+(srfi 13 strings)                      ; string libraries
+(srfi 14 char-sets)                    ; character-set library (default)
+(srfi 14 unicode)                      ;   for all Unicode characters
+(srfi 14 bmp)                          ;   for the Basic Multilingual Plane
+(srfi 14 latin-1)                      ;   for ISO 8859-1 (Latin-1)
+(srfi 16 case-lambda)                  ; syntax for variable arity
+(srfi 17 generalized-set!)             ; generalized set!
+(srfi 19 time)                         ; time data types and procedures
+(srfi 23 error)                        ; error reporting mechanism
+(srfi 25 multi-dimensional-arrays)     ; multi-dimensional array primitives
+(srfi 26 cut)                          ; specializing without currying
+(srfi 27 random-bits)                  ; sources of random bits
+(srfi 28 basic-format-strings)         ; basic format strings
+(srfi 29 localization)                 ; localization
+(srfi 31 rec)                          ; `rec` syntax
+(srfi 37)                              ; program argument processor
+(srfi 38 with-shared-structure)        ; i/o for data with shared structure
+(srfi 39 parameters)                   ; parameter objects
+(srfi 41 streams)                      ; streams
+(srfi 42 eager-comprehensions)         ; eager comprehensions
+(srfi 45 lazy)                         ; iterative lazy algorithms
+(srfi 48 intermediate-format-strings)  ; format
+(srfi 51 rest-values)                  ; rest values hackery
+(srfi 54 cat)                          ; still more formatting
+(srfi 59 vicinities)                   ; vicinity
+(srfi 61 cond)                         ; a more general cond clause
+(srfi 63 arrays)                       ; homogeneous, heterogeneous arrays
+(srfi 64 testing)                      ; an API for test suites
+(srfi 67 compare-procedures)           ; three-way comparison procedures
+(srfi 78 lightweight-testing)          ; lightweight testing
+(srfi 87 case)                         ; a more general case clause
+(srfi 98 os-environment-variables)     ; environment variables
+(srfi 99 records)                      ; (composite library)
+(srfi 99 records procedural)           ; (procedural API)
+(srfi 99 records inspection)           ; (inspection API)
+(srfi 99 records syntactic)            ; (syntactic API)
+(srfi 101 random-access-lists)         ; fast and purely functional lists
+(srfi 111 boxes)                       ; boxes
+(srfi 112)                             ; environment inquiry
+(srfi 113 sets)                        ; sets and bags
+(srfi 114 comparators)                 ; comparators
+(srfi 115 regexp)                      ; regular expressions
+(srfi 116 ilists)                      ; immutable lists
+(srfi 117)                             ; queues based on lists
+(srfi 121)                             ; generators
+(srfi 123)                             ; generic accessor/modifier operators
+(srfi 124)                             ; ephemerons
+(srfi 125)                             ; hash tables
+(srfi 126)                             ; R6RS-based hashtables
+(srfi 127)                             ; lazy sequences
+(srfi 128)                             ; comparators (reduced)
+(srfi 129)                             ; titlecase procedures
+(srfi 130)                             ; cursor-based string library
+(srfi 131)                             ; ERR5RS record syntax (reduced)
+(srfi 132)                             ; sort libraries
+(srfi 133)                             ; vector library
+(srfi 134)                             ; immutable deques</pre><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>For backward compatibility,
+<code class="literal">(srfi 1 lists)</code> through <code class="literal">(srfi 101 random-access-lists)</code> are also
+available with the SRFI 97 naming convention in which the number is
+preceded by a colon, as in <code class="literal">(srfi :1 lists)</code>.
+With the more liberal R7RS syntax, that SRFI 97 naming convention
+is now unnecessary.
+Larceny has extended the R6RS <code class="literal">library</code> syntax to allow R6RS libraries
+to import R7RS libraries that follow the R7RS naming convention shown
+in the list above.</p></div><p>SRFI libraries that are autoloadable but deprecated in Larceny,
+usually because they have been superseded in whole or in part by
+R7RS or R6RS libraries or syntax (shown in parentheses):</p><pre class="literallayout">(srfi 0)                               ; cond-expand (scheme base)
+(srfi 30)                              ; nested multi-line comments (#| |#)
+(srfi 34)                              ; exception handling (scheme base)
+(srfi 43 vectors)                      ; vector library (srfi 133)
+(srfi 55)                              ; require-extension (import)
+(srfi 60 integer-bits)                 ; see (rnrs arithmetic bitwise)
+(srfi 62)                              ; S-expression comments ( #; )
+(srfi 66 octet-vectors)                ; octet vectors (scheme base)
+(srfi 69 basic-hash-tables)            ; hash tables (srfi 125), (srfi 126)
+(srfi 71 let)                          ; extensions of let, let*, letrec
+(srfi 74 blobs)                        ; see (rnrs bytevectors)
+(srfi 95 sorting-and-merging)          ; sorting and merging (srfi 132)</pre><p>ERR5RS libraries that are autoloadable but deprecated in Larceny
+because they have been superseded by the R7RS, SRFI 99, and SRFI 131
+record facilities:</p><pre class="literallayout">(err5rs records procedural)            ; ERR5RS records (procedural API)
+(err5rs records inspection)            ; ERR5RS records (inspection API)
+(err5rs records syntactic)             ; ERR5RS records (syntactic API)
+(err5rs load)                          ; ERR5RS load procedure</pre><p>Other autoloadable libraries:</p><pre class="literallayout">(larceny load)                         ; extension of (err5rs load)
+(larceny compiler)                     ; separate compilation (R7RS/R6RS)
+(larceny benchmarking)                 ; timing facilities
+(larceny profiling)                    ; profiling of Scheme code
+(larceny r7r6)                         ; all R7RS/R6RS standard libraries
+(larceny records printer)              ; custom printing of records
+(larceny shivers-syntax)               ; syntax favored by Olin Shivers
+(r5rs)                                 ; approximates the R5RS top level
+(explicit-renaming)                    ; macros with explicit renaming</pre></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="R7rsLibraryVariableSection"></a>4.5. Library path</h3></div></div></div><p>Larceny's autoload feature locates R7RS/R6RS libraries
+by performing a
+<a class="link" href="ar01s06.html#LibraryTranslationSection" title="6.4. Mapping library names to files (R7RS/R6RS)">depth-first search</a>
+of the directories that belong to Larceny's
+<a class="link" href="ar01s06.html#current-require-path"><code class="literal">current-require-path</code></a>.
+Libraries will not be autoloaded unless they are defined
+in files whose names follow
+<a class="link" href="ar01s06.html" title="6. File naming conventions">Larceny's standard conventions</a>.</p><p>The
+<a class="link" href="ar01s06.html#current-require-path"><code class="literal">current-require-path</code></a>
+is initialized by the <code class="literal">startup.sch</code> file in Larceny's root
+directory.</p><p><a class="link" href="">Larceny's <code class="literal">-path</code> command-line option</a>
+adds one or more directories to the directories in the
+<a class="link" href="ar01s06.html#current-require-path"><code class="literal">current-require-path</code></a>.
+On most systems, you can specify multiple directories
+by separating them with a colon; under Windows, use a
+semicolon as separator instead.  The first directory
+listed will be searched first.</p><p>The <a class="link" href=""><code class="literal">LARCENY_LIBPATH</code></a>
+environment variable can also be used to add one or more directories
+to the directories in the
+<a class="link" href="ar01s06.html#current-require-path"><code class="literal">current-require-path</code></a>.
+Multiple directories should be specified as with the <code class="literal">-path</code> option.</p><div class="tip" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Tip</h3><p>If you have a set of portable libraries that run under more than
+one implementation of the R7RS, and you want to have a special
+version of some of those libraries for Larceny, you can put all
+your portable versions in one directory and the Larceny-specific
+versions in another.  When you run Larceny, use the <code class="literal">-path</code>
+option and specify the Larceny-specific directory first.</p></div><div class="note" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Note</h3><p>The <code class="literal">-path</code> option cannot be used by Scheme scripts,
+because command-line options are passed along to the Scheme
+script without being interpreted by the <code class="literal">scheme-script</code> processor.</p></div><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>We emphasize that these extensions are non-portable.
+Other implementations of the R7RS or R6RS may not provide
+anything comparable to Larceny's <code class="literal">-path</code> option or
+<code class="literal">LARCENY_LIBPATH</code> environment variable.
+Even if they do, their mappings from library names
+to file names may be incompatible with Larceny's.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="DefiningLibrariesSection"></a>4.6. Defining libraries</h3></div></div></div><p>As an extension to the R7RS and R6RS, Larceny allows a top-level
+program or Scheme script to define R7RS/R6RS libraries within
+the file that contains the top-level program or Scheme
+script, before the import form that begins the top-level
+program.  These libraries must be arranged so that no
+library depends upon libraries that come later in the
+file.</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>We emphasize that this extension is non-portable.</p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="R7rsPrimitivesSection"></a>4.7. Importing procedures from Larceny's underlying R5RS system</h3></div></div></div><p>Any of Larceny's R5RS-mode top-level procedures can be imported
+into an R7RS or R6RS library or program by using an import
+declaration with a <code class="literal">primitives</code> clause that names the R5RS
+procedures to be imported.  For example:</p><pre class="screen">    (import (primitives random current-seconds
+                        getenv setenv system
+                        current-directory file-modification-time)
+            (scheme time))</pre><div class="warning" style="margin-left: 0; margin-right: 10%;"><h3 class="title">Warning</h3><p>This feature is highly non-portable.
+Other implementations of the R7RS or R6RS may not even
+have an underlying implementation of the R5RS.</p></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s03.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>
