@@ -1,54 +1,69 @@
 Notes on R7RS benchmarking
 ==========================
-7 March 2015
+24 June 2016
 
 
-Larceny v0.98 runs all benchmarks successfully.
+Larceny v0.99 runs all benchmarks successfully.
 
-Petit Larceny v0.98 fails on the compiler benchmark.
+Petit Larceny v0.99 fails on the compiler benchmark.
 
-Chibi Scheme 0.7 fails on the following benchmarks:
+Chibi Scheme 0.7.3 fails on the following benchmarks:
 
-    pi          timed out after an hour
+    pi          returned incorrect result after 206 seconds
+    earley      timed out after an hour
+    gcbench     timed out after an hour
 
-Chicken Scheme 4.9.0.1 fails on the following benchmarks:
+Chicken Scheme 4.11.0 fails on the following benchmarks:
 
     earley      ran out of heap memory
+    equal       timed out after an hour
 
 Foment Scheme 0.4 (debug) fails on the following benchmarks:
 
-    divrec      mysterious early exit from program
     pi          mysterious early exit from program
-    ack         mysterious early exit from program
-    array1      mysterious early exit from program
-    string      mysterious early exit from program
-    compiler    assertion failure (623)../src/execute.cpp
-    dynamic     mysterious early exit from program
     earley      timed out after an hour
-    graphs      segmentation fault
-    paraffins   mysterious early exit from program
-    primes      mysterious early exit from program
-    quicksort   mysterious early exit from program
+    graphs      segmentation fault after 952 seconds
+    paraffins   segmentation fault after less than 1 second
     nboyer      timed out after an hour
     sboyer      timed out after an hour
-    perm        segmentation fault
+    perm        timed out after an hour
     equal       timed out after an hour
 
 Gauche 0.9.4 fails on the following benchmarks:
 
-    browse      read error while parsing source program
     dynamic     error reported during execution of program
     gcbench     allows record type definitions only at top level
 
-Kawa 2.0 fails on the following benchmarks:
+Kawa 2.1 fails on the following benchmarks:
 
     cpstak      java.lang.StackOverflowError
     ack         java.lang.StackOverflowError
-    compiler    claims proper-definition? is unbound
-    earley      timed out after an hour
+    compiler    spurious error message generated during compilation
+    conform     java.lang.VerifyError
     graphs      java.lang.StackOverflowError
+    parsing     java.lang.VerifyError
+    slatex      java.net.UnknownServiceException
     nboyer      returned incorrect result very quickly
-    sboyer      improperly rejects at expansion time
+    sboyer      improperly rejects at compile time
+
+Picrin v0.1 fails on the following benchmarks:
+
+    mbrotZ      does not support (scheme complex)
+    nucleic     spurious out-of-range error
+    pi          does not support (scheme char)
+    pnpoly      spurious undefined variable error
+    ack         VM stack overflow
+    compiler    does not support (scheme char)
+    dynamic     VM stack overflow
+    earley      timed out after an hour
+    paraffins   VM stack overflow
+    parsing     does not support (scheme char)
+    primes      VM stack overflow
+    scheme      does not support (scheme char)
+    slatex      does not support (scheme char)
+    nboyer      timed out after an hour
+    gcbench     timed out after an hour
+    perm        timed out after an hour
     equal       timed out after an hour
 
 

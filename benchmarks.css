@@ -38,6 +38,7 @@ table.benchmarks .mosh       { background-color:#c02040; }
 table.benchmarks .mzscheme   { background-color:#008020; }
 table.benchmarks .plt        { background-color:#008020; }
 table.benchmarks .petite     { background-color:#801040; }
+table.benchmarks .picrin     { background-color:#604020; }
 table.benchmarks .racket     { background-color:#008020; }
 table.benchmarks .scheme48   { background-color:#602040; }
 table.benchmarks .vicare     { background-color:#802080; }
