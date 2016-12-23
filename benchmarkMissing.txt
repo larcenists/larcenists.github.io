@@ -20,6 +20,19 @@ Chicken Scheme 4.11.0 fails on the following benchmarks:
     earley      ran out of heap memory
     equal       timed out after an hour
 
+Cyclone 0.1.0 fails on the following benchmarks:
+
+    sumfp       returned incorrect result
+    mbrotZ      complex numbers not supported
+    pi          timed out after an hour
+    array1      out of memory error
+    compiler    compilation step took more than an hour
+    graphs      timed out after an hour
+    scheme      errors reported by C compiler
+    slatex      compilation step took more than an hour
+    gcbench     segmentation fault
+    equal       timed out after an hour
+
 Foment Scheme 0.4 (debug) fails on the following benchmarks:
 
     pi          mysterious early exit from program
@@ -68,7 +81,7 @@ Picrin v0.1 fails on the following benchmarks:
     perm        timed out after an hour
     equal       timed out after an hour
 
-Gauche 0.6.4 fails on the following benchmarks:
+Sagittarius 0.6.4 fails on the following benchmark:
 
     dynamic     error reported during execution of program
 

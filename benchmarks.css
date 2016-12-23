@@ -28,6 +28,7 @@ table.benchmarks .bigloo     { background-color:#000080; }
 table.benchmarks .chez       { background-color:#004040; }
 table.benchmarks .chibi      { background-color:#20c020; }
 table.benchmarks .chicken    { background-color:#a08040; }
+table.benchmarks .cyclone    { background-color:#a0b060; }
 table.benchmarks .foment     { background-color:#604040; }
 table.benchmarks .gambit     { background-color:#400060; }
 table.benchmarks .gauche     { background-color:#60e020; }
