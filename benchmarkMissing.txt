@@ -1,9 +1,9 @@
 Notes on R7RS benchmarking
 ==========================
-24 June 2016
+24 May 2017
 
 
-Larceny v0.99 runs all benchmarks successfully.
+Larceny v0.99 and Sagittarius 0.8.4 run all benchmarks successfully.
 
 Petit Larceny v0.99 fails on the following benchmark:
 
@@ -15,23 +15,15 @@ Chibi Scheme 0.7.3 fails on the following benchmarks:
     earley      timed out after an hour
     gcbench     timed out after an hour
 
-Chicken Scheme 4.11.0 fails on the following benchmarks:
+Chicken Scheme 4.12.0 fails on the following benchmarks:
 
     earley      ran out of heap memory
     equal       timed out after an hour
 
-Cyclone 0.1.0 fails on the following benchmarks:
+Cyclone 0.5.1 fails on the following benchmarks:
 
-    sumfp       returned incorrect result
     mbrotZ      complex numbers not supported
-    pi          timed out after an hour
-    array1      out of memory error
-    compiler    compilation step took more than an hour
-    graphs      timed out after an hour
-    scheme      errors reported by C compiler
-    slatex      compilation step took more than an hour
-    gcbench     segmentation fault
-    equal       timed out after an hour
+    compiler    Invalid type: expected pair, found : #f
 
 Foment Scheme 0.4 (debug) fails on the following benchmarks:
 
@@ -47,9 +39,8 @@ Foment Scheme 0.4 (debug) fails on the following benchmarks:
 Gauche 0.9.4 fails on the following benchmarks:
 
     dynamic     error reported during execution of program
-    gcbench     allows record type definitions only at top level
 
-Kawa 2.1 fails on the following benchmarks:
+Kawa 2.4 fails on the following benchmarks:
 
     cpstak      java.lang.StackOverflowError
     ack         java.lang.StackOverflowError
@@ -81,9 +72,6 @@ Picrin v0.1 fails on the following benchmarks:
     perm        timed out after an hour
     equal       timed out after an hour
 
-Sagittarius 0.6.4 fails on the following benchmark:
-
-    dynamic     error reported during execution of program
 
 
 Notes on R6RS benchmarking
