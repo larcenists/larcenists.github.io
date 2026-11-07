@@ -37,7 +37,7 @@
 <div id="content">
 
 
-<div class="post">
+<div class="post"><br>
 <h1 class="title">Description of Benchmarks</h1>
 
 <div class="entry">
@@ -49,7 +49,7 @@ None define any libraries, since the R6RS does not
 specify any way for a portable program to define
 libraries.  Each description of a benchmark begins
 with a link to its source code, omitting
-<a href="R6src/common.sch">the part that is shared
+<a href="../R6src/common.sch">the part that is shared
 by all of these benchmarks</a>.
 </p>
 <p>
@@ -59,20 +59,26 @@ script used to run them, are
 and available for downloading.
 </p>
 <p>
+<!--
 The timings for Vicare include just-in-time compilation.
+-->
+<!--
 The timings for Racket include just-in-time assembly
 but do not include ahead-of-time compilation to byte code.
+-->
 The Larceny and Petit Larceny timings do not include
 ahead-of-time compilation to machine code.
+<!--
 Compilation time will be excluded for all implementations
 that offer a documented process for separate compilation.
+-->
 </p>
 </div>
 </div>
 
 
-<div class="post">
-<h4 class="title"><a name="geometricMean">geometricMean</a></h4>
+<div class="post"><br>
+<h3 class="title"><a name="geometricMean">geometricMean</a></h3>
 
 <div class="entry">
 <p>
@@ -86,6 +92,7 @@ An average ratio of 1.0 is the lowest possible, and
 can be achieved only by a system that is fastest on
 every benchmark.
 </p>
+<!--
 <p>
 To discourage implementors from pursuing speed at the
 expense of compatibility, systems that yield incorrect
@@ -93,93 +100,95 @@ results or cannot run a benchmark are arbitrarily
 considered to be ten times as slow on that benchmark
 as the slowest system that yields correct results.
 </p>
+-->
 </div>
 </div>
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">Gabriel Benchmarks</h3>
 
 
 <dl class="benchmarks">
-<dt><a name="browse"></a><a href="R6src/browse.sch">browse</a></dt>
+<dt><br id="browse"><a name="browse"></a><a href="../R6src/browse.sch">browse</a></dt>
 <dd>
-Browsing a data base, a Gabriel benchmark, 1000 iterations.
+Browsing a data base, a Gabriel benchmark, 10 thousand iterations.
 [May be a test of <code>string->symbol</code> and/or
 <code>symbol-&gt;string</code>.]
 </dd>
 
-<dt><a name="deriv"></a><a href="R6src/deriv.sch">deriv</a></dt>
+<dt><br id="deriv"><a name="deriv"></a><a href="../R6src/deriv.sch">deriv</a></dt>
 <dd>
 Symbolic differentiation, a Gabriel benchmark,
-ten million iterations.
+one hundred million iterations.
 </dd>
 
-<dt><a name="dderiv"></a><a href="R6src/dderiv.sch">dderiv</a></dt>
+<dt><br id="dderiv"><a name="dderiv"></a><a href="../R6src/dderiv.sch">dderiv</a></dt>
 <dd>
-Table-driven symbolic differentiation, a Gabriel benchmark,
-ten million iterations.
-Uses hashtables and association lists instead of the original
+This is a table-driven version of the
+<code><a href="#deriv">deriv</a></code> benchmark
+using hashtables and association lists instead of the original
 benchmark's property lists.
 </dd>
 
-<dt><a name="destruc"></a><a href="R6src/destruc.sch">destruc</a></dt>
+<dt><br id="destruc"><a name="destruc"></a><a href="../R6src/destruc.sch">destruc</a></dt>
 <dd>
-Destructive list operations, a Gabriel benchmark, 1000 iterations
+Destructive list operations, a Gabriel benchmark, 20 thousand iterations
 of a 600x50 problem.
 </dd>
 
-<dt><a name="diviter"></a><a href="R6src/diviter.sch">diviter</a></dt>
+<dt><br id="diviter"><a name="diviter"></a><a href="../R6src/diviter.sch">diviter</a></dt>
 <dd>
 Divides 1000 by 2 using lists as a unary notation for integers,
-a Gabriel benchmark, one million iterations.
+a Gabriel benchmark, 5 million iterations.
 This benchmark tests
 <code>null?</code>, <code>cons</code>, <code>car</code>,
 <code>cdr</code>, and little else.
 </dd>
 
-<dt><a name="divrec"></a><a href="R6src/divrec.sch">divrec</a></dt>
+<dt><br id="divrec"><a name="divrec"></a><a href="../R6src/divrec.sch">divrec</a></dt>
 <dd>
 This benchmark is the same as <code>diviter</code>
 except it uses deep recursion instead of iteration.
 </dd>
 
-<dt><a name="puzzle"></a><a href="R6src/puzzle.sch">puzzle</a></dt>
+<dt><br id="puzzle"><a name="puzzle"></a><a href="../R6src/puzzle.sch">puzzle</a></dt>
 <dd>
-Combinatorial search of a state space, a Gabriel benchmark, 500 iterations.
+Combinatorial search of a state space, a Gabriel benchmark, 5000 iterations.
 A test of arrays and classical compiler optimizations.
 This benchmark was originally written in Pascal by Forrest Baskett.
 </dd>
 
-<dt><a name="triangl"></a><a href="R6src/triangl.sch">triangl</a></dt>
+<dt><br id="triangl"><a name="triangl"></a><a href="../R6src/triangl.sch">triangl</a></dt>
 <dd>
 Another combinatorial search similar to
 <code><a href="#puzzle">puzzle</a></code>,
 a Gabriel benchmark,
-50 iterations.
+250 iterations.
 </dd>
 
-<dt><a name="tak"></a><a href="R6src/tak.sch">tak</a></dt>
+<dt><br id="tak"><a name="tak"></a><a href="../R6src/tak.sch">tak</a></dt>
 <dd>
 A triply recursive integer function related to the Takeuchi function,
 a Gabriel benchmark.
-10 iterations of <code>(tak 32 16 8)</code>.
+1 iteration of <code>(tak 42 20 11)</code>.
 A test of non-tail calls and arithmetic.
 [Historical note:
 The Symbolics 3600 performed 1 iteration of <code>(tak 18 12 6)</code>
 in 0.43 seconds using generic arithmetic.
-On our test machine, Larceny runs that benchmark in 0.00016 seconds.
-That's 2500 times as fast.]
+On our MacBook Air, Larceny runs that benchmark in 0.000096 seconds.
+That's over 4000 times as fast.]
 </dd>
 
-<dt><a name="takl"></a><a href="R6src/takl.sch">takl</a></dt>
+<dt><br id="takl"><a name="takl"></a><a href="../R6src/takl.sch">takl</a></dt>
 <dd>
-The <code><a href="#tak">tak:32:16:8</a></code> benchmark
-using lists to represent integers, a Gabriel benchmark
-(with different arguments), 2 iterations.
+Calculates <code>(tak 42 20 11)</code> using the same recursive
+algorithm as for the <code><a href="#tak">tak:42:20:11</a></code>
+benchmark but using lists to represent integers.  This too was a
+Gabriel benchmark (with different arguments).  1 iteration.
 </dd>
 
-<dt><a name="ntakl"></a><a href="R6src/ntakl.sch">ntakl</a></dt>
+<dt><br id="ntakl"><a name="ntakl"></a><a href="../R6src/ntakl.sch">ntakl</a></dt>
 <dd>
 The <code><a href="#takl">takl</a></code> benchmark contains a
 peculiar boolean expression.  Rewriting that expression into a
@@ -187,21 +196,18 @@ more readable idiom allows some compilers to generate better
 code for it.
 </dd>
 
-<dt><a name="cpstak"></a><a href="R6src/cpstak.sch">cpstak</a></dt>
+<dt><br id="cpstak"><a name="cpstak"></a><a href="../R6src/cpstak.sch">cpstak</a></dt>
 <dd>
-The <code><a href="#tak">tak:32:16:8</a></code> benchmark
-in continuation-passing style, 5 iterations.
+The <code><a href="#tak">tak:42:20:11</a></code> benchmark
+in continuation-passing style, 1 iteration.
 A test of closure creation.
 </dd>
 
-<dt><a name="ctak"></a><a href="R6src/ctak.sch">ctak</a></dt>
+<dt><br id="ctak"><a name="ctak"></a><a href="../R6src/ctak.sch">ctak</a></dt>
 <dd>
 The <code><a href="#tak">tak:32:16:8</a></code> benchmark
-in continuation-capturing style, 1 iteration.
+in continuation-capturing style, 5 iterations.
 A test of <code>call-with-current-continuation</code>.
-[Larceny's code for <code>call-with-current-continuation</code> is now
-written in C, and most of its time on this benchmark is spent crossing
-the Scheme/C barrier.]
 </dd>
 
 </dl>
@@ -209,83 +215,81 @@ the Scheme/C barrier.]
 
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">Numerical Benchmarks</h3>
 
 <dl class="benchmarks">
 
-<dt><a name="fib"></a><a href="R6src/fib.sch">fib</a></dt>
+<dt><br id="fib"><a name="fib"></a><a href="../R6src/fib.sch">fib</a></dt>
 <dd>
 Doubly recursive computation of the 40th fibonacci number
 (102334155), using <code>(&lt; n 2)</code> to terminate the
-recursion; 1 iteration.
+recursion; 10 iterations.
 </dd>
 
-<dt><a name="fibc"></a><a href="R6src/fibc.sch">fibc</a></dt>
+<dt><br id="fibc"><a name="fibc"></a><a href="../R6src/fibc.sch">fibc</a></dt>
 <dd>
 A version of <code>fib</code> that uses first class continuations;
-written by Kent Dybvig.  Calculates the 30th Fibonacci number
-(832040) 10 times.
+written by Kent Dybvig.  Calculates the 40th Fibonacci number
+(102334155) only once.
 </dd>
 
-<dt><a name="fibfp"></a><a href="R6src/fibfp.sch">fibfp</a></dt>
+<dt><br id="fibfp"><a name="fibfp"></a><a href="../R6src/fibfp.sch">fibfp</a></dt>
 <dd>
-Calculation of the 35th Fibonacci number using inexact numbers;
+Calculation of the 40th Fibonacci number using inexact numbers;
 10 iterations.
 A test of floating point arithmetic.
 Uses essentially the same code as the <code><a href="#fib">fib</a></code>
 benchmark.
 </dd>
 
-<dt><a name="sum"></a><a href="R6src/sum.sch">sum</a></dt>
+<dt><br id="sum"><a name="sum"></a><a href="../R6src/sum.sch">sum</a></dt>
 <dd>
-Sums the integers from 0 to 10000, 100000 iterations.
+Sums the integers from 0 to 1000, 5 million iterations.
+(Performs the same number of additions as the
+<code><a href="#sumfp">sumfp</a></code> benchmark described below,
+but avoids the bignum arithmetic that would be needed on some systems
+by performing a thousand times as many
+iterations of a problem that's a thousand times as small.)
 </dd>
 
-<dt><a name="sumfp"></a><a href="R6src/sumfp.sch">sumfp</a></dt>
+<dt><br id="sumfp"><a name="sumfp"></a><a href="../R6src/sumfp.sch">sumfp</a></dt>
 <dd>
-Sums the integers from 0 to 1e6, 250 iterations.
+Sums the integers from 0 to 1e6, 5 thousand iterations.
 A test of floating point arithmetic.
 Uses essentially the same code as the <code><a href="#sum">sum</a></code>
 benchmark.
 </dd>
 
-<dt><a name="fft"></a><a href="R6src/fft.sch">fft</a></dt>
+<dt><br id="fft"><a name="fft"></a><a href="../R6src/fft.sch">fft</a></dt>
 <dd>
-Fast Fourier Transform on 65536 real-valued points, 50 iterations.
+Fast Fourier Transform on 65536 real-valued points, 1000 iterations.
 A test of floating point arithmetic.
 </dd>
 
-<dt><a name="mbrot"></a><a href="R6src/mbrot.sch">mbrot</a></dt>
+<dt><br id="mbrot"><a name="mbrot"></a><a href="../R6src/mbrot.sch">mbrot</a></dt>
 <dd>
-Generation of a Mandelbrot set, 1000 iterations on a problem of
-size 75.
+Generation of a Mandelbrot set, 25 iterations on a problem of
+size 1000.
 A test of floating point arithmetic on reals.
 </dd>
 
-<dt><a name="mbrotZ"></a><a href="R6src/mbrotZ.sch">mbrotZ</a></dt>
+<dt><br id="mbrotZ"><a name="mbrotZ"></a><a href="../R6src/mbrotZ.sch">mbrotZ</a></dt>
 <dd>
 Same as the <code><a href="#mbrot">mbrot</a></code> benchmark,
 but using complex instead of real arithmetic.
 </dd>
 
-<dt><a name="mbrot"></a><a href="R6src/mbrot.sch">mbrot</a></dt>
+<dt><br id="nucleic"><a name="nucleic"></a><a href="../R6src/nucleic.sch">nucleic</a></dt>
 <dd>
-Generation of a Mandelbrot set, 1000 iterations on a problem of
-size 75.
-A test of floating point arithmetic.
-</dd>
-
-<dt><a name="nucleic"></a><a href="R6src/nucleic.sch">nucleic</a></dt>
-<dd>
-Determination of a nucleic acid's spatial structure, 50 iterations.
+Determination of a nucleic acid's spatial structure, 200 iterations.
 A test of floating point arithmetic, and a real program.
 </dd>
 
-<dt><a name="pnpoly"></a><a href="R6src/pnpoly.sch">pnpoly</a></dt>
+<dt><br id="pnpoly"><a name="pnpoly"></a><a href="../R6src/pnpoly.sch">pnpoly</a></dt>
 <dd>
 Testing to see whether a point is contained within a 2-dimensional
-polygon, 500000 iterations (with 12 tests per iteration).
+polygon, 2 million iterations (with 12 tests per iteration).
 A test of floating point arithmetic.
 </dd>
 
@@ -294,7 +298,7 @@ A test of floating point arithmetic.
 
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">Kernighan and Van Wyk Benchmarks</h3>
 
 <div class="entry">
@@ -312,73 +316,73 @@ them into slightly more idiomatic Scheme.
 
 <dl class="benchmarks">
 
-<dt><a name="ack"></a><a href="R6src/ack.sch">ack</a></dt>
+<dt><br id="ack"><a name="ack"></a><a href="../R6src/ack.sch">ack</a></dt>
 <dd>
-A version of the Ackermann function, with arguments 3,12.
-One iteration.
+A version of the Ackermann function, with arguments 3,13.
+Just one iteration.
 </dd>
 
-<dt><a name="array1"></a><a href="R6src/array1.sch">array1</a></dt>
+<dt><br id="array1"><a name="array1"></a><a href="../R6src/array1.sch">array1</a></dt>
 <dd>
 This benchmark allocates, initializes, and copies some fairly
-large one-dimensional arrays.  100 iterations on a problem
+large one-dimensional arrays.  1 thousand iterations on a problem
 size of one million.
 </dd>
 
-<dt><a name="string"></a><a href="R6src/string.sch">string</a></dt>
+<dt><br id="string"><a name="string"></a><a href="../R6src/string.sch">string</a></dt>
 <dd>
 This tests <code>string-append</code> and <code>substring</code>,
-and very little else.  10 iterations on a problem size of 500000.
+and very little else.  5 hundred iterations on a problem size of 500000.
 </dd>
 
-<dt><a name="sum1"></a><a href="R6src/sum1.sch">sum1</a></dt>
+<dt><br id="sum1"><a name="sum1"></a><a href="../R6src/sum1.sch">sum1</a></dt>
 <dd>
 This benchmark reads and sums 100,000 floating point numbers
-ten times.  It is primarily a test of floating point input.
+100 times.  It is primarily a test of floating point input.
 </dd>
 
-<dt><a name="cat"></a><a href="R6src/cat.sch">cat</a></dt>
+<dt><br id="cat"><a name="cat"></a><a href="../R6src/cat.sch">cat</a></dt>
 <dd>
 This file-copying benchmark is a simple test of character i/o.
-It copies the King James Bible 25 times.
+It copies the King James Bible 100 times.
 </dd>
 
-<dt><a name="cat2"></a><a href="R6src/cat2.sch">cat2</a></dt>
+<dt><br id="cat2"><a name="cat2"></a><a href="../R6src/cat2.sch">cat2</a></dt>
 <dd>
 Same as <code><a href="#cat">cat</a></code> except it uses
 UTF-8 transcoding instead of Latin-1.
 </dd>
 
-<dt><a name="cat3"></a><a href="R6src/cat3.sch">cat3</a></dt>
+<dt><br id="cat3"><a name="cat3"></a><a href="../R6src/cat3.sch">cat3</a></dt>
 <dd>
 Same as <code><a href="#cat">cat</a></code> except it uses
 UTF-16 transcoding instead of Latin-1.
 </dd>
 
-<dt><a name="tail"></a><a href="R6src/tail.sch">tail</a></dt>
+<dt><br id="tail"><a name="tail"></a><a href="../R6src/tail.sch">tail</a></dt>
 <dd>
 This benchmark performs considerable character i/o.
 It prints the King James Bible verse by verse, in reverse
-order of the verses, ten times.
+order of the verses, 100 times.
 </dd>
 
-<dt><a name="wc"></a><a href="R6src/wc.sch">wc</a></dt>
+<dt><br id="wc"><a name="wc"></a><a href="../R6src/wc.sch">wc</a></dt>
 <dd>
 Another character i/o benchmark.
 It counts the number of words in the King James Bible
-25 times.
+250 times.
 </dd>
 
 </dl>
 </div>
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">More Input/Output Benchmarks</h3>
 
 <dl class="benchmarks">
 
-<dt><a name="read0"></a><a href="R6src/read0.sch">read0</a></dt>
+<dt><br id="read0"><a name="read0"></a><a href="../R6src/read0.sch">read0</a></dt>
 <dd>
 This synthetic benchmark tests the <code>read</code>
 procedure on all 1-character inputs and on all 2-character
@@ -387,21 +391,20 @@ Since most such inputs are illegal, this is largely a test
 of R6RS exception handling.
 </dd>
 
-<dt><a name="read1"></a><a href="R6src/read1.sch">read1</a></dt>
+<dt><br id="read1"><a name="read1"></a><a href="../R6src/read1.sch">read1</a></dt>
 <dd>
-Reads <code>nboyer.sch</code> 2500 times using Latin-1
+Reads <code>nboyer.sch</code> 10 thousand times.
+</dd>
+
+<dt><br id="read2"><a name="read2"></a><a href="../R6src/read2.sch">read2</a></dt>
+<dd>
+Reads <code>nboyer.sch</code> 10 thousand times using UTF-8
 transcoding.
 </dd>
 
-<dt><a name="read2"></a><a href="R6src/read2.sch">read2</a></dt>
+<dt><br id="read3"><a name="read3"></a><a href="../R6src/read3.sch">read3</a></dt>
 <dd>
-Reads <code>nboyer.sch</code> 2500 times using UTF-8
-transcoding.
-</dd>
-
-<dt><a name="read3"></a><a href="R6src/read3.sch">read3</a></dt>
-<dd>
-Reads <code>nboyer.sch</code> 2500 times using UTF-16
+Reads <code>nboyer.sch</code> 10 thousand times using UTF-16
 transcoding.
 </dd>
 
@@ -409,162 +412,161 @@ transcoding.
 </div>
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">Other Benchmarks</h3>
 
 <dl class="benchmarks">
 
-<dt><a name="bibfreq"></a><a href="R6src/bibfreq.sch">bibfreq</a></dt>
+<dt><br id="bibfreq"><a name="bibfreq"></a><a href="../R6src/bibfreq.sch">bibfreq</a></dt>
 <dd>
 Uses <code>eq?</code> hashtables to find the words that occur
 most frequently in the King James Bible.
 </dd>
 
-<dt><a name="bibfreq2"></a><a href="R6src/bibfreq2.sch">bibfreq2</a></dt>
+<dt><br id="bibfreq2"><a name="bibfreq2"></a><a href="../R6src/bibfreq2.sch">bibfreq2</a></dt>
 <dd>
 Uses <code>symbol-hash</code> hashtables to find the words
 that occur most frequently in the King James Bible.
 </dd>
 
-<dt><a name="compiler"></a><a href="R6src/compiler.sch">compiler</a></dt>
+<dt><br id="compiler"><a name="compiler"></a><a href="../R6src/compiler.sch">compiler</a></dt>
 <dd>
 A compiler kernel that looks as though it was written by Marc Feeley.
-1000 iterations on a 47-line input.
-[Although Larceny/IA32 is able to run this benchmark,
-Larceny/SPARC cannot compile it due to its assumption
-that stack frames are smaller than 4096 bytes.]
+10 thousand iterations on a 47-line input.
 </dd>
 
-<dt><a name="conform"></a><a href="R6src/conform.sch">conform</a></dt>
+<dt><br id="conform"><a name="conform"></a><a href="../R6src/conform.sch">conform</a></dt>
 <dd>
-A type checker written by Jim Miller, 200 iterations.
+A type checker written by Jim Miller, 1000 iterations.
 </dd>
 
-<dt><a name="dynamic"></a><a href="R6src/dynamic.sch">dynamic</a></dt>
+<dt><br id="dynamic"><a name="dynamic"></a><a href="../R6src/dynamic.sch">dynamic</a></dt>
 <dd>
-Dynamic type inference, self-applied, 200 iterations.
+Dynamic type inference, self-applied, 1000 iterations.
 Written by Fritz Henglein.
 A real program.
 </dd>
 
-<dt><a name="earley"></a><a href="R6src/earley.sch">earley</a></dt>
+<dt><br id="earley"><a name="earley"></a><a href="../R6src/earley.sch">earley</a></dt>
 <dd>
 Earley's parsing algorithm, parsing a 15-symbol input according to one
-of the simplest ambiguous grammars, 1 iteration.
+of the simplest ambiguous grammars, 3 iterations.
 A real program, applied to toy data whose exponential behavior
 leads to a peak heap size of half a gigabyte or more.
 </dd>
 
-<dt><a name="graphs"></a><a href="R6src/graphs.sch">graphs</a></dt>
+<dt><br id="graphs"><a name="graphs"></a><a href="../R6src/graphs.sch">graphs</a></dt>
 <dd>
 This program was provided by Andrew Wright, but we don't know much
 about it, and would appreciate more information.
 This higher order program creates closures almost as often as it
 performs non-tail procedure calls.
-One iteration on a problem of size 7.
+Ten iterations on a problem of size 7.
 </dd>
 
-<dt><a name="lattice"></a><a href="R6src/lattice.sch">lattice</a></dt>
+<dt><br id="lattice"><a name="lattice"></a><a href="../R6src/lattice.sch">lattice</a></dt>
 <dd>
 Another program that was provided by Andrew Wright,
 though it may have been written by Jim Miller.
 It enumerates the order-preserving maps between finite lattices.
-10 iterations.
+25 iterations.
 </dd>
 
-<dt><a name="matrix"></a><a href="R6src/matrix.sch">matrix</a></dt>
+<dt><br id="matrix"><a name="matrix"></a><a href="../R6src/matrix.sch">matrix</a></dt>
 <dd>
 Another program that was provided by Andrew Wright.
 Computes maximal matrices; similar to some puzzle programs.
-1000 iterations on a problem of size 5.
+10 thousand iterations on a problem of size 5.
 </dd>
 
-<dt><a name="maze"></a><a href="R6src/maze.sch">maze</a></dt>
+<dt><br id="maze"><a name="maze"></a><a href="../R6src/maze.sch">maze</a></dt>
 <dd>
-Constructs a maze on a hexagonal grid, 5000 iterations.
+Constructs a maze on a 20x7 hexagonal grid, 100 thousand iterations.
 Written by Olin Shivers.
 </dd>
 
-<dt><a name="mazefun"></a><a href="R6src/mazefun.sch">mazefun</a></dt>
+<dt><br id="mazefun"><a name="mazefun"></a><a href="../R6src/mazefun.sch">mazefun</a></dt>
 <dd>
-Constructs a maze on a rectangular grid using purely functional style,
-5000 iterations on a problem of size 11.
+Constructs a maze on an 11x11 rectangular grid using purely functional style,
+50 thousand iterations.
 Written by Marc Feeley.
 </dd>
 
-<dt><a name="nqueens"></a><a href="R6src/nqueens.sch">nqueens</a></dt>
+<dt><br id="nqueens"><a name="nqueens"></a><a href="../R6src/nqueens.sch">nqueens</a></dt>
 <dd>
 Computes the number of solutions to the 13-queens problem,
 10 times.
 </dd>
 
-<dt><a name="paraffins"></a><a href="R6src/paraffins.sch">paraffins</a></dt>
+<dt><br id="paraffins"><a name="paraffins"></a><a href="../R6src/paraffins.sch">paraffins</a></dt>
 <dd>
-Computes the number of paraffins that have 23 carbon atoms,
-5 times.
+Computes the number of paraffins that have 24 carbon atoms,
+10 times.
 </dd>
 
-<dt><a name="parsing"></a><a href="R6src/parsing.sch">parsing</a></dt>
+<dt><br id="parsing"><a name="parsing"></a><a href="../R6src/parsing.sch">parsing</a></dt>
 <dd>
-Parses the <code>nboyer</code> benchmark 1000 times
+Parses the <code>nboyer</code> benchmark 10 thousand times
 using a scanner and parser generated using Will Clinger's
-LexGen and ParseGen.
+LexGen and ParseGen, which are the tools used to create Larceny's
+<code>read</code> procedure.
 </dd>
 
-<dt><a name="peval"></a><a href="R6src/peval.sch">peval</a></dt>
+<dt><br id="peval"><a name="peval"></a><a href="../R6src/peval.sch">peval</a></dt>
 <dd>
-Partial evaluation of Scheme code, 1000 iterations.
+Partial evaluation of Scheme code, 10 thousand iterations.
 Written by Marc Feeley.
 </dd>
 
-<dt><a name="pi"></a><a href="R6src/pi.sch">pi</a></dt>
+<dt><br id="pi"><a name="pi"></a><a href="../R6src/pi.sch">pi</a></dt>
 <dd>
 A bignum-intensive benchmark that calculates digits of pi.
 </dd>
 
-<dt><a name="primes"></a><a href="R6src/primes.sch">primes</a></dt>
+<dt><br id="primes"><a name="primes"></a><a href="../R6src/primes.sch">primes</a></dt>
 <dd>
-Computes the primes less than 1000, 5000 times, using
+Computes the primes less than 10000 using
 a list-based Sieve of Eratosthenes.
+One thousand iterations.
 Written by Eric Mohr.
 </dd>
 
-<dt><a name="quicksort"></a><a href="R6src/quicksort.sch">quicksort</a></dt>
+<dt><br id="quicksort"><a name="quicksort"></a><a href="../R6src/quicksort.sch">quicksort</a></dt>
 <dd>
 This is a quicksort benchmark.
-(That isn't as obvious as it sounds.  The <code>quicksort</code>
-benchmark distributed with Gambit is a bignum benchmark,
+(That isn't as obvious as it sounds.  The original <code>quicksort</code>
+benchmark distributed with Gambit was a bignum benchmark,
 not a quicksort benchmark.  See the comments in
-<a href="R6src/quicksort.sch">the code</a>.)
-Sorts a vector of 10000 random integers 2500 times.
+<a href="../R6src/quicksort.sch">the code</a>.)
+Sorts a vector of 10000 random integers 5 thousand times.
 Written by Lars Hansen, and restored to its original glory
 by Will Clinger.
 </dd>
 
-<dt><a name="ray"></a><a href="R6src/ray.sch">ray</a></dt>
+<dt><br id="ray"><a name="ray"></a><a href="../R6src/ray.sch">ray</a></dt>
 <dd>
-Ray tracing a simple scene, 20 iterations.
+Ray tracing a simple scene, 250 iterations.
 A test of floating point arithmetic.
 This program is translated from the Common Lisp code in
 Example 9.8 of Paul Graham's book on ANSI Common Lisp.
 </dd>
 
-<dt><a name="scheme"></a><a href="R6src/scheme.sch">scheme</a></dt>
+<dt><br id="scheme"><a name="scheme"></a><a href="../R6src/scheme.sch">scheme</a></dt>
 <dd>
 A Scheme interpreter evaluating a merge sort of 30 strings,
-100000 iterations.
+300 thousand iterations.
 Written by Marc Feeley.
 </dd>
 
-<dt><a name="simplex"></a><a href="R6src/simplex.sch">simplex</a></dt>
+<dt><br id="simplex"><a name="simplex"></a><a href="../R6src/simplex.sch">simplex</a></dt>
 <dd>
-Simplex algorithm, one million iterations.
+Simplex algorithm, 5 million iterations.
 A test of floating point arithmetic, and a real program.
 </dd>
 
-<dt><a name="slatex"></a><a href="R6src/slatex.sch">slatex</a></dt>
+<dt><br id="slatex"><a name="slatex"></a><a href="../R6src/slatex.sch">slatex</a></dt>
 <dd>
-Scheme to LaTeX processor, 100 iterations.
+Scheme to LaTeX processor, 500 iterations.
 A test of file i/o and probably much else.
 Part of a real program written by Dorai Sitaram.
 </dd>
@@ -573,33 +575,33 @@ Part of a real program written by Dorai Sitaram.
 </div>
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">Garbage Collection Benchmarks</h3>
 
 <dl class="benchmarks">
 
-<dt><a name="nboyer"></a><a href="R6src/nboyer.sch">nboyer</a></dt>
+<dt><br id="nboyer"><a name="nboyer"></a><a href="../R6src/nboyer.sch">nboyer</a></dt>
 <dd>
 An updated and exponentially scalable version of the
 <code><a href="#boyer">boyer</a></code> benchmark.
 The <code>nboyer</code> benchmark's data structures are
 considerably more appropriate than the data structures used in the
-<code><a href="#boyer">boyer</a></code> benchmarks.
+original <code><a href="#boyer">boyer</a></code> benchmarks.
 These timings are for 1 iteration on
-a problem of size 4.
+a problem of size 6.
 A test of lists, vectors, and garbage collection.
 </dd>
 
-<dt><a name="sboyer"></a><a href="R6src/sboyer.sch">sboyer</a></dt>
+<dt><br id="sboyer"><a name="sboyer"></a><a href="../R6src/sboyer.sch">sboyer</a></dt>
 <dd>
 A version of <a href="#nboyer">nboyer</a> that has been tuned (by Henry
 Baker) to reduce storage allocation, making it less of a garbage collection
 benchmark and more of a compiler benchmark.  Only 4 lines of code were
 changed, and another 7 lines of code were added.
-These timings are for 1 iteration on a problem of size 5.
+These timings are for 1 iteration on a problem of size 6.
 </dd>
 
-<dt><a name="gcbench"></a><a href="R6src/gcbench.sch">gcbench</a></dt>
+<dt><br id="gcbench"><a name="gcbench"></a><a href="../R6src/gcbench.sch">gcbench</a></dt>
 <dd>
 This program was written to mimic the phase structure that has been
 conjectured for a class of application programs for which garbage
@@ -616,26 +618,28 @@ trees top-down using side effects, while the second subphase allocates
 trees bottom-up without using side effects.
 This benchmark was written in Java by John Ellis and Pete Kovac,
 modified by Hans Boehm, and translated into Scheme, Standard ML,
-C++, and C by William Clinger.
+C++, and C by William Clinger;
+it has had way too much influence on implementors of production
+garbage collectors.
 The timings shown are for 1 iteration on problem size 20.
 </dd>
 
-<dt><a name="mperm"></a><a href="R6src/mperm.sch">mperm</a></dt>
+<dt><br id="mperm"><a name="mperm"></a><a href="../R6src/mperm.sch">mperm</a></dt>
 <dd>
-The <code>mperm20:9:2:1</code> benchmark
+The <code>mperm30:10:4:1</code> benchmark
 is a severe test of storage allocation and garbage collection.
-At the end of each of the 20 iterations, the oldest half of the
+At the end of each of the 30 iterations, the oldest quarter of the
 live storage becomes garbage.
 This benchmark is particularly difficult for generational garbage
 collectors, since it violates their assumption that young objects
 have a shorter future life expectancy than older objects.
 <strong>
-The <code>perm9</code> benchmark distributed with Gambit
-does not have that property.
+The <code>perm9</code> benchmark that was once (and might still be)
+distributed with Gambit does not have that property.
 </strong>
 </dd>
 
-<dt><a name="gcold"></a><a href="R6src/gcold.sch">gcold</a></dt>
+<dt><br id="gcold"><a name="gcold"></a><a href="../R6src/gcold.sch">gcold</a></dt>
 <dd>
 A synthetic garbage collection benchmark written by David Detlefs
 and translated to Scheme by Will Clinger and Lars Hansen.
@@ -645,7 +649,7 @@ and translated to Scheme by Will Clinger and Lars Hansen.
 </div>
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">Synthetic Benchmarks for R6RS</h3>
 
 <div class="entry">
@@ -659,39 +663,40 @@ derived from Larceny's test suites for these features.
 
 <dl class="benchmarks">
 
-<dt><a name="equal"></a><a href="R6src/equal.sch">equal</a></dt>
+<dt><br id="equal"><a name="equal"></a><a href="../R6src/equal.sch">equal</a></dt>
 <dd>
-This benchmark tests the R6RS <code>equal?</code> predicate
-on some fairly large structures of various shapes.
+This benchmark tests the R7RS <code>equal?</code> predicate
+on some fairly large structures of various shapes, including
+circular structures.
 </dd>
 
-<dt><a name="normalization"></a><a href="R6src/normalization.sch">normalization</a></dt>
+<dt><br id="normalization"><a name="normalization"></a><a href="../R6src/normalization.sch">normalization</a></dt>
 <dd>
 This benchmark runs all of the Unicode 5.0.0 tests
 of string normalization.
 </dd>
 
-<dt><a name="bv2string"></a><a href="R6src/bv2string.sch">bv2string</a></dt>
+<dt><br id="bv2string"><a name="bv2string"></a><a href="../R6src/bv2string.sch">bv2string</a></dt>
 <dd>
 This benchmark tests conversions between bytevectors
 and Unicode.
 </dd>
 
-<dt><a name="listsort"></a><a href="R6src/listsort.sch">listsort</a></dt>
+<dt><br id="listsort"><a name="listsort"></a><a href="../R6src/listsort.sch">listsort</a></dt>
 <dd>
 This benchmark tests the <code>list-sort</code> procedure.
 Otherwise it is the same as the
 <code><a href="#vecsort">vecsort</a></code> benchmark.
 </dd>
 
-<dt><a name="vecsort"></a><a href="R6src/vecsort.sch">vecsort</a></dt>
+<dt><br id="vecsort"><a name="vecsort"></a><a href="../R6src/vecsort.sch">vecsort</a></dt>
 <dd>
 This benchmark tests the <code>vector-sort</code> procedure.
 Otherwise it is the same as the
 <code><a href="#listsort">listsort</a></code> benchmark.
 </dd>
 
-<dt><a name="hashtable0"></a><a href="R6src/hashtable0.sch">hashtable0</a></dt>
+<dt><br id="hashtable0"><a name="hashtable0"></a><a href="../R6src/hashtable0.sch">hashtable0</a></dt>
 <dd>
 This is a synthetic benchmark designed to stress hashtables.
 </dd>

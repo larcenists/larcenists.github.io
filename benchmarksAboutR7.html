@@ -37,7 +37,7 @@
 <div id="content">
 
 
-<div class="post">
+<div class="post"><br>
 <h1 class="title">Description of Benchmarks</h1>
 
 <div class="entry">
@@ -48,14 +48,14 @@ programs.
 None define any libraries.
 Each description of a benchmark begins
 with a link to its source code, omitting
-<a href="R7src/common.scm">the part that is shared
+<a href="../R7src/common.scm">the part that is shared
 by all of these benchmarks</a>.
 </p>
 <p>
 All of these benchmarks, their inputs, and the Unix
 script used to run them, are
 <a href="https://github.com/larcenists/larceny/tree/master/test/Benchmarking/R7RS">online</a>
-and can be downloaded using <code>git</code> or <code>svn</code>.
+and can be downloaded using <code>git</code>.
 </p>
 
 <p>
@@ -66,7 +66,8 @@ The timings report execution time only, as calculated using
 </div>
 
 
-<div class="post">
+<!--
+<div class="post"><br>
 <h4 class="title"><a name="geometricMean">geometricMean</a></h4>
 
 <div class="entry">
@@ -81,13 +82,13 @@ An average ratio of 1.0 is the lowest possible, and
 can be achieved only by a system that is fastest on
 every benchmark.
 </p>
-<!-- p>
+<p>
 To discourage implementors from pursuing speed at the
 expense of compatibility, systems that yield incorrect
 results or cannot run a benchmark are arbitrarily
 considered to be ten times as slow on that benchmark
 as the slowest system that yields correct results.
-</p -->
+</p>
 <p>
 The R7RS (small) standard does not require implementations
 to provide all of the R7RS standard libraries, and some
@@ -103,86 +104,86 @@ geometric means will be recalculated to impose a penalty
 for each benchmark an implementation is unable to run.
 </p>
 </div>
-</div>
+</divan>
+-->
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">Gabriel Benchmarks</h3>
 
 
 <dl class="benchmarks">
-<dt><a name="browse"></a><a href="R7src/browse.scm">browse</a></dt>
+<dt><br id="browse"><a name="browse"></a><a href="../R7src/browse.scm">browse</a></dt>
 <dd>
-Browsing a data base, a Gabriel benchmark, 2000 iterations.
+Browsing a data base, a Gabriel benchmark, 10 thousand iterations.
 [May be a test of <code>string->symbol</code> and/or
 <code>symbol-&gt;string</code>.]
 </dd>
 
-<dt><a name="deriv"></a><a href="R7src/deriv.scm">deriv</a></dt>
+<dt><br id="deriv"><a name="deriv"></a><a href="../R7src/deriv.scm">deriv</a></dt>
 <dd>
 Symbolic differentiation, a Gabriel benchmark,
-ten million iterations.
+one hundred million iterations.
 </dd>
 
-<dt><a name="destruc"></a><a href="R7src/destruc.scm">destruc</a></dt>
+<dt><br id="destruc"><a name="destruc"></a><a href="../R7src/destruc.scm">destruc</a></dt>
 <dd>
-Destructive list operations, a Gabriel benchmark, 4000 iterations
+Destructive list operations, a Gabriel benchmark, 20 thousand iterations
 of a 600x50 problem.
 </dd>
 
-<dt><a name="diviter"></a><a href="R7src/diviter.scm">diviter</a></dt>
+<dt><br id="diviter"><a name="diviter"></a><a href="../R7src/diviter.scm">diviter</a></dt>
 <dd>
 Divides 1000 by 2 using lists as a unary notation for integers,
-a Gabriel benchmark, one million iterations.
+a Gabriel benchmark, 5 million iterations.
 This benchmark tests
 <code>null?</code>, <code>cons</code>, <code>car</code>,
 <code>cdr</code>, and little else.
 </dd>
 
-<dt><a name="divrec"></a><a href="R7src/divrec.scm">divrec</a></dt>
+<dt><br id="divrec"><a name="divrec"></a><a href="../R7src/divrec.scm">divrec</a></dt>
 <dd>
 This benchmark is the same as <code>diviter</code>
 except it uses deep recursion instead of iteration.
 </dd>
 
-<dt><a name="puzzle"></a><a href="R7src/puzzle.scm">puzzle</a></dt>
+<dt><br id="puzzle"><a name="puzzle"></a><a href="../R7src/puzzle.scm">puzzle</a></dt>
 <dd>
-Combinatorial search of a state space, a Gabriel benchmark, 1000 iterations.
+Combinatorial search of a state space, a Gabriel benchmark, 5000 iterations.
 A test of arrays and classical compiler optimizations.
 This benchmark was originally written in Pascal by Forrest Baskett.
 </dd>
 
-<dt><a name="triangl"></a><a href="R7src/triangl.scm">triangl</a></dt>
+<dt><br id="triangl"><a name="triangl"></a><a href="../R7src/triangl.scm">triangl</a></dt>
 <dd>
 Another combinatorial search similar to
 <code><a href="#puzzle">puzzle</a></code>,
 a Gabriel benchmark,
-50 iterations.
+250 iterations.
 </dd>
 
-<dt><a name="tak"></a><a href="R7src/tak.scm">tak</a></dt>
+<dt><br id="tak"><a name="tak"></a><a href="../R7src/tak.scm">tak</a></dt>
 <dd>
 A triply recursive integer function related to the Takeuchi function,
 a Gabriel benchmark.
-1 iteration of <code>(tak 40 20 11)</code>.
+1 iteration of <code>(tak 42 20 11)</code>.
 A test of non-tail calls and arithmetic.
 [Historical note:
 The Symbolics 3600 performed 1 iteration of <code>(tak 18 12 6)</code>
 in 0.43 seconds using generic arithmetic.
-On our test machine, Larceny runs that benchmark in 0.00016 seconds.
-That's 2500 times as fast.]
+On our MacBook Air, Larceny runs that benchmark in 0.000096 seconds.
+That's over 4000 times as fast.]
 </dd>
 
-<dt><a name="takl"></a><a href="R7src/takl.scm">takl</a></dt>
+<dt><br id="takl"><a name="takl"></a><a href="../R7src/takl.scm">takl</a></dt>
 <dd>
-Calculates <code>(tak 40 20 12)</code>, which is faster than
-calculating <code>(tak 40 20 11)</code>, using the same recursive
-algorithm as for the <code><a href="#tak">tak:32:16:8</a></code>
+Calculates <code>(tak 42 20 11)</code> using the same recursive
+algorithm as for the <code><a href="#tak">tak:42:20:11</a></code>
 benchmark but using lists to represent integers.  This too was a
 Gabriel benchmark (with different arguments).  1 iteration.
 </dd>
 
-<dt><a name="ntakl"></a><a href="R7src/ntakl.scm">ntakl</a></dt>
+<dt><br id="ntakl"><a name="ntakl"></a><a href="../R7src/ntakl.scm">ntakl</a></dt>
 <dd>
 The <code><a href="#takl">takl</a></code> benchmark contains a
 peculiar boolean expression.  Rewriting that expression into a
@@ -190,17 +191,17 @@ more readable idiom allows some compilers to generate better
 code for it.
 </dd>
 
-<dt><a name="cpstak"></a><a href="R7src/cpstak.scm">cpstak</a></dt>
+<dt><br id="cpstak"><a name="cpstak"></a><a href="../R7src/cpstak.scm">cpstak</a></dt>
 <dd>
-The <code><a href="#tak">tak:40:20:11</a></code> benchmark
+The <code><a href="#tak">tak:42:20:11</a></code> benchmark
 in continuation-passing style, 1 iteration.
 A test of closure creation.
 </dd>
 
-<dt><a name="ctak"></a><a href="R7src/ctak.scm">ctak</a></dt>
+<dt><br id="ctak"><a name="ctak"></a><a href="../R7src/ctak.scm">ctak</a></dt>
 <dd>
 The <code><a href="#tak">tak:32:16:8</a></code> benchmark
-in continuation-capturing style, 1 iteration.
+in continuation-capturing style, 5 iterations.
 A test of <code>call-with-current-continuation</code>.
 </dd>
 
@@ -209,101 +210,109 @@ A test of <code>call-with-current-continuation</code>.
 
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">Numerical Benchmarks</h3>
 
 <dl class="benchmarks">
 
-<dt><a name="fib"></a><a href="R7src/fib.scm">fib</a></dt>
+<dt><br id="fib"><a name="fib"></a><a href="../R7src/fib.scm">fib</a></dt>
 <dd>
 Doubly recursive computation of the 40th fibonacci number
 (102334155), using <code>(&lt; n 2)</code> to terminate the
-recursion; 5 iterations.
+recursion; 10 iterations.
 </dd>
 
-<dt><a name="fibc"></a><a href="R7src/fibc.scm">fibc</a></dt>
+<dt><br id="fibc"><a name="fibc"></a><a href="../R7src/fibc.scm">fibc</a></dt>
 <dd>
 A version of <code>fib</code> that uses first class continuations;
-written by Kent Dybvig.  Calculates the 30th Fibonacci number
-(832040) 10 times.
+written by Kent Dybvig.  Calculates the 40th Fibonacci number
+(102334155) only once.
 </dd>
 
-<dt><a name="fibfp"></a><a href="R7src/fibfp.scm">fibfp</a></dt>
+<dt><br id="fibfp"><a name="fibfp"></a><a href="../R7src/fibfp.scm">fibfp</a></dt>
 <dd>
-Calculation of the 35th Fibonacci number using inexact numbers;
+Calculation of the 40th Fibonacci number using inexact numbers;
 10 iterations.
 A test of floating point arithmetic.
 Uses essentially the same code as the <code><a href="#fib">fib</a></code>
 benchmark.
 </dd>
 
-<dt><a name="sum"></a><a href="R7src/sum.scm">sum</a></dt>
+<dt><br id="sum"><a name="sum"></a><a href="../R7src/sum.scm">sum</a></dt>
 <dd>
-Sums the integers from 0 to 10000, 200000 iterations.
+Sums the integers from 0 to 1000, 5 million iterations.
+(Performs the same number of additions as the
+<code><a href="#sumfp">sumfp</a></code> benchmark described below,
+but avoids the bignum arithmetic that would be needed on some systems
+by performing a thousand times as many
+iterations of a problem that's a thousand times as small.)
 </dd>
 
-<dt><a name="sumfp"></a><a href="R7src/sumfp.scm">sumfp</a></dt>
+<dt><br id="sumfp"><a name="sumfp"></a><a href="../R7src/sumfp.scm">sumfp</a></dt>
 <dd>
-Sums the integers from 0 to 1e6, 500 iterations.
+Sums the integers from 0 to 1e6, 5 thousand iterations.
 A test of floating point arithmetic.
 Uses essentially the same code as the <code><a href="#sum">sum</a></code>
 benchmark.
 </dd>
 
-<dt><a name="fft"></a><a href="R7src/fft.scm">fft</a></dt>
+<dt><br id="fft"><a name="fft"></a><a href="../R7src/fft.scm">fft</a></dt>
 <dd>
-Fast Fourier Transform on 65536 real-valued points, 100 iterations.
+Fast Fourier Transform on 65536 real-valued points, 1000 iterations.
 A test of floating point arithmetic.
 </dd>
 
-<dt><a name="mbrot"></a><a href="R7src/mbrot.scm">mbrot</a></dt>
+<dt><br id="mbrot"><a name="mbrot"></a><a href="../R7src/mbrot.scm">mbrot</a></dt>
 <dd>
-Generation of a Mandelbrot set, 1000 iterations on a problem of
-size 75.
+Generation of a Mandelbrot set, 25 iterations on a problem of
+size 1000.
 A test of floating point arithmetic on reals.
 </dd>
 
-<dt><a name="mbrotZ"></a><a href="R7src/mbrotZ.scm">mbrotZ</a></dt>
+<dt><br id="mbrotZ"><a name="mbrotZ"></a><a href="../R7src/mbrotZ.scm">mbrotZ</a></dt>
 <dd>
 Same as the <code><a href="#mbrot">mbrot</a></code> benchmark,
 but using complex instead of real arithmetic.
 </dd>
 
-<dt><a name="nucleic"></a><a href="R7src/nucleic.scm">nucleic</a></dt>
+<dt><br id="nucleic"><a name="nucleic"></a><a href="../R7src/nucleic.scm">nucleic</a></dt>
 <dd>
-Determination of a nucleic acid's spatial structure, 50 iterations.
+Determination of a nucleic acid's spatial structure, 200 iterations.
 A test of floating point arithmetic, and a real program.
 </dd>
 
-<dt><a name="pi"></a><a href="R7src/pi.scm">pi</a></dt>
+<dt><br id="pi"><a name="pi"></a><a href="../R7src/pi.scm">pi</a></dt>
 <dd>
 A bignum-intensive benchmark that calculates digits of pi.
 </dd>
 
-<dt><a name="chudnovsky"></a><a href="R7src/chudnovsky.scm">chudnovsky</a></dt>
+<dt><br id="chudnovsky"><a name="chudnovsky"></a><a href="../R7src/chudnovsky.scm">chudnovsky</a></dt>
 <dd>
 Computes digits of PI using a straightforward implementation of
 the Chudnovsky brothers algorithm.
+That algorithm is considerably faster than the algorithm used by the
+<code><a href="#pi">pi</a></code> benchmark above, so we use 20 times
+as many iterations.
 </dd>
 
-<dt><a name="pnpoly"></a><a href="R7src/pnpoly.scm">pnpoly</a></dt>
+<dt><br id="pnpoly"><a name="pnpoly"></a><a href="../R7src/pnpoly.scm">pnpoly</a></dt>
 <dd>
 Testing to see whether a point is contained within a 2-dimensional
-polygon, 1000000 iterations (with 12 tests per iteration).
+polygon, 2 million iterations (with 12 tests per iteration).
 A test of floating point arithmetic.
 </dd>
 
-<dt><a name="ray"></a><a href="R7src/ray.scm">ray</a></dt>
+<dt><br id="ray"><a name="ray"></a><a href="../R7src/ray.scm">ray</a></dt>
 <dd>
-Ray tracing a simple scene, 50 iterations.
+Ray tracing a simple scene, 250 iterations.
 A test of floating point arithmetic.
 This program is translated from the Common Lisp code in
 Example 9.8 of Paul Graham's book on ANSI Common Lisp.
 </dd>
 
-<dt><a name="simplex"></a><a href="R7src/simplex.scm">simplex</a></dt>
+<dt><br id="simplex"><a name="simplex"></a><a href="../R7src/simplex.scm">simplex</a></dt>
 <dd>
-Simplex algorithm, one million iterations.
+Simplex algorithm, 5 million iterations.
 A test of floating point arithmetic, and a real program.
 </dd>
 
@@ -312,7 +321,7 @@ A test of floating point arithmetic, and a real program.
 
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">Kernighan and Van Wyk Benchmarks</h3>
 
 <div class="entry">
@@ -330,189 +339,191 @@ them into slightly more idiomatic Scheme.
 
 <dl class="benchmarks">
 
-<dt><a name="ack"></a><a href="R7src/ack.scm">ack</a></dt>
+<dt><br id="ack"><a name="ack"></a><a href="../R7src/ack.scm">ack</a></dt>
 <dd>
-A version of the Ackermann function, with arguments 3,12.
-Two iterations.
+A version of the Ackermann function, with arguments 3,13.
+Just one iteration.
 </dd>
 
-<dt><a name="array1"></a><a href="R7src/array1.scm">array1</a></dt>
+<dt><br id="array1"><a name="array1"></a><a href="../R7src/array1.scm">array1</a></dt>
 <dd>
 This benchmark allocates, initializes, and copies some fairly
-large one-dimensional arrays.  500 iterations on a problem
+large one-dimensional arrays.  1 thousand iterations on a problem
 size of one million.
 </dd>
 
-<dt><a name="string"></a><a href="R7src/string.scm">string</a></dt>
+<dt><br id="string"><a name="string"></a><a href="../R7src/string.scm">string</a></dt>
 <dd>
 This tests <code>string-append</code> and <code>substring</code>,
-and very little else.  25 iterations on a problem size of 500000.
+and very little else.  5 hundred iterations on a problem size of 500000.
 </dd>
 
-<dt><a name="sum1"></a><a href="R7src/sum1.scm">sum1</a></dt>
+<dt><br id="sum1"><a name="sum1"></a><a href="../R7src/sum1.scm">sum1</a></dt>
 <dd>
 This benchmark reads and sums 100,000 floating point numbers
-25 times.  It is primarily a test of floating point input.
+100 times.  It is primarily a test of floating point input.
 </dd>
 
-<dt><a name="cat"></a><a href="R7src/cat.scm">cat</a></dt>
+<dt><br id="cat"><a name="cat"></a><a href="../R7src/cat.scm">cat</a></dt>
 <dd>
 This file-copying benchmark is a simple test of character i/o.
-It copies the King James Bible 50 times.
+It copies the King James Bible 100 times.
 </dd>
 
-<dt><a name="tail"></a><a href="R7src/tail.scm">tail</a></dt>
+<dt><br id="tail"><a name="tail"></a><a href="../R7src/tail.scm">tail</a></dt>
 <dd>
 This benchmark performs considerable character i/o.
 It prints the King James Bible verse by verse, in reverse
-order of the verses, 25 times.
+order of the verses, 100 times.
 </dd>
 
-<dt><a name="wc"></a><a href="R7src/wc.scm">wc</a></dt>
+<dt><br id="wc"><a name="wc"></a><a href="../R7src/wc.scm">wc</a></dt>
 <dd>
 Another character i/o benchmark.
 It counts the number of words in the King James Bible
-50 times.
+250 times.
 </dd>
 
 </dl>
 </div>
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">More Input/Output Benchmarks</h3>
 
 <dl class="benchmarks">
 
-<dt><a name="read1"></a><a href="R7src/read1.scm">read1</a></dt>
+<dt><br id="read1"><a name="read1"></a><a href="../R7src/read1.scm">read1</a></dt>
 <dd>
-Reads <code>nboyer.scm</code> 2500 times.
+Reads <code>nboyer.scm</code> 10 thousand times.
 </dd>
 
 </dl>
 </div>
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">Other Benchmarks</h3>
 
 <dl class="benchmarks">
 
-<dt><a name="compiler"></a><a href="R7src/compiler.scm">compiler</a></dt>
+<dt><br id="compiler"><a name="compiler"></a><a href="../R7src/compiler.scm">compiler</a></dt>
 <dd>
 A compiler kernel that looks as though it was written by Marc Feeley.
-2000 iterations on a 47-line input.
+10 thousand iterations on a 47-line input.
 </dd>
 
-<dt><a name="conform"></a><a href="R7src/conform.scm">conform</a></dt>
+<dt><br id="conform"><a name="conform"></a><a href="../R7src/conform.scm">conform</a></dt>
 <dd>
-A type checker written by Jim Miller, 500 iterations.
+A type checker written by Jim Miller, 1000 iterations.
 </dd>
 
-<dt><a name="dynamic"></a><a href="R7src/dynamic.scm">dynamic</a></dt>
+<dt><br id="dynamic"><a name="dynamic"></a><a href="../R7src/dynamic.scm">dynamic</a></dt>
 <dd>
-Dynamic type inference, self-applied, 500 iterations.
+Dynamic type inference, self-applied, 1000 iterations.
 Written by Fritz Henglein.
 A real program.
 </dd>
 
-<dt><a name="earley"></a><a href="R7src/earley.scm">earley</a></dt>
+<dt><br id="earley"><a name="earley"></a><a href="../R7src/earley.scm">earley</a></dt>
 <dd>
 Earley's parsing algorithm, parsing a 15-symbol input according to one
-of the simplest ambiguous grammars, 1 iteration.
+of the simplest ambiguous grammars, 3 iterations.
 A real program, applied to toy data whose exponential behavior
 leads to a peak heap size of half a gigabyte or more.
 </dd>
 
-<dt><a name="graphs"></a><a href="R7src/graphs.scm">graphs</a></dt>
+<dt><br id="graphs"><a name="graphs"></a><a href="../R7src/graphs.scm">graphs</a></dt>
 <dd>
 This program was provided by Andrew Wright, but we don't know much
 about it, and would appreciate more information.
 This higher order program creates closures almost as often as it
 performs non-tail procedure calls.
-Three iterations on a problem of size 7.
+Ten iterations on a problem of size 7.
 </dd>
 
-<dt><a name="lattice"></a><a href="R7src/lattice.scm">lattice</a></dt>
+<dt><br id="lattice"><a name="lattice"></a><a href="../R7src/lattice.scm">lattice</a></dt>
 <dd>
 Another program that was provided by Andrew Wright,
 though it may have been written by Jim Miller.
 It enumerates the order-preserving maps between finite lattices.
-10 iterations.
+25 iterations.
 </dd>
 
-<dt><a name="matrix"></a><a href="R7src/matrix.scm">matrix</a></dt>
+<dt><br id="matrix"><a name="matrix"></a><a href="../R7src/matrix.scm">matrix</a></dt>
 <dd>
 Another program that was provided by Andrew Wright.
 Computes maximal matrices; similar to some puzzle programs.
-2500 iterations on a problem of size 5.
+10 thousand iterations on a problem of size 5.
 </dd>
 
-<dt><a name="maze"></a><a href="R7src/maze.scm">maze</a></dt>
+<dt><br id="maze"><a name="maze"></a><a href="../R7src/maze.scm">maze</a></dt>
 <dd>
-Constructs a maze on a hexagonal grid, 10000 iterations.
+Constructs a maze on a 20x7 hexagonal grid, 100 thousand iterations.
 Written by Olin Shivers.
 </dd>
 
-<dt><a name="mazefun"></a><a href="R7src/mazefun.scm">mazefun</a></dt>
+<dt><br id="mazefun"><a name="mazefun"></a><a href="../R7src/mazefun.scm">mazefun</a></dt>
 <dd>
-Constructs a maze on a rectangular grid using purely functional style,
-10000 iterations on a problem of size 11.
+Constructs a maze on an 11x11 rectangular grid using purely functional style,
+50 thousand iterations.
 Written by Marc Feeley.
 </dd>
 
-<dt><a name="nqueens"></a><a href="R7src/nqueens.scm">nqueens</a></dt>
+<dt><br id="nqueens"><a name="nqueens"></a><a href="../R7src/nqueens.scm">nqueens</a></dt>
 <dd>
 Computes the number of solutions to the 13-queens problem,
 10 times.
 </dd>
 
-<dt><a name="paraffins"></a><a href="R7src/paraffins.scm">paraffins</a></dt>
+<dt><br id="paraffins"><a name="paraffins"></a><a href="../R7src/paraffins.scm">paraffins</a></dt>
 <dd>
-Computes the number of paraffins that have 23 carbon atoms,
+Computes the number of paraffins that have 24 carbon atoms,
 10 times.
 </dd>
 
-<dt><a name="parsing"></a><a href="R7src/parsing.scm">parsing</a></dt>
+<dt><br id="parsing"><a name="parsing"></a><a href="../R7src/parsing.scm">parsing</a></dt>
 <dd>
-Parses the <code>nboyer</code> benchmark 2500 times
+Parses the <code>nboyer</code> benchmark 10 thousand times
 using a scanner and parser generated using Will Clinger's
-LexGen and ParseGen.
+LexGen and ParseGen, which are the tools used to create Larceny's
+<code>read</code> procedure.
 </dd>
 
-<dt><a name="peval"></a><a href="R7src/peval.scm">peval</a></dt>
+<dt><br id="peval"><a name="peval"></a><a href="../R7src/peval.scm">peval</a></dt>
 <dd>
-Partial evaluation of Scheme code, 2000 iterations.
+Partial evaluation of Scheme code, 10 thousand iterations.
 Written by Marc Feeley.
 </dd>
 
-<dt><a name="primes"></a><a href="R7src/primes.scm">primes</a></dt>
+<dt><br id="primes"><a name="primes"></a><a href="../R7src/primes.scm">primes</a></dt>
 <dd>
-Computes the primes less than 1000, 10000 times, using
+Computes the primes less than 10000 using
 a list-based Sieve of Eratosthenes.
+One thousand iterations.
 Written by Eric Mohr.
 </dd>
 
-<dt><a name="quicksort"></a><a href="R7src/quicksort.scm">quicksort</a></dt>
+<dt><br id="quicksort"><a name="quicksort"></a><a href="../R7src/quicksort.scm">quicksort</a></dt>
 <dd>
 This is a quicksort benchmark.
-(That isn't as obvious as it sounds.  The <code>quicksort</code>
-benchmark distributed with Gambit is a bignum benchmark,
+(That isn't as obvious as it sounds.  The original <code>quicksort</code>
+benchmark distributed with Gambit was a bignum benchmark,
 not a quicksort benchmark.  See the comments in
-<a href="R7src/quicksort.scm">the code</a>.)
-Sorts a vector of 10000 random integers 2500 times.
+<a href="../R7src/quicksort.scm">the code</a>.)
+Sorts a vector of 10000 random integers 5 thousand times.
 Written by Lars Hansen, and restored to its original glory
 by Will Clinger.
 </dd>
 
-<dt><a name="scheme"></a><a href="R7src/scheme.scm">scheme</a></dt>
+<dt><br id="scheme"><a name="scheme"></a><a href="../R7src/scheme.scm">scheme</a></dt>
 <dd>
 A Scheme interpreter evaluating a merge sort of 30 strings,
-100000 iterations.
+300 thousand iterations.
 Written by Marc Feeley.
 </dd>
 
-<dt><a name="slatex"></a><a href="R7src/slatex.scm">slatex</a></dt>
+<dt><br id="slatex"><a name="slatex"></a><a href="../R7src/slatex.scm">slatex</a></dt>
 <dd>
 Scheme to LaTeX processor, 500 iterations.
 A test of file i/o and probably much else.
@@ -523,12 +534,12 @@ Part of a real program written by Dorai Sitaram.
 </div>
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">Garbage Collection Benchmarks</h3>
 
 <dl class="benchmarks">
 
-<dt><a name="nboyer"></a><a href="R7src/nboyer.scm">nboyer</a></dt>
+<dt><br id="nboyer"><a name="nboyer"></a><a href="../R7src/nboyer.scm">nboyer</a></dt>
 <dd>
 An updated and exponentially scalable version of the
 <code><a href="#boyer">boyer</a></code> benchmark.
@@ -536,20 +547,20 @@ The <code>nboyer</code> benchmark's data structures are
 considerably more appropriate than the data structures used in the
 original <code><a href="#boyer">boyer</a></code> benchmarks.
 These timings are for 1 iteration on
-a problem of size 5.
+a problem of size 6.
 A test of lists, vectors, and garbage collection.
 </dd>
 
-<dt><a name="sboyer"></a><a href="R7src/sboyer.scm">sboyer</a></dt>
+<dt><br id="sboyer"><a name="sboyer"></a><a href="../R7src/sboyer.scm">sboyer</a></dt>
 <dd>
 A version of <a href="#nboyer">nboyer</a> that has been tuned (by Henry
 Baker) to reduce storage allocation, making it less of a garbage collection
 benchmark and more of a compiler benchmark.  Only 4 lines of code were
 changed, and another 7 lines of code were added.
-These timings are for 1 iteration on a problem of size 5.
+These timings are for 1 iteration on a problem of size 6.
 </dd>
 
-<dt><a name="gcbench"></a><a href="R7src/gcbench.scm">gcbench</a></dt>
+<dt><br id="gcbench"><a name="gcbench"></a><a href="../R7src/gcbench.scm">gcbench</a></dt>
 <dd>
 This program was written to mimic the phase structure that has been
 conjectured for a class of application programs for which garbage
@@ -567,23 +578,23 @@ trees bottom-up without using side effects.
 This benchmark was written in Java by John Ellis and Pete Kovac,
 modified by Hans Boehm, and translated into Scheme, Standard ML,
 C++, and C by William Clinger;
-it has had too much influence on implementors of production
+it has had way too much influence on implementors of production
 garbage collectors.
 The timings shown are for 1 iteration on problem size 20.
 </dd>
 
-<dt><a name="mperm"></a><a href="R7src/mperm.scm">mperm</a></dt>
+<dt><br id="mperm"><a name="mperm"></a><a href="../R7src/mperm.scm">mperm</a></dt>
 <dd>
-The <code>mperm20:10:2:1</code> benchmark
+The <code>mperm30:10:4:1</code> benchmark
 is a severe test of storage allocation and garbage collection.
-At the end of each of the 20 iterations, the oldest half of the
+At the end of each of the 30 iterations, the oldest quarter of the
 live storage becomes garbage.
 This benchmark is particularly difficult for generational garbage
 collectors, since it violates their assumption that young objects
 have a shorter future life expectancy than older objects.
 <strong>
-The <code>perm9</code> benchmark distributed with Gambit
-does not have that property.
+The <code>perm9</code> benchmark that was once (and might still be)
+distributed with Gambit does not have that property.
 </strong>
 </dd>
 
@@ -591,7 +602,7 @@ does not have that property.
 </div>
 
 
-<div class="post">
+<div class="post"><br>
 <h3 class="title">Synthetic Benchmarks for R7RS</h3>
 
 <div class="entry">
@@ -605,14 +616,14 @@ derived from Larceny's test suites for these features.
 
 <dl class="benchmarks">
 
-<dt><a name="equal"></a><a href="R7src/equal.scm">equal</a></dt>
+<dt><br id="equal"><a name="equal"></a><a href="../R7src/equal.scm">equal</a></dt>
 <dd>
 This benchmark tests the R7RS <code>equal?</code> predicate
 on some fairly large structures of various shapes, including
 circular structures.
 </dd>
 
-<dt><a name="bv2string"></a><a href="R7src/bv2string.scm">bv2string</a></dt>
+<dt><br id="bv2string"><a name="bv2string"></a><a href="../R7src/bv2string.scm">bv2string</a></dt>
 <dd>
 This benchmark tests conversions between bytevectors
 and Unicode.
@@ -621,6 +632,155 @@ and Unicode.
 </dl>
 </div>
 
+<div class="post"><br>
+<h3 class="title">Synthetic Benchmarks for R7RS Red Edition</h3>
+
+<div class="entry">
+<p>
+The R7RS Red Edition added several new libraries to those of the R7RS.
+The following benchmarks test those libraries.
+</p>
+</div>
+
+<dl class="benchmarks">
+
+<dt><br id="dderiv"><a name="dderiv"></a><a href="../R7src/dderiv.scm">dderiv</a></dt>
+<dd>
+This is a table-driven version of the
+<code><a href="#deriv">deriv</a></code> benchmark
+using hash tables and comparators from the
+<code>(scheme hash-table)</code> and <code>(scheme comparator)</code>
+libraries.
+</dd>
+
+<dt><br id="bibfreq"><a name="bibfreq"></a><a href="../R7src/bibfreq.scm">bibfreq</a></dt>
+<dd>
+This benchmark uses the Red Edition's hash tables and comparators
+to find the ten words that appear most often within the King James bible.
+Written by Aziz Ghuloum as an R6RS benchmark,
+modified for R7RS by Will Clinger.
+</dd>
+
+<dt><br id="bibfreq2"><a name="bibfreq2"></a><a href="../R7src/bibfreq2.scm">bibfreq2</a></dt>
+<dd>
+Almost the same as the <code><a href="#bibfreq">bibfreq</a></code> benchmark,
+but uses <code>symbol-hash</code> instead of <code>eq?</code> hashtables.
+(It looks as though many implementations of <code>eq?</code> hashtables
+are using <code>symbol-hash</code> already,
+so this benchmark is probably redundant and should be dropped.)
+</dd>
+
+<dt><br id="hashtable0"><a name="hashtable0"></a><a href="../R7src/hashtable0.scm">hashtable0</a></dt>
+<dd>
+Tests only <code>eq?</code> and <code>eqv?</code> hashtables.
+Purely synthetic: does not read the King James bible.
+Written by Will Clinger.
+</dd>
+
+<dt><br id="listsort"><a name="listsort"></a><a href="../R7src/listsort.scm">listsort</a></dt>
+<dd>
+Sorts a scrambled list of the Unicode characters.
+10 iterations.  
+</dd>
+
+<dt><br id="vecsort"><a name="vecsort"></a><a href="../R7src/vecsort.scm">vecsort</a></dt>
+<dd>
+Sorts a scrambled vector of the Unicode characters.
+10 iterations.  
+</dd>
+
+<dt><br id="list"><a name="list"></a><a href="../R7src/list.scm">list</a></dt>
+<dd>
+Tests the <code>lset-adjoin</code>, <code>lset-union</code>,
+<code>take</code>, and <code>drop</code> procedures of
+<code>(scheme list)</code>.
+</dd>
+
+<dt><br id="ilist"><a name="ilist"></a><a href="../R7src/ilist.scm">ilist</a></dt>
+<dd>
+Almost the same as the <code><a href="#list">list</a></code> benchmark,
+but uses the immutable lists provided by the <code>(scheme ilist)</code>
+library.
+</dd>
+
+<dt><br id="rlist"><a name="rlist"></a><a href="../R7src/rlist.scm">rlist</a></dt>
+<dd>
+Similar to the <code><a href="#list">list</a></code> and
+<code><a href="#ilist">ilist</a></code> benchmarks,
+but uses the random access lists provided by the <code>(scheme rlist)</code>
+library.
+Random access is not actually needed by this benchmark,
+and random access lists are considerably slower than
+ordinary lists and immutable lists,
+so the problem size is reduced from 9 to 8;
+that's a considerable reduction, because
+the time required to run this benchmark
+is (at least) exponential in the problem size.
+</dd>
+
+<dt><br id="vector"><a name="vector"></a><a href="../R7src/vector.scm">vector</a></dt>
+<dd>
+Almost the same as the <code><a href="#list">list</a></code> benchmark,
+but uses vectors instead of lists.
+Tests the <code>(scheme vector)</code> library.
+</dd>
+
+<dt><br id="set"><a name="set"></a><a href="../R7src/set.scm">set</a></dt>
+<dd>
+Almost the same as the <code><a href="#list">list</a></code> benchmark
+et cetera, but uses the set operations exported by
+<code>(scheme set)</code>
+instead of lists or vectors.
+For this particular benchmark,
+using those set operations is likely to be considerably slower than
+using ordinary lists or vectors,
+so the problem size is reduced from 9 to 7;
+that's a considerable reduction, because
+the time required to run this benchmark
+is (at least) exponential in the problem size.
+</dd>
+
+<dt><br id="charset"><a name="charset"></a><a href="../R7src/charset.scm">charset</a></dt>
+<dd>
+Uses the character sets of <code>(scheme charset)</code>
+to parse the King James bible into tokens,
+which are then parsed to decide which of those tokens are
+identifiers and which are numbers.
+Basically a test of the <code>char-set-contains?</code> procedure and
+a few standard character sets.
+</dd>
+
+<dt><br id="stream"><a name="stream"></a><a href="../R7src/stream.scm">stream</a></dt>
+<dd>
+Creates an infinite stream of all Pythagorean triples,
+and then reports the 200th Pythagorean triple
+found within that stream.
+A test of <code>(scheme stream)</code>.
+</dd>
+
+<dt><br id="lseq"><a name="lseq"></a><a href="../R7src/lseq.scm">lseq</a></dt>
+<dd>
+Almost the same as the <code><a href="#stream">stream</a></code> benchmark,
+but uses the lazy sequences of <code>(scheme lseq)</code> instead of streams.
+</dd>
+
+<dt><br id="generator"><a name="generator"></a><a href="../R7src/generator.scm">generator</a></dt>
+<dd>
+Almost the same as the <code><a href="#stream">stream</a></code> and
+<code><a href="#lseq">lseq</a></code> benchmarks,
+but uses the generators of <code>(scheme generator)</code>
+instead of streams or lazy sequences.
+</dd>
+
+<dt><br id="text"><a name="text"></a><a href="../R7src/text.scm">text</a></dt>
+<dd>
+Tests the immutable texts of <code>(scheme text)</code>
+on Book I of Thucydides, in both Greek and English,
+timing traversals, splits, and joins.
+</dd>
+
+</dl>
+</div>
 
 
 </div>
